@@ -8,16 +8,6 @@
                 <div class="col-md-12 col-sm-12 col-lg-12">
                     <div class="page-title-inner">
                         <h1 itemprop="headline">Track your order</h1>
-                        <form class="restaurant-search-form brd-rd2">
-                            <div class="row mrg10">
-                                <div class="col-md-10 col-sm-9 col-lg-9 col-xs-12">
-                                    <div class="input-field brd-rd2"><input class="brd-rd2" type="text" name="trackid" placeholder="Type your tracking number here ex. 1234567890"></div>
-                                </div>
-                                <div class="col-md-2 col-sm-3 col-lg-3 col-xs-12">
-                                    <button class="brd-rd2 red-bg" type="submit">TRACK MY ORDER</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -43,81 +33,34 @@
                                 @auth
                                     <div class="welcome-note yellow-bg brd-rd5">
                                         <h4 itemprop="headline">Hi, {{ Auth::user()->name }}</h4>
-                                        <p itemprop="description">You will receive your order within <span>30min</span> at your <span>Home Address</span>. Please pay the exact amount of <span>P200</span>.</p>
+                                        <p itemprop="description">Please pay the exact amount of <span class="amount-to-pay">P0.00</span>.</p>
                                         <p itemprop="description">Thank you for being a regular customer. Enjoy your food.</p>
                                         <img src="/assets/fe/images/resource/welcome-note-img.png" alt="welcome-note-img.png" itemprop="image">
                                     </div>
                                 @endauth
 
                                 <div class="order-list">
-                                    <div class="order-item brd-rd5">
+                                    @foreach($trackorders as $order)
+                                    <div class="order-item brd-rd5" data-order-price="{{ ($order->mprice * $order->orderquantity) }}">
                                         <div class="order-thumb brd-rd5">
-                                            <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
-                                            <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 4.25</span>
+                                            <a href="/menu-detail/{{ $order->menuid }}"title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
                                         </div>
                                         <div class="order-info">
-                                            <span class="red-clr">Maenaam Thai Restaurant</span>
-                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">Large Lomi x 2</a></h4>
+                                            <h4 itemprop="headline"><a href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">{{ $order->mname }} x {{ $order->orderquantity }}</a></h4>
                                             
-                                            <span class="price">P85.00</span>
-                                            <a class="brd-rd2" href="#" title="" itemprop="url">Order Details</a>
+                                            <span class="price">P{{ ($order->mprice * $order->orderquantity) }}.00</span>
+                                            <!-- <a class="brd-rd2" href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">Order Details</a> -->
                                             <ul class="post-meta">
-                                                <li><i class="fa fa-check-circle-o"></i>Add-ons: Cheese, Hot sauce, etc...</li>
-                                                <li><i class="flaticon-transport"></i> 10min</li>
+                                                <li><i class="fa fa-check-circle-o"></i>Add-ons:
+                                                    @foreach($order->addons as $li)
+                                                    <span data-order-price="{{ $li->addprice * $li->q }}">{{ $li->addname }} (P{{ $li->addprice }}.00) x {{ $li->q }}</span>,
+                                                    @endforeach
+                                                </li>
+                                                <!-- <li><i class="flaticon-transport"></i> 00min</li> -->
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="order-item brd-rd5">
-                                        <div class="order-thumb brd-rd5">
-                                            <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img2.jpg" alt="order-img2.jpg" itemprop="image"></a>
-                                            <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 3.0</span>
-                                        </div>
-                                        <div class="order-info">
-                                            <span class="red-clr">Maenaam Thai Restaurant</span>
-                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">Large Siopao x 3</a></h4>
-                                            
-                                            <span class="price">P85.00</span>
-                                            <a class="brd-rd2" href="#" title="" itemprop="url">Order Details</a>
-                                            <ul class="post-meta">
-                                                <li><i class="fa fa-check-circle-o"></i>Add-ons: Cheese, Hot sauce, etc...</li>
-                                                <li><i class="flaticon-transport"></i> 10min</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="order-item brd-rd5">
-                                        <div class="order-thumb brd-rd5">
-                                            <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img3.jpg" alt="order-img3.jpg" itemprop="image"></a>
-                                            <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 5.00</span>
-                                        </div>
-                                        <div class="order-info">
-                                            <span class="red-clr">Maenaam Thai Restaurant</span>
-                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">Pancit Bilao x 1</a></h4>
-                                            
-                                            <span class="price">P85.00</span>
-                                            <a class="brd-rd2" href="#" title="" itemprop="url">Order Details</a>
-                                            <ul class="post-meta">
-                                                <li><i class="fa fa-check-circle-o"></i>Add-ons: Cheese, Hot sauce, etc...</li>
-                                                <li><i class="flaticon-transport"></i> 10min</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="order-item brd-rd5">
-                                        <div class="order-thumb brd-rd5">
-                                            <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img4.jpg" alt="order-img4.jpg" itemprop="image"></a>
-                                            <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 5.30</span>
-                                        </div>
-                                        <div class="order-info">
-                                            <span class="red-clr">Maenaam Thai Restaurant</span>
-                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">1L Coke x 4</a></h4>
-                                            
-                                            <span class="price">P85.00</span>
-                                            <a class="brd-rd2" href="#" title="" itemprop="url">Order Details</a>
-                                            <ul class="post-meta">
-                                                <li><i class="fa fa-check-circle-o"></i>Add-ons: Cheese, Hot sauce, etc...</li>
-                                                <li><i class="flaticon-transport"></i> 10min</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -127,3 +70,16 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        var data = $('[data-order-price]');
+        total = 0;
+        $.each(data, function( i, v ) {
+            total += $(v).data('order-price');
+        });
+        console.log(total)
+        $('.amount-to-pay').empty().append('P'+total+'.00')
+    });
+</script>
+@endpush

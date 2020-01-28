@@ -20,7 +20,7 @@ class CreateOrderTable extends Migration
             $table->json('orderaddons');
             $table->integer('orderquantity');
             $table->string('ordereta')->nullable();
-            $table->enum('order_status', ['oncart', 'delivered']);
+            $table->enum('order_status', ['oncart', 'processing', 'delivered']);
             $table->softDeletes();
             $table->timestamps();
         });

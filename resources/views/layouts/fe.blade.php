@@ -41,11 +41,13 @@
 
         @yield('content')
 
-        <div class="footer-label">            
+        <div class="footer-label">   
+            <div class="cart-added-notifs">
+            </div>       
             <div>
                 <img class="left-scooty-mockup hidden-sm hidden-xs" src="/assets/fe/images/resource/restaurant-mockup1.png" alt="restaurant-mockup1.png" itemprop="image">
             </div>
-            <img class="bottom-clouds-mockup hidden-sm hidden-xs" src="/assets/fe/images/resource/clouds2.png" alt="clouds.png" itemprop="image">
+            <!-- <img class="bottom-clouds-mockup hidden-sm hidden-xs" src="/assets/fe/images/resource/clouds2.png" alt="clouds.png" itemprop="image"> -->
         </div>
 
         <div class="log-popup text-center">
@@ -149,6 +151,38 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="checkout" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Checkout</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>Total Amount: <span class="total-amount">0</span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>Choose Delivery Address:</p>
+                                </div>
+                                <div id="checkoutAddress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success btn-confirm-order" data-orderid>Confirm Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/assets/fe/js/jquery.min.js"></script>
@@ -157,5 +191,26 @@
     <script src="/assets/fe/js/main.js"></script>
     <script src="/assets/fe/js/cart.js"></script>
     @stack('scripts')
+    <script>
+        $.ajax({
+            type: 'GET',
+            url: '/getmyaddress',
+            dataType: 'json',
+            success:function(data){
+                $('#checkoutAddress').empty();
+                $.each(data, function( i, v ) {
+                    $('#checkoutAddress').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
+                        '<div class="address-holder">'+
+                            '<h4><input type="radio" name="deliveryadd" checked value="'+v.caid+'"> '+v.calabel+'</h4>'+
+                            '<p>'+v.castreet+' '+v.cacity+', '+v.caprovince+' '+v.cacountry+'</p>'+
+                        '</div>'+
+                    '</div>');
+                });
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
+    </script>
 </body>
 </html>

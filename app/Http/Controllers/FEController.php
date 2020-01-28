@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 // Models
 use \App\Order;
+use \App\CustomerAddress;
+use \App\OrderTrack;
 
 class FEController extends Controller
 {
@@ -24,6 +26,24 @@ class FEController extends Controller
     public function index()
     {
         return view('fe/index');
+    }
+
+    public function dashboard()
+    {
+        $this->middleware('auth');
+
+    	if(isset(\Auth::user()->id))
+    	{
+			$address = DB::table('customer_address')
+	            ->where('cacustomerid', \Auth::user()->id)
+	            ->get();
+
+	        return view('fe/dashboard',
+	        	[
+	        		'address' => $address
+	        	]
+	    	);
+    	}
     }
 
     public function menu(Request $request)
@@ -150,7 +170,40 @@ class FEController extends Controller
 
     public function trackorder()
     {
-        return view('fe/track-order');
+		$trackorders = DB::table('order')
+            ->where('ordercustomerid',  \Auth::user()->id)
+            ->where('order_status', 'processing')
+            ->join('menus', 'menus.menuid', '=', 'order.ordermenuid')
+            ->select('menus.*', 'order.*')
+            ->get();
+
+        foreach ($trackorders as $k => $v) {
+        	$addons = [];
+        	if($v->orderaddons !== '{}')
+        	{
+	        	$_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
+
+	        	foreach ($_ik as $id => $val) {
+	        		$_nik = explode(':', $val);
+	        		$_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+	        		$_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+	        		$_addons_details = DB::table('addons')
+			            ->where('addid', $_nik_id)
+			            ->first();
+			        $_addons_details->q = $_nik_q;
+
+	        		array_push($addons, $_addons_details);
+	        	}
+	        	$trackorders[$k]->addons = $addons;
+        	}
+        }
+        // dd($trackorders);
+
+        return view('fe/track-order',
+        	[
+        		'trackorders' => $trackorders
+        	]
+        );
     }
 
     public function menuDetails($id)
@@ -180,6 +233,47 @@ class FEController extends Controller
         return response()->json($order->new($data));
     }
 
+    public function confirmOrder(Request $request)
+    {
+    	$confirm = new OrderTrack;
+        $data = $request->all();
+        return response()->json($confirm->new($data));
+    }
+
+    public function addNewAddress(Request $request)
+    {
+    	$address = new CustomerAddress;
+        $data = $request->all();
+        return response()->json($address->new($data));
+    }
+
+    public function getMyAddress()
+    {
+    	$data = DB::table('customer_address')
+            ->where('cacustomerid', \Auth::user()->id)
+            ->get();
+        return response()->json($data);
+    }
+
+    public function removeAddress($id)
+    {
+		if(DB::table('customer_address')->where('caid', $id)->delete())
+		{
+			$status = 'success';
+			$message = 'Delivery Address removed.';
+		}
+		else
+		{
+			$status = 'error';
+			$message = 'You\'re trying to removed Delivery Address!';
+		}
+
+    	return response()->json([ 	
+    		'status' => $status,
+    		'message' => $message
+    	]);
+    }
+
     public function getCartDetails()
     {
     	if(isset(\Auth::user()->id))
@@ -192,6 +286,23 @@ class FEController extends Controller
 	            ->get();
 
 	    	return response()->json($data);
+    	}
+    }
+
+    public function getCartCount()
+    {
+    	if(isset(\Auth::user()->id))
+    	{
+	    	$data = DB::table('order')
+	            ->where('ordercustomerid', \Auth::user()->id)
+	            ->where('order_status', 'oncart')
+	            ->count();
+
+	    	return response()->json($data);
+    	}
+    	else
+    	{    		
+	    	return response()->json(0);
     	}
     }
 
@@ -209,14 +320,20 @@ class FEController extends Controller
 		if(DB::table('order')->where('orderid', $orderid)->delete())
 		{
 			$status = 'success';
-			$message = 'message';
+			$message = 'You removed an item from cart!';
 		}
 		else
 		{
 			$status = 'error';
-			$message = 'message';
+			$message = 'You\'re trying to removed an item from cart!';
 		}
+
+    	$cart_cnt = DB::table('order')
+                ->where('ordercustomerid', \Auth::user()->id)
+                ->where('order_status', 'oncart');
+
     	return response()->json([
+    		'cart_cnt' => $cart_cnt->count(),    	
     		'status' => $status,
     		'message' => $message
     	]);

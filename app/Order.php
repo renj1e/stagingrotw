@@ -27,15 +27,21 @@ class Order extends Model
 
         if($_is_exist->count() > 0)
         {
-            DB::table('order')
+            $order = DB::table('order')
                 ->where('orderid', $_is_exist->first()->orderid)
                 ->update([
                 	'orderquantity' => $data['orderquantity'],
                 	'orderaddons' => (isset($data['orderaddons']))? json_encode($_raw_addons) : '{}'
                 ]);
 
+			$menu_details = DB::table('menus')
+	            ->where('menuid', $data['ordermenuid'])
+	            ->select('menus.mname')
+	            ->first();
+
+            $new_cart_item = $menu_details;
 			$status = 'success';
-			$message = 'message';
+			$message = ' on cart has been updated!';
         }
         else
         {
@@ -44,21 +50,34 @@ class Order extends Model
 			$order->ordermenuid = $data['ordermenuid'];
 			$order->orderaddons = (isset($data['orderaddons']))? json_encode($_raw_addons) : '{}';
 			$order->orderquantity = $data['orderquantity'];
-			$order->order_status = 'oncart';
-			
+			$order->order_status = 'oncart';			
+
+			$menu_details = DB::table('menus')
+	            ->where('menuid', $data['ordermenuid'])
+	            ->select('menus.mname')
+	            ->first();
+
 			if($order->save())
 			{
+            	$new_cart_item = $menu_details;
 				$status = 'success';
-				$message = 'message';
+				$message = ' has been added to cart!';
 			}
 			else
 			{
+            	$new_cart_item = $menu_details;
 				$status = 'error';
-				$message = 'message';
+				$message = ' is not added to cart!';
 			}
         }
 
+    	$cart_cnt = DB::table('order')
+                ->where('ordercustomerid', \Auth::user()->id)
+                ->where('order_status', 'oncart');
+
     	return [
+    		'new_cart_item' => $new_cart_item,
+    		'cart_cnt' => $cart_cnt->count(),
     		'status' => $status,
     		'message' => $message
     	];

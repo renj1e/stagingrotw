@@ -28,7 +28,7 @@
                 @endguest
             </div>
             <div class="social1">
-                <button title="Cart" class="btn btn-xs btn-cart-drawer"><i class="fa fa-shopping-cart"></i> <span class="cart">5</span></button>
+                <button title="Cart" class="btn btn-xs btn-cart-drawer"><i class="fa fa-shopping-cart"></i> <span class="cart cart_count">0</span></button>
             </div>
         </div>                
     </div>
@@ -46,13 +46,16 @@
             </nav>
         </div>
     </div>
+    <div class="sticky-cart btn-cart-drawer">
+        <p>Cart <i class="fa fa-shopping-cart"></i> <span class="cart cart_count">0</span></p>
+    </div>
 </header>
 
 <div class="responsive-header">
     <div class="responsive-logomenu">
         <span class="menu-btn yellow-bg brd-rd4"><i class="fa fa-align-justify"></i></span>
         <div class="social1 responsive">
-            <button title="Cart" class="btn btn-xs btn-cart-drawer"><i class="fa fa-shopping-cart"></i> <span class="cart">5</span></button>
+            <button title="Cart" class="btn btn-xs btn-cart-drawer"><i class="fa fa-shopping-cart"></i> <span class="cart cart_count">0</span></button>
         </div>
     </div>
     <div class="responsive-menu">
@@ -65,7 +68,19 @@
             </ul>
         </div>
         <div class="topbar-register">
-            <a class="log-popup-btn" href="#" title="Login" itemprop="url">LOGIN</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">REGISTER</a> / <a href="dashboard.html" title="My Account" itemprop="url">MY ACCOUNT</a>
+            @guest
+                <a class="log-popup-btn" href="#" title="Login" itemprop="url">LOGIN</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">REGISTER</a> 
+            @else
+                <a href="/dashboard" title="My Account" itemprop="url">MY ACCOUNT</a> / 
+                <a href="{{ route('logout') }}" title="Logout" itemprop="url"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    LOGOUT
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @endguest
         </div>
         <div class="register-btn">
             <a class="yellow-bg brd-rd4" href="register-reservation.html" title="Track Order" itemprop="url">TRACK ORDER</a>
@@ -78,7 +93,7 @@
     <div class="cart-body" id="cartContent">
     </div>
     <div class="cart-footer">
-        <div class="row" id="cartFooter">
+        <div class="row" id="cartFooter" data-delivery-fee="100">
         </div>
     </div>
 </div>
