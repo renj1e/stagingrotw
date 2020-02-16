@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('gender',array('male','female','others'));
-            $table->enum('utype',array('staff','customer'));
+            $table->enum('utype',array('staff','rider','customer'));
             $table->rememberToken();
             $table->timestamps();
         });

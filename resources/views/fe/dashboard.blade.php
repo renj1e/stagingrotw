@@ -1,6 +1,11 @@
 @extends('layouts.fe')
 
 @section('content')
+    <style type="text/css">
+        .form-holder {
+            margin-bottom: 40px;
+        }
+    </style>
     <section>
         <div class="block">
             <div class="fixed-bg" style="background-image: url(/assets/fe/images/topbg.jpg);"></div>
@@ -51,11 +56,9 @@
                                                     </div>
                                                 </div>
                                                 <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#dashboard" data-toggle="tab"><i class="fa fa-dashboard"></i> DASHBOARD</a></li>
-                                                    <!-- <li><a href="#my-reviews" data-toggle="tab"><i class="fa fa-comments"></i> MY REVIEWS</a></li> -->
-                                                    <li><a href="#my-orders" data-toggle="tab"><i class="fa fa-shopping-basket"></i> MY ORDERS</a></li>
+                                                    <li  class="active"><a href="#my-orders" data-toggle="tab"><i class="fa fa-shopping-basket"></i> MY ORDERS</a></li>
                                                     <li><a href="#delivery-address" data-toggle="tab"><i class="fa fa-map"></i> DELIVERY ADDRESS</a></li>
-                                                    <li><a href="#statement" data-toggle="tab"><i class="fa fa-wpforms"></i> STATEMENT</a></li>
+                                                    <!-- <li><a href="#statement" data-toggle="tab"><i class="fa fa-wpforms"></i> STATEMENT</a></li> -->
                                                     <li><a href="#account-settings" data-toggle="tab"><i class="fa fa-cog"></i> ACCOUNT SETTINGS</a></li>
                                                 </ul>
                                             </div>
@@ -63,214 +66,35 @@
                                     </div>
                                     <div class="col-md-8 col-sm-12 col-lg-8">
                                         <div class="tab-content">
-                                            <div class="tab-pane fade in active" id="dashboard">
-                                                <div class="dashboard-wrapper brd-rd5">
-                                                    <div class="welcome-note yellow-bg brd-rd5">
-                                                        <h4 itemprop="headline">WELCOME TO YOUR ACCOUNT</h4>
-                                                        <p itemprop="description">Things that get tricky are things like burgers and fries, or things that are deep-fried. We do have a couple of burger restaurants that are capable of doing a good</p>
-                                                        <img src="/assets/fe/images/resource/welcome-note-img.png" alt="welcome-note-img.png" itemprop="image">
-                                                        <a class="remove-noti" href="#" title="" itemprop="url"><img src="/assets/fe/images/close-icon.png" alt="close-icon.png" itemprop="image"></a>
-                                                    </div>
-                                                    <div class="dashboard-title">
-                                                        <h4 itemprop="headline">SUGGESTED RESTAURANTS</h4>
-                                                        <span>Define <a class="red-clr" href="#" title="" itemprop="url">Search criteria</a> to search for specific</span>
-                                                    </div>
-                                                    <div class="restaurants-list">
-                                                        <div class="featured-restaurant-box style3 brd-rd5 wow fadeInUp" data-wow-delay="0.2s">
-                                                            <div class="featured-restaurant-thumb"><a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/restaurant-logo1-1.png" alt="restaurant-logo1-1.png" itemprop="image"></a></div>
-                                                            <div class="featured-restaurant-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Domino's Pizza</a></h4>
-                                                                <ul class="post-meta">
-                                                                    <li><i class="fa fa-check-circle-o"></i> Min order P50</li>
-                                                                    <li><i class="flaticon-transport"></i> 30min</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="view-menu-liks">
-                                                                <span class="red-bg brd-rd4 post-likes"><i class="fa fa-heart-o"></i> 12</span>
-                                                                <a class="brd-rd3" href="#" title="" itemprop="url">View Menu</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="featured-restaurant-box style3 brd-rd5 wow fadeInUp" data-wow-delay="0.3s">
-                                                            <div class="featured-restaurant-thumb"><a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/restaurant-logo1-2.png" alt="restaurant-logo1-2.png" itemprop="image"></a></div>
-                                                            <div class="featured-restaurant-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Pizza Hut</a></h4>
-                                                                <ul class="post-meta">
-                                                                    <li><i class="fa fa-check-circle-o"></i> Min order P40</li>
-                                                                    <li><i class="flaticon-transport"></i> 30min</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="view-menu-liks">
-                                                                <span class="red-bg brd-rd4 post-likes"><i class="fa fa-heart-o"></i> 20</span>
-                                                                <a class="brd-rd3" href="#" title="" itemprop="url">View Menu</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="featured-restaurant-box style3 brd-rd5 wow fadeInUp" data-wow-delay="0.4s">
-                                                            <div class="featured-restaurant-thumb"><a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/restaurant-logo1-1.png" alt="restaurant-logo1-1.png" itemprop="image"></a></div>
-                                                            <div class="featured-restaurant-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Burger King</a></h4>
-                                                                <ul class="post-meta">
-                                                                    <li><i class="fa fa-check-circle-o"></i> Min order P100</li>
-                                                                    <li><i class="flaticon-transport"></i> 30min</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="view-menu-liks">
-                                                                <span class="red-bg brd-rd4 post-likes"><i class="fa fa-heart-o"></i> 15</span>
-                                                                <a class="brd-rd3" href="#" title="" itemprop="url">View Menu</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="my-reviews">
+                                            <div class="tab-pane fade in active" id="my-orders">
                                                 <div class="tabs-wrp brd-rd5">
-                                                    <h4 itemprop="headline">MY REVIEWS</h4>
-                                                    <div class="select-wrap-inner">
-                                                        <div class="select-wrp2">
-                                                            <select>
-                                                                <option>Newest Reviews</option>
-                                                                <option>Newest Reviews</option>
-                                                                <option>Newest Reviews</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="select-wrp2">
-                                                            <select>
-                                                                <option>Select Date Range</option>
-                                                                <option>Select Date Range</option>
-                                                                <option>Select Date Range</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review-list">
-                                                        <div class="review-box brd-rd5">
-                                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">RESTAURANT DEMO</a></h4>
-                                                            <div class="ratings">
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star off"></i>
-                                                                <i class="fa fa-star off"></i>
-                                                            </div>
-                                                            <p itemprop="description">FoodBakery order today. So great to be able to order food and not have to talk to anyone.</p>
-                                                            <div class="review-info">
-                                                                <img class="brd-rd50" src="/assets/fe/images/resource/reviewr-img1.jpg" alt="reviewr-img1.jpg" itemprop="image">
-                                                                <div class="review-info-inner">
-                                                                    <h5 itemprop="headline">QLARK JAKSON</h5>
-                                                                    <i class="red-clr">2 months Ago</i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="review-box brd-rd5">
-                                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">RESTAURANT DEMO</a></h4>
-                                                            <div class="ratings">
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star off"></i>
-                                                            </div>
-                                                            <p itemprop="description">FoodBakery order today. So great to be able to order food and not have to talk to anyone.</p>
-                                                            <div class="review-info">
-                                                                <img class="brd-rd50" src="/assets/fe/images/resource/reviewr-img2.jpg" alt="reviewr-img2.jpg" itemprop="image">
-                                                                <div class="review-info-inner">
-                                                                    <h5 itemprop="headline">QLARK JAKSON</h5>
-                                                                    <i class="red-clr">2 months Ago</i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="review-box brd-rd5">
-                                                            <h4 itemprop="headline"><a href="#" title="" itemprop="url">RESTAURANT DEMO</a></h4>
-                                                            <div class="ratings">
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                                <i class="fa fa-star on"></i>
-                                                            </div>
-                                                            <p itemprop="description">FoodBakery order today. So great to be able to order food and not have to talk to anyone.</p>
-                                                            <div class="review-info">
-                                                                <img class="brd-rd50" src="/assets/fe/images/resource/reviewr-img3.jpg" alt="reviewr-img3.jpg" itemprop="image">
-                                                                <div class="review-info-inner">
-                                                                    <h5 itemprop="headline">QLARK JAKSON</h5>
-                                                                    <i class="red-clr">2 months Ago</i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="my-orders">
-                                                <div class="tabs-wrp brd-rd5">
-                                                    <h4 itemprop="headline">MY ORDERS</h4>
-                                                    <div class="select-wrap-inner">
-                                                        <div class="select-wrp2">
-                                                            <select>
-                                                                <option>Incoming Orders</option>
-                                                                <option>Previous Orders</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                                    <h4 itemprop="headline">MY DELIVERED ORDERS</h4>
                                                     <div class="order-list">
-                                                        <div class="order-item brd-rd5">
-                                                            <div class="order-thumb brd-rd5">
-                                                                <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
-                                                                <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 4.25</span>
+
+                                                        @foreach($prev_orders as $po)
+                                                            <div class="order-item brd-rd5">
+                                                                <div class="order-thumb brd-rd5">
+                                                                    <a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                                                </div>
+                                                                <div class="order-info">
+                                                                    <span class="red-clr">
+                                                                        {{ $po->vname }}
+                                                                    </span>
+                                                                    <h4 itemprop="headline" style="margin-top:0"><a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url">{{ $po->mname }}</a></h4>
+                                                                    <span class="red-clr">
+                                                                        @foreach($po->addons as $k => $ad)
+                                                                            {{ $ad->addname }} (P{{ $ad->addprice }}.00) x {{ $ad->q }} {{ (($k + 1) < count($po->addons))? ',' : '' }}
+                                                                        @endforeach
+                                                                    </span>
+                                                                    
+                                                                    <span class="price">P{{ $po->mprice }}.00</span>
+                                                                    <a class="brd-rd2" href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url">Detail</a>
+                                                                </div>
                                                             </div>
-                                                            <div class="order-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Maenaam Thai Restaurant</a></h4>
-                                                                
-                                                                <span class="price">P85.00</span>
-                                                                <span class="processing brd-rd3">PROCESSING</span>
-                                                                <a class="brd-rd2" href="#" title="" itemprop="url">Order Detail</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="order-item brd-rd5">
-                                                            <div class="order-thumb brd-rd5">
-                                                                <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img2.jpg" alt="order-img2.jpg" itemprop="image"></a>
-                                                                <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 3.0</span>
-                                                            </div>
-                                                            <div class="order-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Maenaam Thai Restaurant</a></h4>
-                                                                
-                                                                <span class="price">P85.00</span>
-                                                                <span class="completed brd-rd3">COMPLETED</span>
-                                                                <a class="brd-rd2" href="#" title="" itemprop="url">Order Detail</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="order-item brd-rd5">
-                                                            <div class="order-thumb brd-rd5">
-                                                                <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img3.jpg" alt="order-img3.jpg" itemprop="image"></a>
-                                                                <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 5.00</span>
-                                                            </div>
-                                                            <div class="order-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Maenaam Thai Restaurant</a></h4>
-                                                                
-                                                                <span class="price">P85.00</span>
-                                                                <span class="completed brd-rd3">COMPLETED</span>
-                                                                <a class="brd-rd2" href="#" title="" itemprop="url">Order Detail</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="order-item brd-rd5">
-                                                            <div class="order-thumb brd-rd5">
-                                                                <a href="#" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img4.jpg" alt="order-img4.jpg" itemprop="image"></a>
-                                                                <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 5.30</span>
-                                                            </div>
-                                                            <div class="order-info">
-                                                                <span class="red-clr">5th Avenue New York 68</span>
-                                                                <h4 itemprop="headline"><a href="#" title="" itemprop="url">Maenaam Thai Restaurant</a></h4>
-                                                                
-                                                                <span class="price">P85.00</span>
-                                                                <span class="completed brd-rd3">COMPLETED</span>
-                                                                <a class="brd-rd2" href="#" title="" itemprop="url">Order Detail</a>
-                                                            </div>
-                                                        </div>
+                                                        @endforeach
+
                                                     </div>
-                                                    <div class="pagination-wrapper text-center style2">
+<!--                                                     <div class="pagination-wrapper text-center style2">
                                                         <ul class="pagination justify-content-center">
                                                             <li class="page-item prev"><a class="page-link brd-rd2" href="#" itemprop="url">PREV</a></li>
                                                             <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">1</a></li>
@@ -282,7 +106,7 @@
                                                             <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">18</a></li>
                                                             <li class="page-item next"><a class="page-link brd-rd2" href="#" itemprop="url">NEXT</a></li>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="delivery-address">
@@ -330,48 +154,6 @@
 
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="statement">
-                                                <div class="tabs-wrp brd-rd5">
-                                                    <h4 itemprop="headline">STATEMENTS</h4>
-                                                    <div class="select-wrap-inner">
-                                                        <div class="select-wrp2"></div>
-                                                        <div class="select-wrp2">
-                                                            <select>
-                                                                <option>Select Date Range</option>
-                                                                <option>Select Date Range</option>
-                                                                <option>Select Date Range</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="statement-table">
-                                                        <table>
-                                                            <thead>
-                                                                <tr><th>TRANSACTION ID</th><th>ORDER ID</th><th>DATE</th><th>DETAIL</th><th>AMOUNT</th></tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr><td>#30737723</td><td>8720</td><td>Aug 17,2017</td><td>Order - Misumisu Thai</td><td><span class="red-clr">P35.97</span></td></tr>
-                                                                <tr><td>#30737723</td><td>8720</td><td>Aug 17,2017</td><td>Order - Jet's Kitchen</td><td><span class="red-clr">P35.97</span></td></tr>
-                                                                <tr><td>#30737723</td><td>8720</td><td>Aug 17,2017</td><td>Order - Misumisu Thai</td><td><span class="red-clr">P35.97</span></td></tr>
-                                                                <tr><td>#30737723</td><td>8720</td><td>Aug 17,2017</td><td>Order - Misumisu Thai</td><td><span class="red-clr">P35.97</span></td></tr>
-                                                                <tr><td>#30737723</td><td>8720</td><td>Aug 17,2017</td><td>Order - Misumisu Thai</td><td><span class="red-clr">P35.97</span></td></tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="pagination-wrapper text-center style2">
-                                                        <ul class="pagination justify-content-center">
-                                                            <li class="page-item prev"><a class="page-link brd-rd2" href="#" itemprop="url">PREV</a></li>
-                                                            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">1</a></li>
-                                                            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">2</a></li>
-                                                            <li class="page-item active"><span class="page-link brd-rd2">3</span></li>
-                                                            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">4</a></li>
-                                                            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">5</a></li>
-                                                            <li class="page-item">........</li>
-                                                            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">18</a></li>
-                                                            <li class="page-item next"><a class="page-link brd-rd2" href="#" itemprop="url">NEXT</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="tab-pane fade" id="account-settings">
                                                 <div class="tabs-wrp account-settings brd-rd5">
                                                     <h4 itemprop="headline">ACCOUNT SETTINGS</h4>
@@ -382,7 +164,7 @@
                                                                     <div class="profile-thumb brd-rd50">
                                                                         <img id="profile-display" src="/assets/fe/images/resource/profile-img1.jpg" alt="profile-img1.jpg" itemprop="image">
                                                                     </div>
-                                                                    <a class="red-clr change-password" href="#" title="" itemprop="url">Change Password</a>
+                                                                    <a class="red-clr change-password" href="javascript:void(0)" title="" itemprop="url">Change Password</a>
                                                                     <div class="profile-img-upload-btn">
                                                                         <label class="fileContainer brd-rd5 yellow-bg">
                                                                             UPLOAD PICTURE
@@ -401,64 +183,42 @@
                                                             </div>
                                                             <div class="col-md-8 col-sm-8 col-lg-8">
                                                                 <div class="profile-info-form-wrap">
-                                                                    <form class="profile-info-form">
-                                                                        <div class="row mrg20">
-                                                                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                                <label>Complete Name <sup>*</sup></label>
-                                                                                <input class="brd-rd3" type="text" placeholder="Enter Your Name">
-                                                                            </div>
-                                                                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                                <label>Email Address <sup>*</sup></label>
-                                                                                <input class="brd-rd3" type="email" placeholder="Enter Your Email Address">
-                                                                            </div>
-                                                                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                                <label>Phone No <sup>*</sup></label>
-                                                                                <input class="brd-rd3" type="text" placeholder="Enter Your Phone No">
-                                                                            </div>
-                                                                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                                <label>Country <sup>*</sup></label>
-                                                                                <div class="select-wrp">
-                                                                                    <select>
-                                                                                        <option>Pakistan</option>
-                                                                                        <option>India</option>
-                                                                                        <option>USA</option>
-                                                                                    </select>
+                                                                    <div class="form-holder">
+                                                                        <form class="profile-info-form" id="profile-info-form">
+                                                                            <div class="row mrg20">
+                                                                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                                    <label>Name <sup>*</sup></label>
+                                                                                    <input class="brd-rd3" type="text" name="name" placeholder="Enter Your Name">
+                                                                                </div>
+                                                                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                                    <label>Email Address <sup>*</sup></label>
+                                                                                    <input class="brd-rd3" type="email" name="email" placeholder="Enter Your Email Address">
+                                                                                </div>
+                                                                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                                    <button class="btn btn-sm btn-primary btn-update-info">Save Changes</button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                                                                <label>Province <sup>*</sup></label>
-                                                                                <input class="brd-rd3" type="text">
-                                                                            </div>
-                                                                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                                                                <label>City <sup>*</sup></label>
-                                                                                <div class="select-wrp">
-                                                                                    <select>
-                                                                                        <option>Karachi</option>
-                                                                                        <option>Multan</option>
-                                                                                        <option>Lahore</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                                                                <label>Latitude <sup>*</sup></label>
-                                                                                <input class="brd-rd3" type="text">
-                                                                            </div>
-                                                                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                                                                <label>Longitude <sup>*</sup></label>
-                                                                                <input class="brd-rd3" type="text">
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                <div class="loc-map2">
-                                                                    <div class="loc-map brd-rd3" id="loc-map"></div>
-                                                                    
-                                                                    <div class="loc-srch">
-                                                                        <input class="brd-rd3" type="text" placeholder="Type Your Address">
-                                                                        <button class="brd-rd3 red-bg" type="submit">Search Now</button>
+                                                                        </form>
                                                                     </div>
+
+                                                                    <div class="form-holder">
+                                                                        <form class="profile-info-form" id="profile-info-password-form">
+                                                                            <div class="row mrg20">
+                                                                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                                    <label>Password <sup>*</sup></label>
+                                                                                    <input class="brd-rd3" type="password" name="password" placeholder="Password">
+                                                                                </div>
+                                                                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                                    <label>Repeat Password <sup>*</sup></label>
+                                                                                    <input class="brd-rd3" type="password" name="cpassword" placeholder="Repeat Password">
+                                                                                </div>
+                                                                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                                    <button class="btn btn-sm btn-primary btn-update-password">Save Changes</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -480,6 +240,9 @@
 
 @push('scripts')
 <script>
+    $('. btn-update-password').click(function(){
+        console.log('TO-DO: change password');
+    });
 	function getMyAddress()
 	{
 		$.ajax({
@@ -538,6 +301,8 @@
 			$('.new-address-form').addClass('show')
 		}
 	});
+
+
 
 	$('.btn-add-new-address').click(function(e){
 		e.preventDefault(); 

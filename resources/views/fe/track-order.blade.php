@@ -46,6 +46,9 @@
                                             <a href="/menu-detail/{{ $order->menuid }}"title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
                                         </div>
                                         <div class="order-info">
+                                            <span class="red-clr">
+                                                {{ $order->vname }}
+                                            </span>
                                             <h4 itemprop="headline"><a href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">{{ $order->mname }} x {{ $order->orderquantity }}</a></h4>
                                             
                                             <span class="price">P{{ ($order->mprice * $order->orderquantity) }}.00</span>

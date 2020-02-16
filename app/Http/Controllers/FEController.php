@@ -34,13 +34,44 @@ class FEController extends Controller
 
     	if(isset(\Auth::user()->id))
     	{
-			$address = DB::table('customer_address')
-	            ->where('cacustomerid', \Auth::user()->id)
-	            ->get();
+            $address = DB::table('customer_address')
+                ->where('cacustomerid', \Auth::user()->id)
+                ->get();
 
+
+            $prev_orders = DB::table('order')
+                ->where('ordercustomerid',  \Auth::user()->id)
+                ->where('order_status', 'delivered') // change this to 'delivered'
+                ->join('menus', 'menus.menuid', '=', 'order.ordermenuid')
+                ->join('vendors', 'vendors.vendorid', '=', 'menus.vendorid' )
+                ->select('menus.*', 'order.*', 'vendors.*')
+                ->get();
+
+            foreach ($prev_orders as $k => $v) {
+                $addons = [];
+                if($v->orderaddons !== '{}')
+                {
+                    $_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
+
+                    foreach ($_ik as $id => $val) {
+                        $_nik = explode(':', $val);
+                        $_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+                        $_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+                        $_addons_details = DB::table('addons')
+                            ->where('addid', $_nik_id)
+                            ->first();
+                        $_addons_details->q = $_nik_q;
+
+                        array_push($addons, $_addons_details);
+                    }
+                    $prev_orders[$k]->addons = $addons;
+                }
+            }
+            
 	        return view('fe/dashboard',
 	        	[
-	        		'address' => $address
+                    'address' => $address,
+                    'prev_orders' => $prev_orders
 	        	]
 	    	);
     	}
@@ -174,7 +205,8 @@ class FEController extends Controller
             ->where('ordercustomerid',  \Auth::user()->id)
             ->where('order_status', 'processing')
             ->join('menus', 'menus.menuid', '=', 'order.ordermenuid')
-            ->select('menus.*', 'order.*')
+            ->join('vendors', 'vendors.vendorid', '=', 'menus.vendorid')
+            ->select('menus.*', 'order.*', 'vendors.vname')
             ->get();
 
         foreach ($trackorders as $k => $v) {

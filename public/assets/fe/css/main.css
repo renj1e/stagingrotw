@@ -6168,8 +6168,8 @@ i.off {color: #d7d7d7;}
 .order-item + .order-item {margin-top: 10px;}
 .order-thumb {
   position: relative;
-  width: 180px;
-  max-width: 180px;
+  width: 130px;
+  max-width: 130px;
   overflow: hidden;
 }
 .order-item > div {
