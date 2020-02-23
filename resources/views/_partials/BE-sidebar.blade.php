@@ -35,7 +35,7 @@
             <a class="nav-link active" href="/admin"><i class="material-icons icon">dashboard</i><span class="menu-text">Dashboard</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="riders.html"><i class="material-icons icon">directions_bike</i><span class="menu-text">Riders</span></a>
+            <a class="nav-link" href="/riders"><i class="material-icons icon">directions_bike</i><span class="menu-text">Riders</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="customers.html"><i class="material-icons icon">group</i><span class="menu-text">Customers</span></a>

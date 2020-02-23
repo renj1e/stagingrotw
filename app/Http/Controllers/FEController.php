@@ -30,6 +30,19 @@ class FEController extends Controller
 
     public function dashboard()
     {
+        if(!isset(\Auth::user()->utype))
+        {
+            return redirect('/');
+        }
+        if(\Auth::user()->utype === 'staff')
+        {
+            return redirect('/admin');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/admin/rider');
+        }
+
         $this->middleware('auth');
 
     	if(isset(\Auth::user()->id))

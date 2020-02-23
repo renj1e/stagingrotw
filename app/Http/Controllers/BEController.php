@@ -24,9 +24,13 @@ class BEController extends Controller
      */
     public function index()
     {
-    	if(\Auth::user()->utype !== 'staff')
+    	if(\Auth::user()->utype === 'customer')
         {
-        	return redirect('/');
+        	return redirect('/dashboard');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/admin/rider');
         }
 
         $riders = DB::table('users')
@@ -44,13 +48,89 @@ class BEController extends Controller
             ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
             ->select('users.id', 'users.name', 'order_track.*', 'customer_address.*')
             ->get();
-            
-            // dd($customers);
 
         return view('be/index',
         	[
         		'riders' => $riders,
         		'customers' => $customers
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function rider()
+    {
+        if(\Auth::user()->utype === 'staff')
+        {
+            return redirect('/admin');
+        }
+        if(\Auth::user()->utype === 'customer')
+        {
+            return redirect('/dashboard');
+        }
+
+        $orders = DB::table('order_track')
+            // ->where('order_track.order_track_riderid', \Auth::user()->id)
+            ->where('order_track.order_trackstatus', '=', 'order_confirmed_and_received')
+            ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
+            ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
+            ->select('order_track.*', 'users.id', 'users.name', 'customer_address.*')
+            ->get();
+
+
+        foreach ($orders as $k => $v) {
+        	$_o = [];
+        	if($v->order_trackorderid !== '{}')
+        	{
+	        	$_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
+
+	        	foreach ($_ik as $id => $val) {
+	        		$_oid = (int) str_replace(array('"'), '', $val);
+
+	        		$_order_details = DB::table('order')
+			            ->where('orderid', $_oid)
+			            ->join('menus', 'menus.menuid', 'order.ordermenuid')
+			            ->join('vendors', 'vendors.vendorid', 'menus.vendorid')
+			            ->select('order.*', 'menus.*', 'vendors.*')
+			            ->first();
+	        		array_push($_o, $_order_details);
+	        	}
+
+	        	$_all_orders = $orders[$k]->orders = $_o;
+
+		        foreach ($_all_orders as $k => $v) {
+		        	$addons = [];
+		        	if($v->orderaddons !== '{}')
+		        	{
+			        	$_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
+
+			        	foreach ($_ik as $id => $val) {
+			        		$_nik = explode(':', $val);
+			        		$_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+			        		$_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+			        		$_addons_details = DB::table('addons')
+					            ->where('addid', $_nik_id)
+					            ->first();
+					        $_addons_details->q = $_nik_q;
+
+			        		array_push($addons, $_addons_details);
+			        	}
+			        	$_all_orders[$k]->addons = $addons;
+		        	}
+		        }
+
+
+        	}
+        }
+
+            // dd($orders);
+        return view('be/index-rider',
+        	[
+        		'orders' => $orders,
         	]
         );
     }
