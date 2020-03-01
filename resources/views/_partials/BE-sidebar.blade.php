@@ -38,13 +38,13 @@
             <a class="nav-link" href="/riders"><i class="material-icons icon">directions_bike</i><span class="menu-text">Riders</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="customers.html"><i class="material-icons icon">group</i><span class="menu-text">Customers</span></a>
+            <a class="nav-link" href="/customers"><i class="material-icons icon">group</i><span class="menu-text">Customers</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="products.html"><i class="material-icons icon">fastfood</i><span class="menu-text">Products</span></a>
+            <a class="nav-link" href="/products"><i class="material-icons icon">fastfood</i><span class="menu-text">Products</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="stores.html"><i class="material-icons icon">local_convenience_store</i><span class="menu-text">Stores</span></a>
+            <a class="nav-link" href="/stores"><i class="material-icons icon">local_convenience_store</i><span class="menu-text">Stores</span></a>
         </li>
     </ul>
 </div>

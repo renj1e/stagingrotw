@@ -1,11 +1,6 @@
 @extends('layouts.fe')
 
 @section('content')
-    <style type="text/css">
-        .form-holder {
-            margin-bottom: 40px;
-        }
-    </style>
     <section>
         <div class="block">
             <div class="fixed-bg" style="background-image: url(/assets/fe/images/topbg.jpg);"></div>

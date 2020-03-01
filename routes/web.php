@@ -33,7 +33,9 @@ Route::post('/confirmorder', 'FEController@confirmOrder')->name('confirm-order')
 
 // BACKEND ROUTES
 Route::get('/admin', 'BEController@index')->name('admin-index');
-Route::get('/admin/rider', 'BEController@rider')->name('admin-rider');
+
+Route::get('/rider', 'BEController@rider')->name('admin-rider');
+// Route::get('/get-all-riders', 'BEController@getAllRiders')->name('get-all-riders');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

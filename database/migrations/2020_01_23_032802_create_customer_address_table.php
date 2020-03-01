@@ -21,6 +21,7 @@ class CreateCustomerAddressTable extends Migration
             $table->string('cacity');
             $table->string('caprovince');
             $table->string('cacountry');
+            $table->string('cazipcode');
             $table->softDeletes();
             $table->timestamps();
         });

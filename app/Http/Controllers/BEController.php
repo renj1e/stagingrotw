@@ -30,7 +30,7 @@ class BEController extends Controller
         }
         if(\Auth::user()->utype === 'rider')
         {
-            return redirect('/admin/rider');
+            return redirect('/rider');
         }
 
         $riders = DB::table('users')
@@ -133,5 +133,35 @@ class BEController extends Controller
         		'orders' => $orders,
         	]
         );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getAllRiders()
+    {
+    	if(\Auth::user()->utype === 'customer')
+        {
+        	return redirect('/dashboard');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/rider');
+        }
+
+        $riders = DB::table('users')
+            ->where('utype',  'rider')
+            ->join('rider_status', 'rider_status.rider_status_rider_id', '=', 'users.id')
+            ->join('rider_profile', 'rider_profile.rider_profile_rider_id', '=', 'users.id')
+            ->join('rider_contact', 'rider_contact.rider_contact_rider_id', '=', 'users.id')
+            ->where('rider_status.rider_status_status', '!=', 'not_active')
+            ->select('users.*', 'rider_status.rider_status_status', 'rider_status.rider_status_id', 'rider_profile.rider_profile_address', 'rider_contact.rider_contact_type', 'rider_contact.rider_contact_number')
+            ->get();
+            
+        return response()->json([
+        	'riders'=>$riders
+        ]);
     }
 }

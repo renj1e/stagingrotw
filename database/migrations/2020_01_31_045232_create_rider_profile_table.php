@@ -21,6 +21,7 @@ class CreateRiderProfileTable extends Migration
             $table->enum('rider_profile_vehicle_type', ['motorcycle', 'tricycle', 'delivery_van', 'others']);
             $table->longtext('rider_profile_drivers_license');
             $table->longtext('rider_profile_avatar');
+            $table->string('rider_profile_zip_code');
             $table->timestamps();
         });
     }

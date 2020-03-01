@@ -1,7 +1,6 @@
 @extends('layouts.rider')
 
 @section('content')
-
     <main class="flex-shrink-0">
         <div class="container-fluid" id="main-container">
             <div class="row">
@@ -74,8 +73,8 @@
                                     <h6 class="card-title">Assigned Orders 
                                     </h6>
                                 </div>
-                                <div class="card-body p-0">
-                                    <table class="table  footable" data-paging-limit="3">
+                                <div class="card-body p-0 table-responsive">
+                                    <table class="table footable" data-paging-limit="3">
                                         <thead>
                                             <tr>
                                                 <th>Customer</th>
@@ -140,6 +139,7 @@
 	<script>
         'user strict'
         $(document).ready(function() {
+
         });
 	</script>
 @endpush

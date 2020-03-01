@@ -3,15 +3,6 @@
 <header class="stick">
     <div class="topbar">
         <div class="container">
-            <div class="select-wrp">
-                <select data-placeholder="Choose Location">
-                    <option>CHOOSE LOCATION</option>
-                    <option>New york</option>
-                    <option>Washington</option>
-                    <option>Chicago</option>
-                    <option>Los Angeles</option>
-                </select>
-            </div>
             <div class="topbar-register">
                 @guest
                     <a class="log-popup-btn" href="#" title="Login" itemprop="url">LOGIN</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">REGISTER</a> 
@@ -71,6 +62,7 @@
             @guest
                 <a class="log-popup-btn" href="#" title="Login" itemprop="url">LOGIN</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">REGISTER</a> 
             @else
+                <online-user></online-user>
                 <a href="/dashboard" title="My Account" itemprop="url">MY ACCOUNT</a> / 
                 <a href="{{ route('logout') }}" title="Logout" itemprop="url"
                    onclick="event.preventDefault();

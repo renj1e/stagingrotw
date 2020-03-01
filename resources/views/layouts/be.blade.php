@@ -47,6 +47,7 @@
 </head>
 <body class="h-100">
     <div id="app">
+        <online-user></online-user>
         <div class="loader">
             <div>
                 <div class="loader-animation">
@@ -87,75 +88,7 @@
                             <div class="col text-center align-self-center px-0 ">
                                 <div class="btn-group shadow-sm  d-none d-md-inline-flex" role="group" aria-label="Basic example">
                                     <a href="#" class="btn text-uppercase px-3 btn-sm btn-default active">Dashboard</a>
-                                    <a href="chat.html" class="btn text-uppercase px-3 btn-sm btn-default">Chat <span class="badge badge-danger">5</span></a>
                                     <a href="orders.html" class="btn text-uppercase px-3 btn-sm btn-default">Track Orders <span class="badge badge-danger">15</span></a>
-                                </div>
-                            </div>
-                            <div class="col-auto text-right align-self-center">
-                                <div class="btn-group">
-                                    <div class="dropdown">
-                                        <button class="btn btn-link dropdown-toggle no-caret" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="material-icons">notifications</i> <span class="badge badge-danger notif_count">3</span>
-                                        </button>
-                                        <div class="dropdown-menu align-center pb-0" aria-labelledby="dropdownMenuButton2">
-                                            <div class="arrow pink-gradient"></div>
-                                            <div class="bg-template text-white py-3 text-center">
-                                                <h6 class="mb-0">Messages</h6>
-                                                <p>Just Recieved Messages</p>
-                                            </div>
-                                            <div class="notification-row new">
-                                                <div class="row">
-                                                    <div class="col-auto">
-                                                        <figure class="avatar avatar-50">
-                                                            <img src="/assets/be/img/user3.jpg" alt="" class="mCS_img_loaded">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="col pl-0">
-                                                        <p class="mb-1">
-                                                            <span>John Johnson</span>
-                                                            <small class="text-mute-high float-right">1 day ago</small>
-                                                        </p>
-                                                        <small class="text-mute">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</small>
-                                                        <br>
-                                                        <p class="small mt-2"><a href="">Reply</a>
-                                                            <a href="" class="ml-2">View</a></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="notification-row">
-                                                <div class="row">
-                                                    <div class="col-auto">
-                                                        <figure class="avatar avatar-40">
-                                                            <img src="/assets/be/img/user2.jpg" alt="" class="mCS_img_loaded">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="col pl-0">
-                                                        <p class="mb-0">
-                                                            <span>Ananya Chings</span>
-                                                            <small class="text-mute-high float-right">2 day ago</small>
-                                                        </p>
-                                                        <small class="text-mute">Cras sit amet nibh libero... </small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="notification-row">
-                                                <div class="row">
-                                                    <div class="col-auto">
-                                                        <figure class="avatar avatar-40">
-                                                            <img src="/assets/be/img/user4.jpg" alt="" class="mCS_img_loaded">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="col pl-0">
-                                                        <p class="mb-0">
-                                                            <span>Mark John</span>
-                                                            <small class="text-mute-high float-right">2 day ago</small>
-                                                        </p>
-                                                        <small class="text-mute">Cras sit amet nibh libero... </small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -171,6 +104,9 @@
     </div>
 
     <!-- Optional JavaScript -->
+    
+    <script src="{{ asset('/js/app.js') }}"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/assets/be/js/jquery-3.3.1.min.js"></script>
     <script src="/assets/be/js//popper.min.js"></script>
@@ -186,7 +122,7 @@
     <script src="/assets/be/js/main.js"></script>
 
     <!-- color picker and Layout selector main js -->
-    <script src="/assets/be/js/layout-colorpicker.js"></script>
+    <script src="/assets/be/js/layout-colorpicker.js"></script>    
 
     <!-- page specific script -->
 

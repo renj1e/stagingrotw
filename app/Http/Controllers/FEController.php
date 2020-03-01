@@ -40,7 +40,7 @@ class FEController extends Controller
         }
         if(\Auth::user()->utype === 'rider')
         {
-            return redirect('/admin/rider');
+            return redirect('/rider');
         }
 
         $this->middleware('auth');

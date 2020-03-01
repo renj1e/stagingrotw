@@ -184,13 +184,14 @@
             </div>
         </div>
     </div>
-
     <script src="/assets/fe/js/jquery.min.js"></script>
     <script src="/assets/fe/js/bootstrap.min.js"></script>
     <script src="/assets/fe/js/plugins.js"></script>
     <script src="/assets/fe/js/main.js"></script>
     <script src="/assets/fe/js/cart.js"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
     @stack('scripts')
+    @if(\Auth::user())
     <script>
         $.ajax({
             type: 'GET',
@@ -212,5 +213,6 @@
             }
         });
     </script>
+    @endif
 </body>
 </html>
