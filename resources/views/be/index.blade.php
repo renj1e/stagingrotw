@@ -23,7 +23,6 @@
                                                 <th>Rider name</th>
                                                 <th data-breakpoints="xs">Phone</th>
                                                 <th data-breakpoints="xs sm">Status</th>
-                                                <th data-breakpoints="xs sm">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -35,7 +34,7 @@
                                                     </figure>
                                                     <div class="d-inline-block vm">
                                                         <p class="my-0 template-primary">{{ $rider->name }}</p>
-                                                        <p class="text-mute"><small>{{ $rider->rider_profile_address }}</small></p>
+                                                        <p class="text-mute"><small>Area: {{ $rider->rider_profile_zip_code }} - {{ $rider->rider_profile_address }}</small></p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -50,9 +49,6 @@
 						                                    <small class="text-danger vm">Waiting...</small>
 						                                @break
 						                            @endswitch
-                                                </td>
-                                                <td class="text-right footable-last-visible" style="display: table-cell;">
-                                                    <button class="btn btn-info px-1 btn-sm mr-1 btn-message" data-id="{{ $rider->id }}"><i class="material-icons md-18">message</i></button>
                                                 </td>
                                             </tr>
                                         	@endforeach
@@ -91,13 +87,32 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span class="badge badge-success">Confirmed Order </span>
+                                                    @switch($c->order_trackstatus)
+                                                        @case('order_confirmed_and_received')
+                                                            <span class="badge badge-success">Confirmed Order </span>
+                                                        @break
+                                                        @case('processing')
+                                                            <span class="badge badge-success">Processing </span>
+                                                        @break
+                                                        @case('purchased')
+                                                            <span class="badge badge-success">Purchased </span>
+                                                        @break
+                                                        @case('otw')
+                                                            <span class="badge badge-success">On the way </span>
+                                                        @break
+                                                        @case('delivered')
+                                                            <span class="badge badge-success">delivered </span>
+                                                        @break
+
+                                                        @default
+                                                        @break
+                                                    @endswitch
                                                 </td>
                                                 <!-- <td>
                                                     <small class="text-mute vm">Today</small>
                                                 </td> -->
                                                 <td class="text-right footable-last-visible" style="display: table-cell;">
-                                                    <button class="btn btn-success px-1 btn-sm mr-1 btn-assign-rider" data-toggle="modal" data-target="#assignRider" data-id="{{ $c->order_trackid }}"><i class="material-icons md-18">person_add</i></button>
+                                                    <button class="btn btn-success px-1 btn-sm mr-1 btn-assign-rider" data-toggle="modal" data-target="#assignRider" data-id="{{ $c->order_trackid }}" data-zcode="{{ $c->cazipcode }}">Assign</button>
                                                 </td>
                                             </tr>
                                         	@endforeach
@@ -125,11 +140,14 @@
 						</button>
 					</div>
 					<div class="modal-body">
-					
+						<form id="form-assign">
+							<input type="hidden" name="otid" value>
+							<div id="riders"></div>
+						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary">Assign</button>
+						<button type="button" class="btn btn-primary btn-assign-rider-modal">Assign</button>
 					</div>
 				</div>
 			</div>
@@ -150,4 +168,63 @@
 <script src="/assets/be/vendor/chartjs/Chart.min.js"></script>
 <script src="/assets/be/vendor/chartjs/utils.js"></script>
 <script src="/assets/be/js/dashboard.js"></script>
+	<script>
+        'user strict'
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });   
+            $('button.btn-assign-rider').click(function(e){
+                var id = $(this).data('id')
+                var zcode = $(this).data('zcode')
+                if(id && zcode)
+                {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/get-all-riders-by-zip-code/'+id+'/'+zcode,
+                        dataType: 'json',
+                        success:function(riders){
+                        	console.log(riders)
+                        	$('#riders').empty();
+                        	$('[name="otid"]').prop('value', id);
+							for ( var i = 0, l = riders.length; i < l; i++ ) {
+
+                                $('#riders').append('<div class="custom-control custom-radio">'+
+                                    '<input type="radio" name="rider" value="'+riders[i].id+'" class="custom-control-input" id="rider-'+i+'">'+
+                                    '<label class="custom-control-label" for="rider-'+i+'"><span class="font-weight-bold">'+riders[i].name+'</span> : Area : <span>'+riders[i].rider_profile_zip_code+'</span> <span>'+riders[i].rider_profile_address+'</span></label>'+
+                                '</div>');
+							}
+                        },
+                        error:function(data){
+                          console.log(data);
+                        }
+                    });
+                }
+            })
+            $('button.btn-assign-rider-modal').click(function(e){
+		    	e.preventDefault(); 
+		    	var data = $('#form-assign').serializeArray();
+		        $.ajax({
+		           type: 'POST',
+		           url: '/assign-order-to-rider',
+		           data: data,
+		           dataType: 'json',
+		           success:function(data){
+			           	console.log(data)
+	                    location.reload(true);
+		           },
+		           error:function(data){
+		              console.log(data);
+		           }
+		        });
+            })
+
+        // $('.btn-remove-address').on('click',function(e){
+        //     e.preventDefault();
+        //     var id = $(this).data('item-id');          
+        // });
+        });
+	</script>
 @endpush

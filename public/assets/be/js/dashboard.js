@@ -2,11 +2,6 @@ $('.btn-message').click(function(e){
     console.log($(this).data('id'))
 });
 
-$('.btn-assign-rider').click(function(e){
-    console.log($(this).data('id'))
-});
-
-
 /* circular progress */
 $('.progress-success').circleProgress({
     fill: '#00ca47',

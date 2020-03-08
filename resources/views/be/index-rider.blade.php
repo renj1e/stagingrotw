@@ -12,10 +12,26 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                            <select class="form-control " data-live-search="true" tabindex="-1" aria-hidden="true">
-                                <option>Set you status here</option>
-                                <option>Hired</option>
-                                <option>Waiting</option>
+                            <select class="form-control select-rider-status" data-live-search="true" tabindex="-1" aria-hidden="true">
+                                @switch($status->rider_status_status)
+                                    @case('hired')
+                                        <option>Hired</option>
+                                    @break
+                                    @case('waiting')
+                                        <option>Waiting to take orders</option>
+                                    @break
+                                    @case('not_active')
+                                        <option>Not for hire</option>
+                                    @break
+
+                                    @default
+                                    @break
+                                @endswitch
+
+                                <option>-- Select your status here --</option>
+                                <option value="hired">Hired</option>
+                                <option value="waiting">Waiting to take orders</option>
+                                <option value="not_active">Not for hire</option>
                             </select><br/>
                         </div>                        
                     </div>
@@ -89,7 +105,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Customer</th>
-                                                <th data-breakpoints="xs">Orders</th>
+                                                <!-- <th data-breakpoints="xs">Orders</th> -->
                                                 <th data-breakpoints="xs" class="text-center">Status</th>
                                                 <th data-breakpoints="xs" class="text-right">Action</th>
                                             </tr>
@@ -104,10 +120,12 @@
                                                     </figure>
                                                     <div class="d-inline-block vm">
                                                         <p class="my-0 template-primary">{{ $l->name }}</p>
-                                                        <p class="text-mute"><small>({{$l->calabel}}) {{$l->castreet}}, {{$l->cacity}}, {{$l->caprovince}}</small></p>
+                                                        <p class="text-mute"><small>({{$l->calabel}}) {{$l->castreet}}, {{$l->cacity}}, {{$l->caprovince}} {{$l->cazipcode}}</small></p>
                                                     </div>
                                                 </td>
-                                                <td>
+
+                                                {{--
+                                                    <td>
                                                     @foreach($l->orders as $o)
                                                         <p>
                                                             <span>{{ $o->vname }} <br/> {{ $o->vstreet }}, {{ $o->vcity }}, {{ $o->vprovince }}</span>
@@ -122,11 +140,32 @@
                                                             @endforeach
                                                         </p>
                                                     @endforeach
+                                                </td>--}}
+
+                                                <td class="text-center">
+                                                    @switch($l->order_trackstatus)
+                                                        @case('order_confirmed_and_received')
+                                                            <span class="badge badge-success">Confirmed Order </span>
+                                                        @break
+                                                        @case('processing')
+                                                            <span class="badge badge-success">Processing </span>
+                                                        @break
+                                                        @case('purchased')
+                                                            <span class="badge badge-success">Purchased </span>
+                                                        @break
+                                                        @case('otw')
+                                                            <span class="badge badge-success">On the way </span>
+                                                        @break
+                                                        @case('delivered')
+                                                            <span class="badge badge-success">delivered </span>
+                                                        @break
+
+                                                        @default
+                                                        @break
+                                                    @endswitch
                                                 </td>
-                                                <td class="text-center"><span class="badge badge-success">Confirmed Order </span></td>
                                                 <td class="text-right footable-last-visible" style="display: table-cell;">
-                                                    <button class="btn btn-success px-1 btn-sm mr-1 btn-assign-rider" data-toggle="modal" data-target="#assignRider" data-id="1"><i class="material-icons md-18">thumb_up</i> <span>Accept</span></button>
-                                                    <button class="btn btn-danger px-1 btn-sm mr-1 btn-assign-rider" data-toggle="modal" data-target="#assignRider" data-id="1"><i class="material-icons md-18">thumb_down</i> <span>Decline</span></button>
+                                                    <a href="/view-order/{{$l->order_trackid}}" class="btn btn-info px-1 btn-sm mr-1"> <span>View</span></a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -150,7 +189,34 @@
 	<script>
         'user strict'
         $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });   
+            $('select.select-rider-status').change(function(e){
+                var status = e.target.value
+                if(status)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/rider-change-status',
+                        data: {status: status},
+                        dataType: 'json',
+                        success:function(data){
+                            console.log(data)
+                        },
+                        error:function(data){
+                          console.log(data);
+                        }
+                    });
+                }
+            })
 
+        // $('.btn-remove-address').on('click',function(e){
+        //     e.preventDefault();
+        //     var id = $(this).data('item-id');          
+        // });
         });
 	</script>
 @endpush
