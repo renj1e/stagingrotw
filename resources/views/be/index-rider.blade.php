@@ -11,6 +11,17 @@
             <div class="row">
                 <div class="container">
                     <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                            <select class="form-control " data-live-search="true" tabindex="-1" aria-hidden="true">
+                                <option>Set you status here</option>
+                                <option>Hired</option>
+                                <option>Waiting</option>
+                            </select><br/>
+                        </div>                        
+                    </div>
+                </div>
+                <!-- <div class="container">
+                    <div class="row">
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="card border-0 shadow-sm mb-4">
                                 <div class="card-body">
@@ -64,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="container">
                     <div class="row">                                
                         <div class="col-12 col-md-12 col-lg-12">

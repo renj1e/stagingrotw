@@ -76,8 +76,8 @@
                             <div class="col text-center align-self-center px-0 ">
                                 <div class="btn-group shadow-sm  d-none d-md-inline-flex" role="group" aria-label="Menu">
                                     <a href="/rider" class="btn text-uppercase px-3 btn-sm btn-default active">Dashboard</a>
-                                    <!-- <a href="chat.html" class="btn text-uppercase px-3 btn-sm btn-default">Chat <span class="badge badge-danger">5</span></a> -->
-                                    <a href="/orders" class="btn text-uppercase px-3 btn-sm btn-default">Orders <span class="badge badge-danger">15</span></a>
+                                    <!-- <a href="chat.html" class="btn text-uppercase px-3 btn-sm btn-default">Chat <span class="badge badge-danger">5</span></a>
+                                    <a href="/orders" class="btn text-uppercase px-3 btn-sm btn-default">Orders <span class="badge badge-danger">15</span></a> -->
                                 </div>
                             </div>
                         </div>
