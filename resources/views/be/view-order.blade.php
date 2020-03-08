@@ -12,7 +12,7 @@
 				<div class="container">
                     <div class="row">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                            <select class="form-control select-rider-status" data-live-search="true" tabindex="-1" aria-hidden="true">
+                            <select class="form-control select-order-status" data-live-search="true" data-otid="{{$id}}" tabindex="-1" aria-hidden="true">
                                 @switch($order->order_trackstatus)
                                     @case('order_confirmed_and_received')
                                         <option value="order_confirmed_and_received">Confirmed Order </option>
@@ -27,7 +27,7 @@
                                         <option value="otw">On the way </option>
                                     @break
                                     @case('delivered')
-                                        <option value="delivered">delivered </option>
+                                        <option value="delivered">Delivered </option>
                                     @break
 
                                     @default
@@ -90,6 +90,30 @@
 	<script>
         'user strict'
         $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });   
+            $('select.select-order-status').change(function(e){
+                var status = e.target.value;
+                var otid = $(this).data('otid');
+                if(status)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/order-change-status',
+                        data: {status: status, otid: otid},
+                        dataType: 'json',
+                        success:function(data){
+                            console.log(data)
+                        },
+                        error:function(data){
+                          console.log(data);
+                        }
+                    });
+                }
+            })
         });
 	</script>
 @endpush

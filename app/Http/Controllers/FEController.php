@@ -51,40 +51,65 @@ class FEController extends Controller
                 ->where('cacustomerid', \Auth::user()->id)
                 ->get();
 
-
-            $prev_orders = DB::table('order')
-                ->where('ordercustomerid',  \Auth::user()->id)
-                ->where('order_status', 'delivered') // change this to 'delivered'
-                ->join('menus', 'menus.menuid', '=', 'order.ordermenuid')
-                ->join('vendors', 'vendors.vendorid', '=', 'menus.vendorid' )
-                ->select('menus.*', 'order.*', 'vendors.*')
+            $orders = DB::table('order_track')
+                ->where('order_track.order_trackcustomerid', '=', \Auth::user()->id)
+                ->where(function ($query) {
+                    $query->where('order_track.order_trackstatus', '=', 'delivered');
+                })
+                ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
+                ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
+                ->select('order_track.*', 'users.id', 'users.name', 'customer_address.*')
                 ->get();
 
-            foreach ($prev_orders as $k => $v) {
-                $addons = [];
-                if($v->orderaddons !== '{}')
+            foreach ($orders as $k => $v) {
+                $_o = [];
+                if($v->order_trackorderid !== '{}')
                 {
-                    $_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
+                    $_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
 
                     foreach ($_ik as $id => $val) {
-                        $_nik = explode(':', $val);
-                        $_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
-                        $_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
-                        $_addons_details = DB::table('addons')
-                            ->where('addid', $_nik_id)
-                            ->first();
-                        $_addons_details->q = $_nik_q;
+                        $_oid = (int) str_replace(array('"'), '', $val);
 
-                        array_push($addons, $_addons_details);
+                        $_order_details = DB::table('order')
+                            ->where('orderid', $_oid)
+                            ->join('menus', 'menus.menuid', 'order.ordermenuid')
+                            ->join('vendors', 'vendors.vendorid', 'menus.vendorid')
+                            ->select('order.*', 'menus.*', 'vendors.*')
+                            ->first();
+                        array_push($_o, $_order_details);
                     }
-                    $prev_orders[$k]->addons = $addons;
+
+                    $_all_orders = $orders[$k]->orders = $_o;
+
+                    foreach ($_all_orders as $k => $x) {
+                        $addons = [];
+                        if($x->orderaddons !== '{}')
+                        {
+                            $_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
+
+                            foreach ($_ik as $id => $val) {
+                                $_nik = explode(':', $val);
+                                $_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+                                $_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+                                $_addons_details = DB::table('addons')
+                                    ->where('addid', $_nik_id)
+                                    ->first();
+                                $_addons_details->q = $_nik_q;
+
+                                array_push($addons, $_addons_details);
+                            }
+                            $_all_orders[$k]->addons = $addons;
+                        }
+                    }
+
+
                 }
             }
             
 	        return view('fe/dashboard',
 	        	[
                     'address' => $address,
-                    'prev_orders' => $prev_orders
+                    'prev_orders' => $orders
 	        	]
 	    	);
     	}
@@ -214,39 +239,66 @@ class FEController extends Controller
 
     public function trackorder()
     {
-		$trackorders = DB::table('order')
-            ->where('ordercustomerid',  \Auth::user()->id)
-            ->where('order_status', 'processing')
-            ->join('menus', 'menus.menuid', '=', 'order.ordermenuid')
-            ->join('vendors', 'vendors.vendorid', '=', 'menus.vendorid')
-            ->select('menus.*', 'order.*', 'vendors.vname')
+        $orders = DB::table('order_track')
+            ->where('order_track.order_trackcustomerid', '=', \Auth::user()->id)
+            ->where(function ($query) {
+                $query->where('order_track.order_trackstatus', '=', 'processing')
+                    ->orWhere('order_track.order_trackstatus', '=', 'purchased')
+                    ->orWhere('order_track.order_trackstatus', '=', 'otw');
+            })
+            ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
+            ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
+            ->select('order_track.*', 'users.id', 'users.name', 'customer_address.*')
             ->get();
 
-        foreach ($trackorders as $k => $v) {
-        	$addons = [];
-        	if($v->orderaddons !== '{}')
-        	{
-	        	$_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
+        foreach ($orders as $k => $v) {
+            $_o = [];
+            if($v->order_trackorderid !== '{}')
+            {
+                $_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
 
-	        	foreach ($_ik as $id => $val) {
-	        		$_nik = explode(':', $val);
-	        		$_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
-	        		$_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
-	        		$_addons_details = DB::table('addons')
-			            ->where('addid', $_nik_id)
-			            ->first();
-			        $_addons_details->q = $_nik_q;
+                foreach ($_ik as $id => $val) {
+                    $_oid = (int) str_replace(array('"'), '', $val);
 
-	        		array_push($addons, $_addons_details);
-	        	}
-	        	$trackorders[$k]->addons = $addons;
-        	}
+                    $_order_details = DB::table('order')
+                        ->where('orderid', $_oid)
+                        ->join('menus', 'menus.menuid', 'order.ordermenuid')
+                        ->join('vendors', 'vendors.vendorid', 'menus.vendorid')
+                        ->select('order.*', 'menus.*', 'vendors.*')
+                        ->first();
+                    array_push($_o, $_order_details);
+                }
+
+                $_all_orders = $orders[$k]->orders = $_o;
+
+                foreach ($_all_orders as $k => $x) {
+                    $addons = [];
+                    if($x->orderaddons !== '{}')
+                    {
+                        $_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
+
+                        foreach ($_ik as $id => $val) {
+                            $_nik = explode(':', $val);
+                            $_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+                            $_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+                            $_addons_details = DB::table('addons')
+                                ->where('addid', $_nik_id)
+                                ->first();
+                            $_addons_details->q = $_nik_q;
+
+                            array_push($addons, $_addons_details);
+                        }
+                        $_all_orders[$k]->addons = $addons;
+                    }
+                }
+
+
+            }
         }
-        // dd($trackorders);
-
+        // dd($orders);
         return view('fe/track-order',
         	[
-        		'trackorders' => $trackorders
+                'trackorders' => $orders
         	]
         );
     }

@@ -40,29 +40,55 @@
                                 @endauth
 
                                 <div class="order-list">
-                                    @foreach($trackorders as $order)
-                                    <div class="order-item brd-rd5" data-order-price="{{ ($order->mprice * $order->orderquantity) }}">
-                                        <div class="order-thumb brd-rd5">
-                                            <a href="/menu-detail/{{ $order->menuid }}"title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                    @foreach($trackorders as $o)
+                                        <div class="welcome-note yellow-bg brd-rd5">
+                                        <p itemprop="description">Order Status: 
+                                            @switch($o->order_trackstatus)
+                                                @case('order_confirmed_and_received')
+                                                    <span class="">Confirmed Order </span>
+                                                @break
+                                                @case('processing')
+                                                    <span class="">Processing </span>
+                                                @break
+                                                @case('purchased')
+                                                    <span class="">Purchased </span>
+                                                @break
+                                                @case('otw')
+                                                    <span class="">On the way </span>
+                                                @break
+                                                @case('delivered')
+                                                    <span class="">delivered </span>
+                                                @break
+
+                                                @default
+                                                @break
+                                            @endswitch
+                                        </p>
                                         </div>
-                                        <div class="order-info">
-                                            <span class="red-clr">
-                                                {{ $order->vname }}
-                                            </span>
-                                            <h4 itemprop="headline"><a href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">{{ $order->mname }} x {{ $order->orderquantity }}</a></h4>
-                                            
-                                            <span class="price">P{{ ($order->mprice * $order->orderquantity) }}.00</span>
-                                            <!-- <a class="brd-rd2" href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">Order Details</a> -->
-                                            <ul class="post-meta">
-                                                <li><i class="fa fa-check-circle-o"></i>Add-ons:
-                                                    @foreach($order->addons as $li)
-                                                    <span data-order-price="{{ $li->addprice * $li->q }}">{{ $li->addname }} (P{{ $li->addprice }}.00) x {{ $li->q }}</span>,
-                                                    @endforeach
-                                                </li>
-                                                <!-- <li><i class="flaticon-transport"></i> 00min</li> -->
-                                            </ul>
+                                        @foreach($o->orders as $order)
+                                        <div class="order-item brd-rd5" data-order-price="{{ ($order->mprice * $order->orderquantity) }}">
+                                            <div class="order-thumb brd-rd5">
+                                                <a href="/menu-detail/{{ $order->menuid }}"title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                            </div>
+                                            <div class="order-info">
+                                                <span class="red-clr">
+                                                    {{ $order->vname }}
+                                                </span>
+                                                <h4 itemprop="headline"><a href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">{{ $order->mname }} x {{ $order->orderquantity }}</a></h4>
+                                                
+                                                <span class="price">P{{ ($order->mprice * $order->orderquantity) }}.00</span>
+                                                <!-- <a class="brd-rd2" href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">Order Details</a> -->
+                                                <ul class="post-meta">
+                                                    <li><i class="fa fa-check-circle-o"></i>Add-ons:
+                                                        @foreach($order->addons as $li)
+                                                        <span data-order-price="{{ $li->addprice * $li->q }}">{{ $li->addname }} (P{{ $li->addprice }}.00) x {{ $li->q }}</span>,
+                                                        @endforeach
+                                                    </li>
+                                                    <!-- <li><i class="flaticon-transport"></i> 00min</li> -->
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
+                                        @endforeach
                                     @endforeach
                                 </div>
                             </div>

@@ -39,6 +39,7 @@ Route::get('/get-all-riders-by-zip-code/{orderid}/{zipcode}', 'BEController@getA
 Route::post('/rider-change-status', 'BEController@riderChangeStatus')->name('rider-change-status');
 Route::get('/view-order/{id}', 'BEController@viewOrder')->name('view-order');
 Route::post('/assign-order-to-rider', 'BEController@assignOrderToRider')->name('assign-order-to-rider');
+Route::post('/order-change-status', 'BEController@orderChangeStatus')->name('order-change-status');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

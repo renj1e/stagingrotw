@@ -66,26 +66,28 @@
                                                     <h4 itemprop="headline">MY DELIVERED ORDERS</h4>
                                                     <div class="order-list">
 
-                                                        @foreach($prev_orders as $po)
-                                                            <div class="order-item brd-rd5">
-                                                                <div class="order-thumb brd-rd5">
-                                                                    <a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                                        @foreach($prev_orders as $o)
+                                                            @foreach($o->orders as $po)
+                                                                <div class="order-item brd-rd5">
+                                                                    <div class="order-thumb brd-rd5">
+                                                                        <a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                                                    </div>
+                                                                    <div class="order-info">
+                                                                        <span class="red-clr">
+                                                                            {{ $po->vname }}
+                                                                        </span>
+                                                                        <h4 itemprop="headline" style="margin-top:0"><a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url">{{ $po->mname }}</a></h4>
+                                                                        <span class="red-clr">
+                                                                            @foreach($po->addons as $k => $ad)
+                                                                                {{ $ad->addname }} (P{{ $ad->addprice }}.00) x {{ $ad->q }} {{ (($k + 1) < count($po->addons))? ',' : '' }}
+                                                                            @endforeach
+                                                                        </span>
+                                                                        
+                                                                        <span class="price">P{{ $po->mprice }}.00</span>
+                                                                        <a class="brd-rd2" href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url">Detail</a>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="order-info">
-                                                                    <span class="red-clr">
-                                                                        {{ $po->vname }}
-                                                                    </span>
-                                                                    <h4 itemprop="headline" style="margin-top:0"><a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url">{{ $po->mname }}</a></h4>
-                                                                    <span class="red-clr">
-                                                                        @foreach($po->addons as $k => $ad)
-                                                                            {{ $ad->addname }} (P{{ $ad->addprice }}.00) x {{ $ad->q }} {{ (($k + 1) < count($po->addons))? ',' : '' }}
-                                                                        @endforeach
-                                                                    </span>
-                                                                    
-                                                                    <span class="price">P{{ $po->mprice }}.00</span>
-                                                                    <a class="brd-rd2" href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url">Detail</a>
-                                                                </div>
-                                                            </div>
+                                                            @endforeach
                                                         @endforeach
 
                                                     </div>

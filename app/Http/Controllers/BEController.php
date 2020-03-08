@@ -222,6 +222,24 @@ class BEController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function orderChangeStatus(Request $request)
+    {
+        $status = DB::table('order_track')
+            ->where('order_trackid', '=', (int) $request->get('otid'))
+            ->update([
+            	'order_trackstatus' => $request->get('status'),
+            ]);
+            
+        return response()->json([
+        	'status'=> $request->all()
+        ]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function assignOrderToRider(Request $request)
     {
         $status = DB::table('order_track')
@@ -243,14 +261,13 @@ class BEController extends Controller
      */
     public function viewOrder($id)
     {
-
         $order = DB::table('order_track')
             ->where('order_track.order_trackid', '=', $id)
             ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
             ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
             ->select('order_track.*', 'users.id', 'users.name', 'customer_address.*')
             ->first();
-            
+
         // foreach ($order as $k => $v) {
         	$_o = [];
         	if($order->order_trackorderid !== '{}')
@@ -298,6 +315,7 @@ class BEController extends Controller
         	// dd($order);
         return view('be/view-order',
         	[
+        		'id' => $order->order_trackid,
         		'order' => $order,
         	]
         );

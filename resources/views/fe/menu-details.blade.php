@@ -40,15 +40,6 @@
 											<div class="restaurant-detail-thumb">
 												<ul class="restaurant-detail-img-carousel">
 													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-big-img1-1.jpg" alt="restaurant-detail-big-img1-1.jpg" itemprop="image"></li>
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-big-img1-2.jpg" alt="restaurant-detail-big-img1-2.jpg" itemprop="image"></li>
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-big-img1-3.jpg" alt="restaurant-detail-big-img1-3.jpg" itemprop="image"></li>
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-big-img1-4.jpg" alt="restaurant-detail-big-img1-4.jpg" itemprop="image"></li>
-												</ul>
-												<ul class="restaurant-detail-thumb-carousel">
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-small-img1-1.jpg" alt="restaurant-detail-small-img1-1.jpg" itemprop="image"></li>
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-small-img1-2.jpg" alt="restaurant-detail-small-img1-2.jpg" itemprop="image"></li>
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-small-img1-3.jpg" alt="restaurant-detail-small-img1-3.jpg" itemprop="image"></li>
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-small-img1-4.jpg" alt="restaurant-detail-small-img1-4.jpg" itemprop="image"></li>
 												</ul>
 											</div>
 
