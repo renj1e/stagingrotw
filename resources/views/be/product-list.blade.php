@@ -100,14 +100,15 @@
 	                                                            <input type="number" class="form-control" placeholder="" name="mquantity">
 	                                                        </div>
 	                                                    </div>
+	                                                    {{--
 	                                                    <div class="form-group row">
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <label>Add-ons: </label>
-		                                                            <div id="addons"> 
-		                                                            <p class="mb-0">No add-ons</p>                                          
-		                                                            </div>
-                                                                </div>
+                                                            <div class="col-lg-12 col-md-12">
+                                                                <label>Add-ons: </label>
+	                                                            <div id="addons"> 
+	                                                            <p class="mb-0">No add-ons</p>                                          
+	                                                            </div>
                                                             </div>
+                                                        </div>--}}
 	                                                    <br>
 	                                                    <div class="form-group row">
 	                                                        <div class="col-md-12">
