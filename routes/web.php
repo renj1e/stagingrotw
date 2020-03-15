@@ -35,6 +35,24 @@ Route::post('/confirmorder', 'FEController@confirmOrder')->name('confirm-order')
 Route::get('/admin', 'BEController@index')->name('admin-index');
 
 Route::get('/rider', 'BEController@rider')->name('admin-rider');
+
+Route::get('/rider-list', 'BEController@riderList')->name('admin-rider-list');
+// Add
+// Update
+
+Route::get('/customer-list', 'BEController@customerList')->name('admin-customer-list');
+
+Route::get('/product-list', 'BEController@productList')->name('admin-product-list');
+Route::post('/product-add', 'BEController@productAdd')->name('admin-product-add');
+Route::get('/product-update/{id}', 'BEController@productUpdate')->name('admin-product-update');
+Route::post('/product-save-update', 'BEController@productSaveUpdate')->name('admin-product-save-update');
+
+Route::get('/store-list', 'BEController@storeList')->name('admin-store-list');
+Route::post('/getvendoraddons', 'BEController@getVendorAddons')->name('admin-get-vendor-addons');
+Route::post('/store-add', 'BEController@storeAdd')->name('admin-store-add');
+Route::get('/store-update/{id}', 'BEController@storeUpdate')->name('admin-store-update');
+Route::post('/store-save-update', 'BEController@storeSaveUpdate')->name('admin-store-save-update');
+
 Route::get('/get-all-riders-by-zip-code/{orderid}/{zipcode}', 'BEController@getAllRidersByZipCode')->name('get-all-riders-by-zip-code');
 Route::post('/rider-change-status', 'BEController@riderChangeStatus')->name('rider-change-status');
 Route::get('/view-order/{id}', 'BEController@viewOrder')->name('view-order');

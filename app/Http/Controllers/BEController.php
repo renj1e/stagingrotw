@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use App\Vendors;
+use App\VendorContact;
+use App\Menus;
+use App\Addons;
 
 class BEController extends Controller
 {
@@ -62,6 +67,325 @@ class BEController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function riderList()
+    {
+    	if(\Auth::user()->utype === 'customer')
+        {
+        	return redirect('/dashboard');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/rider');
+        }
+
+        $riders = DB::table('users')
+            ->where('utype',  'rider')
+            ->join('rider_status', 'rider_status.rider_status_rider_id', '=', 'users.id')
+            ->join('rider_profile', 'rider_profile.rider_profile_rider_id', '=', 'users.id')
+            ->join('rider_contact', 'rider_contact.rider_contact_rider_id', '=', 'users.id')
+            // ->where('rider_status.rider_status_status', '!=', 'not_active')
+            ->select('users.*', 'rider_status.rider_status_status', 'rider_status.rider_status_id', 'rider_profile.rider_profile_address', 'rider_profile.rider_profile_zip_code', 'rider_profile.rider_profile_vehicle_number', 'rider_profile.rider_profile_vehicle_type', 'rider_profile.rider_profile_avatar', 'rider_profile.rider_profile_drivers_license', 'rider_contact.rider_contact_type', 'rider_contact.rider_contact_number')
+            ->get();
+            // dd($riders);
+        return view('be/rider-list',
+        	[
+        		'riders' => $riders
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function customerList()
+    {
+    	if(\Auth::user()->utype === 'customer')
+        {
+        	return redirect('/dashboard');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/rider');
+        }
+
+        $customers = DB::table('users')
+            ->where('users.utype', '=', 'customer')
+            ->select('users.id', 'users.name', 'users.email', 'users.gender', 'users.created_at')
+            ->get();
+
+        foreach ($customers as $k => $v)
+        {
+        	$_c = [];
+    		$_contacts = DB::table('contact')
+	            ->where('concustomerid', $v->id)
+	            ->get();
+
+        	$customers[$k]->contacts = $_contacts;
+        }
+
+        foreach ($customers as $k => $v)
+        {
+       		$_address = [];
+    		$_add = DB::table('customer_address')
+	            ->where('cacustomerid', $v->id)
+	            ->get();
+
+        	$customers[$k]->address = $_add;
+        }
+            // dd($customers);
+        return view('be/customer-list',
+        	[
+        		'customers' => $customers
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function productList()
+    {
+    	if(\Auth::user()->utype === 'customer')
+        {
+        	return redirect('/dashboard');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/rider');
+        }
+
+        $menu = DB::table('menus')
+            ->get();
+
+        foreach ($menu as $k => $v)
+        {
+    		$_vendor = DB::table('vendors')
+	            ->where('vendorid', $v->vendorid)
+	            ->first();
+
+    		$_addons = DB::table('addons')
+	            ->where('addmenuid', $v->menuid)
+	            ->get();
+	            
+        	$_mt = explode(',', str_replace(array('[',']'), '', $v->mtype));
+
+        	$menu[$k]->vendor = $_vendor;
+        	$menu[$k]->addons = $_addons;
+        	$menu[$k]->mt = collect($_mt);
+        }
+
+        $vendors = DB::table('vendors')
+            ->where('vendors.vis_activated', 1)
+            ->get();
+
+    	// dd($menu);
+
+        return view('be/product-list',
+        	[
+        		'menu' => $menu,
+        		'vendors' => $vendors
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function productAdd(Request $request)
+    {
+    	dd($request);
+    	$_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension(); 
+    	$request->mavatar->storeAs('public/images', $_mavatar);
+    	// dd($request);
+
+		// 'all-time-meal' = 1
+		// 'breakfast' = 2
+		// 'lunch' = 3
+		// 'dinner' = 4
+		// 'merienda' = 5
+
+		$m = new Menus;
+		$m->mname = $request->mname;
+		$m->vendorid = $request->vendorid;
+		$m->mtype = '[' . implode(',', $request->mtype) . ']';
+		$m->mdesc = $request->mdesc;
+		$m->mprice = $request->mprice;
+		$m->mquantity = $request->mquantity;
+		$m->mavatar = $_mavatar;
+		$m->save();
+		$_lid = $m->id;
+		
+		foreach ($request->maddons as $a) {
+			$key = array_search($a, $request->maddons);
+
+		}
+
+    	return redirect('/product-list');
+    }
+
+    public function getVendorAddons(Request $request)
+    {
+		$addons = DB::table('addon_menu')
+            ->where('am_vendorid', $request->id)
+            ->get();
+        return response()->json($addons);
+    }
+
+  //   /**
+  //    * Show the application dashboard.
+  //    *
+  //    * @return \Illuminate\Contracts\Support\Renderable
+  //    */
+  //   public function productUpdate($id)
+  //   {
+		// $menu = DB::table('menus')
+	 //            ->where('menuid', $id)
+	 //            ->first();
+
+		// $_contact = DB::table('vendor_contact')
+  //           ->where('vc_vendor_id', $store->vendorid)
+  //           ->get();
+
+  //   	$menu->contact = $_contact;
+  //   	// dd($store);
+  //       return view('be/product-update',
+  //       	[
+  //       		'menu' => $menu
+  //       	]
+  //       );
+  //   }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function storeList()
+    {
+    	if(\Auth::user()->utype === 'customer')
+        {
+        	return redirect('/dashboard');
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return redirect('/rider');
+        }
+
+        $stores = DB::table('vendors')
+            ->get();
+
+        foreach ($stores as $k => $v)
+        {
+    		$_contact = DB::table('vendor_contact')
+	            ->where('vc_vendor_id', $v->vendorid)
+	            ->get();
+
+        	$stores[$k]->contact = $_contact;
+        }
+
+            // dd($stores);
+        return view('be/store-list',
+        	[
+        		'stores' => $stores
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function storeAdd(Request $request)
+    {
+		$v = new Vendors;
+		$v->vname = $request->vname;
+		$v->vstreet = $request->vstreet;
+		$v->vcity = $request->vcity;
+		$v->vprovince = $request->vprovince;
+		$v->vcountry = $request->vcountry;
+		$v->vis_activated = $request->vis_activated;
+		$v->save();
+		$_lid = $v->id;
+
+    	foreach ($request->contact as $rc)
+    	{
+			$vc = new VendorContact;
+			$vc->vc_vendor_id = $_lid;
+			$vc->vc_number = $rc;
+			$vc->save();
+    	}
+
+    	return redirect('/store-list');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function storeUpdate($id)
+    {
+		$store = DB::table('vendors')
+	            ->where('vendorid', $id)
+	            ->first();
+
+		$_contact = DB::table('vendor_contact')
+            ->where('vc_vendor_id', $store->vendorid)
+            ->get();
+
+    	$store->contact = $_contact;
+    	// dd($store);
+        return view('be/store-update',
+        	[
+        		'store' => $store
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function storeSaveUpdate(Request $request)
+    {
+    	// dd($request);
+    	Vendors::where('vendorid', (int) $request->vendorid)
+        	->update([
+        		'vname' => $request->vname,
+        		'vstreet' => $request->vstreet,
+        		'vcity' => $request->vcity,
+        		'vprovince' => $request->vprovince,
+        		'vcountry' => $request->vcountry,
+        		'vis_activated' => $request->vis_activated
+        	]);
+
+    	foreach ($request->contact as $rc)
+    	{
+    		$key = array_search($rc, $request->contact);
+
+	    	VendorContact::where('vcid', (int) $key)
+	        	->update([
+	        		'vc_number' => $rc,
+	        		'updated_at' => date('Y-m-d h:i:s')
+	        	]);
+    	}
+
+    	return redirect('/store-list');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function rider()
     {
         if(\Auth::user()->utype === 'staff')
@@ -88,7 +412,7 @@ class BEController extends Controller
 
         foreach ($orders as $k => $v) {
         	$_o = [];
-        	if($v->order_trackorderid !== '{}')
+        	if($v->order_trackorderid !== '{}' || $v->order_trackorderid !== '[]')
         	{
 	        	$_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
 
@@ -108,7 +432,7 @@ class BEController extends Controller
 
 		        foreach ($_all_orders as $k => $x) {
 		        	$addons = [];
-		        	if($x->orderaddons !== '{}')
+		        	if($x->orderaddons !== '{}' || $x->orderaddons !== '[]')
 		        	{
 			        	$_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
 
@@ -270,7 +594,7 @@ class BEController extends Controller
 
         // foreach ($order as $k => $v) {
         	$_o = [];
-        	if($order->order_trackorderid !== '{}')
+        	if($order->order_trackorderid !== '{}' || $order->order_trackorderid !== '[]')
         	{
 	        	$_ik = explode(',', str_replace(array('[',']'), '', $order->order_trackorderid));
 
@@ -290,7 +614,7 @@ class BEController extends Controller
 
 		        foreach ($_all_orders as $k => $v) {
 		        	$addons = [];
-		        	if($v->orderaddons !== '{}')
+		        	if($v->orderaddons !== '{}' || $v->orderaddons !== '[]')
 		        	{
 			        	$_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
 

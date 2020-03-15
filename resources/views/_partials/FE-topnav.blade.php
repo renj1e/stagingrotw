@@ -30,7 +30,7 @@
                     <ul>
                         <li><a href="/" title="HOME" itemprop="url"><span class="red-clr">ON THE WAY</span>HOME</a></li>
                         <li><a href="/our-menu" title="OUR MENU" itemprop="url"><span class="red-clr">REAL FOOD</span>OUR MENU</a></li>
-                        <li><a href="/contact" title="CONTACT US" itemprop="url"><span class="red-clr">NEED SOME HELP?</span>CONTACT US</a></li>
+                        <!-- <li><a href="/contact" title="CONTACT US" itemprop="url"><span class="red-clr">NEED SOME HELP?</span>CONTACT US</a></li> -->
                     </ul>
                     <a class="red-bg brd-rd4" href="/track-order" title="Register" itemprop="url">TRACK ORDER</a>
                 </div>
@@ -55,7 +55,7 @@
             <ul>
                 <li><a href="/" title="HOME" itemprop="url"><span class="yellow-clr">ON THE WAY</span>HOME</a></li>
                 <li><a href="/our-menu" title="OUR MENU" itemprop="url"><span class="yellow-clr">REAL FOOD</span>OUR MENU</a></li>
-                <li><a href="/contact" title="CONTACT US" itemprop="url"><span class="yellow-clr">NEED SOME HELP?</span>CONTACT US</a></li>
+                <!-- <li><a href="/contact" title="CONTACT US" itemprop="url"><span class="yellow-clr">NEED SOME HELP?</span>CONTACT US</a></li> -->
             </ul>
         </div>
         <div class="topbar-register">

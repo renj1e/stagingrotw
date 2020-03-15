@@ -12,14 +12,13 @@
     </a>
     <div class="sidebar-profile text-center">
         <figure class="avatar avatar-120 avatar-circle"><img src="/assets/be/img/user1.jpg" alt=""></figure>
-        <div class="dropdown mt-3">
+        <div class="dropdown mt-3 w-100">
             <button class="btn btn-link dropdown-toggle no-caret w-100" type="button" id="dropdownMenuButton13" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="d-flex justify-content-center">
                     <span class="ml-3">
-                        Juan dela Cruz<br>
-                        <span class="text-mute small">Admin</span>
+                        {{ \Auth::user()->name }}<br>
+                        <span class="text-mute small">{{ \Auth::user()->utype }}</span>
                     </span>
-                    <i class="material-icons  align-self-center ml-2 icon-right">keyboard_arrow_down</i>
                 </span>
             </button>
             <div class="dropdown-menu w-100 text-center " aria-labelledby="dropdownMenuButton13">
@@ -32,19 +31,19 @@
 
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="/admin"><i class="material-icons icon">dashboard</i><span class="menu-text">Dashboard</span></a>
+            <a class="nav-link {{ (Request::segment(1) === 'admin')? 'active' : '' }}" href="/admin"><i class="material-icons icon">dashboard</i><span class="menu-text">Dashboard</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/riders"><i class="material-icons icon">directions_bike</i><span class="menu-text">Riders</span></a>
+            <a class="nav-link {{ (Request::segment(1) === 'rider-list')? 'active' : '' }}" href="/rider-list"><i class="material-icons icon">directions_bike</i><span class="menu-text">Riders</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/customers"><i class="material-icons icon">group</i><span class="menu-text">Customers</span></a>
+            <a class="nav-link {{ (Request::segment(1) === 'customer-list')? 'active' : '' }}" href="/customer-list"><i class="material-icons icon">group</i><span class="menu-text">Customers</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/products"><i class="material-icons icon">fastfood</i><span class="menu-text">Products</span></a>
+            <a class="nav-link {{ (Request::segment(1) === 'product-list')? 'active' : '' }}" href="/product-list"><i class="material-icons icon">fastfood</i><span class="menu-text">Products</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/stores"><i class="material-icons icon">local_convenience_store</i><span class="menu-text">Stores</span></a>
+            <a class="nav-link {{ (Request::segment(1) === 'store-list')? 'active' : '' }}" href="/store-list"><i class="material-icons icon">local_convenience_store</i><span class="menu-text">Stores</span></a>
         </li>
     </ul>
 </div>

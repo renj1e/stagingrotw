@@ -15,13 +15,13 @@
                             <select class="form-control select-rider-status" data-live-search="true" tabindex="-1" aria-hidden="true">
                                 @switch($status->rider_status_status)
                                     @case('hired')
-                                        <option>Hired</option>
+                                        <option value="hired">Hired</option>
                                     @break
                                     @case('waiting')
-                                        <option>Waiting to take orders</option>
+                                        <option value="waiting">Waiting to take orders</option>
                                     @break
                                     @case('not_active')
-                                        <option>Not for hire</option>
+                                        <option value="not_active">Not for hire</option>
                                     @break
 
                                     @default

@@ -63,7 +63,7 @@ class FEController extends Controller
 
             foreach ($orders as $k => $v) {
                 $_o = [];
-                if($v->order_trackorderid !== '{}')
+                if($v->order_trackorderid !== '{}' || $v->order_trackorderid !== '[]')
                 {
                     $_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
 
@@ -83,7 +83,7 @@ class FEController extends Controller
 
                     foreach ($_all_orders as $k => $x) {
                         $addons = [];
-                        if($x->orderaddons !== '{}')
+                        if($x->orderaddons !== '{}' || $x->orderaddons !== '[]')
                         {
                             $_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
 
@@ -123,7 +123,6 @@ class FEController extends Controller
     	{
     		switch ($search_meal)
     		{
-
     			case 'all-time-meal':
     				$meal = 1;
     				break;
@@ -253,7 +252,7 @@ class FEController extends Controller
 
         foreach ($orders as $k => $v) {
             $_o = [];
-            if($v->order_trackorderid !== '{}')
+            if($v->order_trackorderid !== '{}' || $v->order_trackorderid !== '[]')
             {
                 $_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
 
@@ -273,7 +272,7 @@ class FEController extends Controller
 
                 foreach ($_all_orders as $k => $x) {
                     $addons = [];
-                    if($x->orderaddons !== '{}')
+                    if($x->orderaddons !== '{}' || $x->orderaddons !== '[]')
                     {
                         $_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
 

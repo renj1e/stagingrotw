@@ -17,9 +17,9 @@
     <!-- Styles -->
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="/favicon.png" />
 
 
     <!-- Material design icon fonts CSS -->
@@ -43,7 +43,9 @@
     <!-- Customized CSS -->
     <link href="/assets/be/css/otw.css" id="link" rel="stylesheet">
 
-    <title>On The Way : Admin Panel</title>
+    <title>On The Way : Admin Panel</title>    
+
+    @stack('styles')
 </head>
 <body class="h-100">
     <div id="app">
@@ -87,8 +89,15 @@
                             </div>
                             <div class="col text-center align-self-center px-0 ">
                                 <div class="btn-group shadow-sm  d-none d-md-inline-flex" role="group" aria-label="Basic example">
-                                    <a href="#" class="btn text-uppercase px-3 btn-sm btn-default active">Dashboard</a>
-                                    <a href="orders.html" class="btn text-uppercase px-3 btn-sm btn-default">Track Orders <span class="badge badge-danger">15</span></a>
+                                    <a href="{{ route('logout') }}"  class="btn text-uppercase px-3 btn-sm btn-default active" title="Logout" itemprop="url"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        LOGOUT
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a href="/profile" class="btn text-uppercase px-3 btn-sm btn-default">Profile</a>
                                 </div>
                             </div>
                         </div>

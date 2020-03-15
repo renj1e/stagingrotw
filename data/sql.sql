@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `rotw` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `rotw` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `rotw`;
 -- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
 --
@@ -18,6 +18,36 @@ USE `rotw`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `addon_menu`
+--
+
+DROP TABLE IF EXISTS `addon_menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `addon_menu` (
+  `amid` int(11) NOT NULL AUTO_INCREMENT,
+  `am_vendorid` int(11) DEFAULT NULL,
+  `am_name` varchar(45) NOT NULL,
+  `am_price` varchar(45) NOT NULL,
+  `am_quantity` varchar(45) DEFAULT NULL,
+  `am_is_active` tinyint(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`amid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `addon_menu`
+--
+
+LOCK TABLES `addon_menu` WRITE;
+/*!40000 ALTER TABLE `addon_menu` DISABLE KEYS */;
+INSERT INTO `addon_menu` VALUES (1,1,'Hot Sauce','10','9',1,'2020-03-14 19:27:47','2020-03-15 03:27:47'),(2,1,'Cheese','10','9',1,'2020-03-14 19:27:47','2020-03-15 03:27:47');
+/*!40000 ALTER TABLE `addon_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `addons`
 --
 
@@ -27,14 +57,15 @@ DROP TABLE IF EXISTS `addons`;
 CREATE TABLE `addons` (
   `addid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `addmenuid` int(11) NOT NULL,
-  `addname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adddesc` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `addtype` json NOT NULL,
-  `addprice` int(11) NOT NULL,
-  `addquantity` int(11) NOT NULL,
-  `addis_activated` tinyint(4) NOT NULL,
+  `add_menu_addons` int(11) DEFAULT NULL,
+  `addname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `adddesc` longtext COLLATE utf8mb4_unicode_ci,
+  `addtype` json DEFAULT NULL,
+  `addprice` int(11) DEFAULT NULL,
+  `addquantity` int(11) DEFAULT NULL,
+  `addis_activated` tinyint(4) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`addid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -46,7 +77,7 @@ CREATE TABLE `addons` (
 
 LOCK TABLES `addons` WRITE;
 /*!40000 ALTER TABLE `addons` DISABLE KEYS */;
-INSERT INTO `addons` VALUES (1,1,'Hot Sauce','Hot Sauce','[1]',10,99,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,1,'Cheese','Cheese','[1, 2]',10,99,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(3,2,'Cheese','Cheese','[1, 2]',10,99,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `addons` VALUES (1,1,NULL,'Hot Sauce','Hot Sauce','[1]',10,99,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,1,NULL,'Cheese','Cheese','[1, 2]',10,99,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(3,2,NULL,'Cheese','Cheese','[1, 2]',10,99,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `addons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,7 +137,7 @@ CREATE TABLE `customer_address` (
 
 LOCK TABLES `customer_address` WRITE;
 /*!40000 ALTER TABLE `customer_address` DISABLE KEYS */;
-INSERT INTO `customer_address` VALUES (3,1,'Home','Poblacion','Alaminos City','Pangasinan','Philippines','2404',NULL,'2020-01-24 22:44:03','2020-01-24 22:44:03'),(10,1,'Work','Poblacion','Alaminos City','Pangasinan','Philippines','2404',NULL,'2020-01-25 03:54:34','2020-01-25 03:54:34'),(11,3,'Work','Poblacion','Alaminos City','Pangasinan','Philippines','2404',NULL,'2020-02-16 01:15:06','2020-02-16 01:15:06');
+INSERT INTO `customer_address` VALUES (3,1,'Home','Alos','Alaminos City','Pangasinan','Philippines','2404',NULL,'2020-01-24 22:44:03','2020-01-24 22:44:03'),(10,1,'Work','Alos','Alaminos City','Pangasinan','Philippines','2404',NULL,'2020-01-25 03:54:34','2020-01-25 03:54:34'),(11,3,'Work','Alos','Alaminos City','Pangasinan','Philippines','2404',NULL,'2020-02-16 01:15:06','2020-02-16 01:15:06');
 /*!40000 ALTER TABLE `customer_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,15 +153,17 @@ CREATE TABLE `menus` (
   `vendorid` int(11) NOT NULL,
   `mname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mdesc` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mtype` json NOT NULL,
+  `mtype` longtext COLLATE utf8mb4_unicode_ci,
   `mprice` int(11) NOT NULL,
+  `mavatar` longtext COLLATE utf8mb4_unicode_ci,
   `mquantity` int(11) NOT NULL,
-  `mis_activated` tinyint(4) NOT NULL,
+  `maddons` longtext COLLATE utf8mb4_unicode_ci,
+  `mis_activated` tinyint(4) NOT NULL DEFAULT '1',
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`menuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +172,7 @@ CREATE TABLE `menus` (
 
 LOCK TABLES `menus` WRITE;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
-INSERT INTO `menus` VALUES (1,1,'Cheese Burger',' Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. uni harum quidem sed rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihilares impedit quo repellendus eligendi optio cumque nihilare impedit quo minus id quod maxime.','[1, 2, 3]',50,20,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,1,'Pizza Deluxe',' Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. uni harum quidem sed rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihilares impedit quo repellendus eligendi optio cumque nihilare impedit quo minus id quod maxime.','[4, 5]',150,20,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `menus` VALUES (1,1,'Cheese Burger','Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. uni harum quidem sed rerum facilis est et expedita distinctio','[3]',50,'',20,NULL,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,1,'Pizza Deluxe','Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. uni harum quidem sed rerum facilis est et expedita distinctio','[1,2]',150,'',20,NULL,1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +262,7 @@ CREATE TABLE `order_track` (
 
 LOCK TABLES `order_track` WRITE;
 /*!40000 ALTER TABLE `order_track` DISABLE KEYS */;
-INSERT INTO `order_track` VALUES (1,1,NULL,'[\"20\", \"21\"]',10,'order_confirmed_and_received','','',NULL,'2020-01-28 22:24:02','2020-01-28 22:24:02'),(2,3,NULL,'[\"22\"]',11,'order_confirmed_and_received','','',NULL,'2020-02-16 01:15:30','2020-02-16 01:15:30');
+INSERT INTO `order_track` VALUES (1,1,2,'[\"20\", \"21\"]',10,'delivered','','',NULL,'2020-01-28 22:24:02','2020-01-28 22:24:02'),(2,3,NULL,'[\"22\"]',11,'order_confirmed_and_received','','',NULL,'2020-02-16 01:15:30','2020-02-16 01:15:30');
 /*!40000 ALTER TABLE `order_track` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +305,7 @@ CREATE TABLE `rider_contact` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`rider_contact_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,7 +314,7 @@ CREATE TABLE `rider_contact` (
 
 LOCK TABLES `rider_contact` WRITE;
 /*!40000 ALTER TABLE `rider_contact` DISABLE KEYS */;
-INSERT INTO `rider_contact` VALUES (1,2,'mobile','09301234567','2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `rider_contact` VALUES (1,2,'mobile','09301234567','2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,4,'mobile','09301234569','2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `rider_contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +337,7 @@ CREATE TABLE `rider_profile` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`rider_profile_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +346,7 @@ CREATE TABLE `rider_profile` (
 
 LOCK TABLES `rider_profile` WRITE;
 /*!40000 ALTER TABLE `rider_profile` DISABLE KEYS */;
-INSERT INTO `rider_profile` VALUES (1,2,'Alaminos City, Pangasinan','1234-TY','motorcycle','0-000-0000-0000','http://localhost:8000/assets/fe/images/resource/user-avatar.jpg','2404','2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `rider_profile` VALUES (1,2,'Alaminos City, Pangasinan','1234-TY','motorcycle','0-000-0000-0000','http://localhost:8000/assets/fe/images/resource/user-avatar.jpg','2404','2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,4,'Alaminos City, Pangasinan','1000-TY','motorcycle','0-000-0000-0000','http://localhost:8000/assets/fe/images/resource/user-avatar.jpg','2404','2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `rider_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,7 +364,7 @@ CREATE TABLE `rider_status` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`rider_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +373,7 @@ CREATE TABLE `rider_status` (
 
 LOCK TABLES `rider_status` WRITE;
 /*!40000 ALTER TABLE `rider_status` DISABLE KEYS */;
-INSERT INTO `rider_status` VALUES (1,2,'waiting','2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `rider_status` VALUES (1,2,'waiting','2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,4,'waiting','2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `rider_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,7 +397,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -373,8 +406,35 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Customer 1','customer@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','customer','4YdzdxlNUTby0d088mPvHTwUc18fgmcDjMkagJPZazzsVHWVfHBUZSQkXGgp','2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,'Rider 1','rider1@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','rider','VlogbCgDqIVlYm9Gbof6twfGgsgp0dG72WyBLLriKvuciPAcXOPIw0uyLXlq','2020-01-22 00:34:30','2020-01-22 00:34:30'),(3,'Admin','admin@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','staff','ZZHqmNd6GgzuiebJH2PCWTG8xgjNMHvkAjxagSgn8isTx0iB6stITFc8BOtk','2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `users` VALUES (1,'Customer 1','customer1@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','customer','OjZu9fZ1uZ42DophBMAsMWrdg7gGHMYDfHlXKxz2dYUTKkblyG4fiArtaa6l','2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,'Rider 1','rider1@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','rider','VlogbCgDqIVlYm9Gbof6twfGgsgp0dG72WyBLLriKvuciPAcXOPIw0uyLXlq','2020-01-22 00:34:30','2020-01-22 00:34:30'),(3,'Admin','admin@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','staff','ZZHqmNd6GgzuiebJH2PCWTG8xgjNMHvkAjxagSgn8isTx0iB6stITFc8BOtk','2020-01-22 00:34:30','2020-01-22 00:34:30'),(4,'Rider 2','rider2@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','rider','VlogbCgDqIVlYm9Gbof6twfGgsgp0dG72WyBLLriKvuciPAcXOPIw0uyLXlq','2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vendor_contact`
+--
+
+DROP TABLE IF EXISTS `vendor_contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendor_contact` (
+  `vcid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `vc_vendor_id` varchar(45) NOT NULL,
+  `vc_number` varchar(45) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`vcid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vendor_contact`
+--
+
+LOCK TABLES `vendor_contact` WRITE;
+/*!40000 ALTER TABLE `vendor_contact` DISABLE KEYS */;
+INSERT INTO `vendor_contact` VALUES (2,'4','444444444','2020-03-15 04:36:21','2020-03-15 04:36:21');
+/*!40000 ALTER TABLE `vendor_contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -393,11 +453,11 @@ CREATE TABLE `vendors` (
   `vcountry` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `vis_activated` tinyint(4) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`vendorid`),
   UNIQUE KEY `vendors_vname_unique` (`vname`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,7 +466,7 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
-INSERT INTO `vendors` VALUES (1,'MC Jolly','#23 Poblacion','Alaminos City','Pangasinan','PH',1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30');
+INSERT INTO `vendors` VALUES (1,'MC Jolly','#23 Poblacion','Alaminos City','Pangasinan','PH',1,NULL,'2020-01-22 00:34:30','2020-01-22 00:34:30'),(4,'33333333','3333333','33333333t','33333333','333333333333333',1,NULL,'2020-03-14 19:27:47','2020-03-15 04:36:20');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,4 +515,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-01 16:23:09
+-- Dump completed on 2020-03-15 14:22:57

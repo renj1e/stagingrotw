@@ -948,7 +948,7 @@ header.sticky nav > div > ul > li span {font-size: 11px;}
   z-index: 9;
   background-color: #111;
   width: 320px;
-  padding: 80px 30px 30px;
+  padding: 80px 5px 5px;
   opacity: 0;
   visibility: hidden;
 }
@@ -976,7 +976,7 @@ header.sticky nav > div > ul > li span {font-size: 11px;}
 .menu-lst {
   float: left;
   width: 100%;
-  margin-bottom: 55px;
+  margin-bottom: 0;
 }
 .menu-lst > ul {
   padding-left: 0;
@@ -1047,7 +1047,7 @@ header.sticky nav > div > ul > li span {font-size: 11px;}
 .register-btn {
   float: left;
   width: 100%;
-  margin-top: 55px;
+  margin-top: 20px;
 }
 .register-btn > a {
   font-size: 12px;
@@ -6372,7 +6372,8 @@ i.off {color: #d7d7d7;}
 .menu-lst {position: relative;}
 .menu-lst > ul {
   overflow-y: auto !important;
-  height: 265px;
+  /*height: 265px;*/
+  height: 140px;
 }
 /*===== Track Order =====*/
 .track-order-popup {
