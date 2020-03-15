@@ -70,7 +70,7 @@
                                     <div class="col-md-3 col-sm-6 col-lg-3">
                                         <div class="popular-dish-box style2 wow fadeIn" data-wow-delay="0.2s">
                                             <div class="popular-dish-thumb">
-                                                <a href="/menu-detail/{{ $list->menuid }}" title="" itemprop="url"><img src="/assets/fe/images/resource/popular-dish-img{{ $list->menuid }}.jpg" alt="popular-dish-img{{ $list->menuid }}.jpg" itemprop="image"></a>
+                                                <a href="/menu-detail/{{ $list->menuid }}" title="" itemprop="url"><img src="/storage/images/{{ $list->mavatar }}" alt="{{ $list->menuid }}" itemprop="image"></a>
                                             </div>
                                             <div class="popular-dish-info">
                                                 <h4 itemprop="headline"><a href="food-detail.html" title="" itemprop="url">{{ $list->mname }}</a></h4>

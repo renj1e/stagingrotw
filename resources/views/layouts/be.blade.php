@@ -97,6 +97,7 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    <a href="/admin" class="btn text-uppercase px-3 btn-sm btn-default">Dashboard</a>
                                     <a href="/profile" class="btn text-uppercase px-3 btn-sm btn-default">Profile</a>
                                 </div>
                             </div>

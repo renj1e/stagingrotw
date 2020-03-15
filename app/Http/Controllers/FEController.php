@@ -243,7 +243,8 @@ class FEController extends Controller
             ->where(function ($query) {
                 $query->where('order_track.order_trackstatus', '=', 'processing')
                     ->orWhere('order_track.order_trackstatus', '=', 'purchased')
-                    ->orWhere('order_track.order_trackstatus', '=', 'otw');
+                    ->orWhere('order_track.order_trackstatus', '=', 'otw')
+                    ->orWhere('order_track.order_trackstatus', '=', 'order_confirmed_and_received');
             })
             ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
             ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
@@ -275,17 +276,23 @@ class FEController extends Controller
                     if($x->orderaddons !== '{}' || $x->orderaddons !== '[]')
                     {
                         $_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
+                        if(isset($_ik))
+                        {
+                            foreach ($_ik as $id => $val)
+                            {
+                                if(isset($val) && $val !== '')
+                                {
+                                    $_nik = explode(':', $val);
+                                    $_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+                                    $_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+                                    $_addons_details = DB::table('addons')
+                                        ->where('addid', $_nik_id)
+                                        ->first();
+                                    $_addons_details->q = $_nik_q;
 
-                        foreach ($_ik as $id => $val) {
-                            $_nik = explode(':', $val);
-                            $_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
-                            $_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
-                            $_addons_details = DB::table('addons')
-                                ->where('addid', $_nik_id)
-                                ->first();
-                            $_addons_details->q = $_nik_q;
-
-                            array_push($addons, $_addons_details);
+                                    array_push($addons, $_addons_details);
+                                }
+                            }
                         }
                         $_all_orders[$k]->addons = $addons;
                     }

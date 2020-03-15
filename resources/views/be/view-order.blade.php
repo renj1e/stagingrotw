@@ -12,6 +12,7 @@
 				<div class="container">
                     <div class="row">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                            <label>Change Order status here</label>
                             <select class="form-control select-order-status" data-live-search="true" data-otid="{{$id}}" tabindex="-1" aria-hidden="true">
                                 @switch($order->order_trackstatus)
                                     @case('order_confirmed_and_received')

@@ -31,118 +31,77 @@
 	                                            <span aria-hidden="true">×</span>
 	                                        </button>
 	                                    </div>
-	                                    <div class="modal-body">
+                                        <form action="/rider-add" method="POST" enctype="multipart/form-data">
+	                                        @csrf
+		                                    <div class="modal-body">
+		                                        <div class="row justify-content-center">
+		                                            <div class="col-md-10 mx-auto">
+		                                                <div class="form-group row">
+		                                                    <div class="col-lg-12 col-md-12">
+		                                                        <label>Name</label>                   
+		                                                        <div class="input-group mb-1">
+		                                                            <input type="text" class="form-control" name="name" placeholder="Name">
+		                                                        </div>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-lg-12 col-md-12">
+		                                                        <label>Login Credentials</label>                   
+		                                                        <div class="input-group mb-1">
+		                                                            <input type="text" class="form-control" name="email" placeholder="Email">
+		                                                            <input type="password" class="form-control" name="password" placeholder="Password">
+		                                                        </div>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-lg-12 col-md-12">
+		                                                        <label>Contact Info</label>
+	                                                            <div class="p-0">
+	                                                                <input type="text" class="form-control" name="rider_contact_number[]" placeholder="09201234567">
+	                                                            </div>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-md-12 col-lg-12">
+		                                                        <label>Avatar</label>
+		                                                        <input type="file" name="rider_profile_avatar" class="form-control">
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-lg-12 col-md-12">
+		                                                        <label>Home Address</label>                                
+		                                                        <div class="input-group mb-1">
+		                                                            <textarea class="form-control" name="rider_profile_address"></textarea>
+		                                                        </div>               
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-lg-12 col-md-12">
+		                                                        <label>Postal Code</label>
+		                                                        <input type="text" class="form-control" placeholder="Postal code" name="rider_profile_zip_code">
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-md-12 col-lg-12">
+		                                                        <label>Driver's License (Front and Back)</label>
+		                                                        <input type="file" name="rider_profile_drivers_license" class="form-control">
 
-	                                        <div class="row justify-content-center">
-	                                            <div class="col-md-10 mx-auto">
-	                                                <div class="form-group row">
-	                                                    <div class="col-lg-12 col-md-12">
-	                                                        <label>Name</label>                   
-	                                                        <div class="input-group mb-1">
-	                                                            <input type="text" class="form-control" placeholder="First Name">
-	                                                            <input type="text" class="form-control" placeholder="Middle Name">
-	                                                            <input type="text" class="form-control" placeholder="Last Name">
-	                                                        </div>
-	                                                    </div>
-	                                                </div>
-	                                                <div class="form-group row">
-	                                                    <div class="col-lg-12 col-md-12">
-	                                                        <label>Login Credentials</label>                   
-	                                                        <div class="input-group mb-1">
-	                                                            <input type="text" class="form-control" placeholder="Username">
-	                                                            <input type="password" class="form-control" placeholder="Password">
-	                                                        </div>
-	                                                    </div>
-	                                                </div>
-	                                                <div class="form-group row">
-	                                                    <div class="col-md-12 col-lg-12">
-	                                                        <label>Avatar</label>
-	                                                        <br>
-	                                                        <div class="custom-dropzone text-center align-items-center" id="avatarUpload">
-	                                                            <div class="dz-default dz-message" data-dz-message="">
-	                                                                <h3 class="mt-2"><i class="material-icons md-36">cloud_download</i></h3>
-	                                                                <p>Drop here or click here to upload</p>
-	                                                            </div>
-	                                                        </div>
-
-	                                                    </div>
-	                                                </div>
-	                                                <div class="form-group row">
-	                                                    <div class="col-lg-12 col-md-12">
-	                                                        <label>Home Address</label>                                
-	                                                        <div class="input-group mb-1">
-	                                                            <input type="text" class="form-control" placeholder="Street">
-	                                                            <input type="text" class="form-control" placeholder="City / Municipality">
-	                                                        </div>                                                  
-	                                                        <div class="input-group mb-1">
-	                                                            <input type="text" class="form-control" placeholder="Province">
-	                                                            <input type="text" class="form-control" placeholder="Country">
-	                                                        </div>
-	                                                    </div>
-	                                                </div>
-	                                                <div class="form-group row">
-	                                                    <div class="col-lg-12 col-md-12">
-	                                                        <label>Contact Info</label>
-	                                                        <span class="btn btn-success btn-sm float-right mb-2"><i class="material-icons icon-right icon">add</i></span>
-	                                                        <div class="input-group mb-1">
-	                                                            <div class="col-lg-4 col-md-4 p-0">
-	                                                                <select class="form-control">
-	                                                                    <option>Select</option>
-	                                                                    <optgroup label="Social Media" >
-	                                                                        <option>Facebook</option>
-	                                                                        <option>Instagram</option>
-	                                                                    </optgroup>
-	                                                                    <optgroup label="Other" >
-	                                                                        <option>Mobile</option>
-	                                                                        <option>Landline</option>
-	                                                                    </optgroup>
-	                                                                </select>
-	                                                            </div>
-	                                                            <div class="col-lg-8 col-md-8 p-0">
-	                                                                <input type="text" class="form-control" placeholder="1234567890 or (https://www/facebook/com/urname)">
-	                                                            </div>
-	                                                        </div>
-	                                                    </div>
-	                                                </div>
-	                                                <div class="form-group row">
-	                                                    <div class="col-md-12 col-lg-12">
-	                                                        <label>Driver's License (Front and Back)</label>
-	                                                        <br>
-	                                                        <div class="custom-dropzone text-center align-items-center" id="dlUpload">
-	                                                            <div class="dz-default dz-message" data-dz-message="">
-	                                                                <h3 class="mt-2"><i class="material-icons md-36">cloud_download</i></h3>
-	                                                                <p>Drop here or click here to upload</p>
-	                                                            </div>
-	                                                        </div>
-
-	                                                    </div>
-	                                                </div>
-	                                                <div class="form-group row">
-	                                                    <div class="col-lg-12 col-md-12">
-	                                                        <label>Vehicle Info</label>
-	                                                        <span class="btn btn-success btn-sm float-right mb-2"><i class="material-icons icon-right icon">add</i></span>
-	                                                        <div class="input-group mb-1">
-	                                                            <div class="col-lg-4 col-md-4 p-0">
-	                                                                <select class="form-control">
-	                                                                    <option>Select</option>
-	                                                                    <option>Motorcycle</option>
-	                                                                    <option>Tricycle</option>
-	                                                                    <option>4 Wheels etc...</option>
-	                                                                </select>
-	                                                            </div>
-	                                                            <div class="col-lg-8 col-md-8 p-0">
-	                                                                <input type="text" class="form-control" placeholder="Plate #">
-	                                                            </div>
-	                                                        </div>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="modal-footer">
-	                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                                        <button type="button" class="btn btn-success">Save changes</button>
-	                                    </div>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="form-group row">
+		                                                    <div class="col-lg-12 col-md-12">
+		                                                        <label>Vehicle Info</label>
+		                                                        <input type="text" class="form-control" placeholder="Plate #" name="rider_profile_vehicle_number">
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="modal-footer">
+		                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		                                        <button type="submit" class="btn btn-success">Save changes</button>
+		                                    </div>
+		                                </form>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -158,6 +117,7 @@
 	                        <table class="table table-striped border" id="dataTables-example">
 	                            <thead>
 	                                <tr>
+	                                    <th style="width: 82px">Avatar</th>
 	                                    <th>Name</th>
 	                                    <th>Contact</th>
 	                                    <th>Vehicle</th>
@@ -167,6 +127,9 @@
 
                                     @foreach($riders as $k => $r)
 		                                <tr class="{{ ($k % 2 === 0)? 'even':'odd' }}">
+		                                	<td>		                                		
+		                                    	<figure class="avatar avatar-100 vm"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure>
+		                                	</td>
 		                                    <td>
 		                                    	{{ $r->name }}
 		                                    </td>
@@ -195,7 +158,8 @@
                                                     @endswitch
                                                     : {{ $r->rider_profile_vehicle_number }}</p>
 		                                        <p class="mb-0">
-		                                        	License: {{ $r->rider_profile_drivers_license }}
+		                                        	License:<br>                   		
+		                                    		<figure class="avatar avatar-100 vm"><img src="/storage/images/users/license/{{ $r->rider_profile_drivers_license }}" alt=""></figure>
 		                                        </p>
 		                                    </td>                 
 		                                </tr>

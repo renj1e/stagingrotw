@@ -141,7 +141,6 @@
 	                                    <th style="width: 82px">Photo</th>
 	                                    <th>Menu / Vendor</th>
 	                                    <th>Price</th>
-	                                    <th>Addons</th>
 	                                    <th>Actions</th>
 	                                </tr>
 	                            </thead>
@@ -154,7 +153,7 @@
 		                                    </td>
 		                                    <td>
 		                                        <p class="mb-0"><span>{{ $m->mname }}</span></p>		                                        
-			                                    <p class="mb-0">
+			                                    <p class="mb-0"> <small>Meal type: </small>
 			                                    	@foreach($m->mt as $type)
 	                                                    @switch($type)
 	                                                        @case('1')
@@ -178,6 +177,14 @@
 	                                                    @endswitch
 			                                    	@endforeach
 			                                    </p>
+		                                        <hr/>
+	                                        	@if(isset($m->addon_menu))
+			                                        <p class="mb-0"> <small>Add-ons:</small>
+				                                        @foreach($m->addon_menu as $_k => $_a)
+					                                        <span class="font-weight-bold">{{$_a->am_name}} (P{{$_a->am_price}}) {{(count($m->addon_menu) !== ($_k + 1))? ',' : ''}}</span>
+				                                        @endforeach
+				                                    </p>
+		                                        @endif
 		                                        <p class="mb-0"><span>{{ $m->mdesc }}</span></p>
 		                                        <hr/>
 		                                        <p class="mb-0"><span>Vendor: {{ $m->vendor->vname }}</span></p>
@@ -190,14 +197,8 @@
 		                                    <td>
 		                                    	<p class="mb-0">P{{ $m->mprice }}</p>
 		                                    </td>   
-		                                    <td>
-		                                        @foreach($m->addons as $_a)
-			                                        <p class="mb-0"><span class="font-weight-bold">{{$_a->addname}} (P{{$_a->addprice}})</span>: {{$_a->adddesc}}</p>
-		                                        @endforeach
-		                                    </td>
 		                                    <td class="center">
-		                                    	<a href="/product-update/{{$m->vendorid}}" class="btn btn-success px-3 btn-sm">Edit</a>
-		                                    	<a href="/product-delete/{{$m->vendorid}}" class="btn btn-success px-3 btn-sm">Edit</a>
+		                                    	<a href="/product-update/{{$m->menuid}}" class="btn btn-success px-3 btn-sm">Edit</a>
 		                                    </td>
 		                                </tr>
                                     @endforeach

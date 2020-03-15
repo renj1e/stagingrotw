@@ -175,11 +175,12 @@ $(function(){
 
     $('.btn-confirm-order').click(function(e){
         e.preventDefault();
-        var ids = $(this).data('orderid');
+        var ids = $(this).data('orderid');        
+    	var del_fee = $('#cartFooter').data('delivery-fee');
         $.ajax({
             type: 'POST',
             url: '/confirmorder',
-            data: {ids: ids, address: $('[name="deliveryadd"]:checked').val()},
+            data: {ids: ids, address: $('[name="deliveryadd"]:checked').val(), fee: del_fee},
             dataType: 'json',
             success:function(data){
                 console.log(data);

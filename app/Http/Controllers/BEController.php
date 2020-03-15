@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use App\Vendors;
 use App\VendorContact;
 use App\Menus;
 use App\Addons;
+use App\User;
+use App\RiderStatus;
+use App\RiderContact;
+use App\RiderProfile;
 
 class BEController extends Controller
 {
@@ -47,12 +52,30 @@ class BEController extends Controller
             ->select('users.*', 'rider_status.rider_status_status', 'rider_status.rider_status_id', 'rider_profile.rider_profile_address', 'rider_profile.rider_profile_zip_code', 'rider_contact.rider_contact_type', 'rider_contact.rider_contact_number')
             ->get();
 
-        $customers = DB::table('users')
-            ->where('users.utype', '=', 'customer')
-            ->join('order_track', 'order_track.order_trackcustomerid', '=', 'users.id')
+        // $customers = DB::table('users')
+        //     ->where('users.utype', '=', 'customer')
+        //     ->join('order_track', 'order_track.order_trackcustomerid', '=', 'users.id')
+        //     ->where(function ($query) {
+        //         $query->where('order_track.order_trackstatus', '=', 'processing')
+        //         	->orWhere('order_track.order_trackstatus', '=', 'purchased')
+        //         	->orWhere('order_track.order_trackstatus', '=', 'otw')
+        //         	->orWhere('order_track.order_trackstatus', '=', 'order_confirmed_and_received');
+        //     })
+        //     ->select('users.id', 'users.name', 'order_track.*')
+        //     ->get();
+
+        $customers = DB::table('order_track')
+            ->where(function ($query) {
+                $query->where('order_track.order_trackstatus', '=', 'processing')
+                	->orWhere('order_track.order_trackstatus', '=', 'purchased')
+                	->orWhere('order_track.order_trackstatus', '=', 'otw')
+                	->orWhere('order_track.order_trackstatus', '=', 'order_confirmed_and_received');
+            })
+            ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
             ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
             ->select('users.id', 'users.name', 'order_track.*', 'customer_address.*')
             ->get();
+
             // dd($customers);
         return view('be/index',
         	[
@@ -92,6 +115,64 @@ class BEController extends Controller
         		'riders' => $riders
         	]
         );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function riderAdd(Request $request)
+    {
+    	// dd($request);
+    	$rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension(); 
+    	$request->rider_profile_avatar->storeAs('public/images/users', $rider_profile_avatar);
+
+    	$rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
+    	$request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
+    	// dd($request);
+
+		// 'all-time-meal' = 1
+		// 'breakfast' = 2
+		// 'lunch' = 3
+		// 'dinner' = 4
+		// 'merienda' = 5
+
+		$u = new User;
+		$u->name = $request->name;
+		$u->email = $request->email;
+		$u->utype = 'rider';
+		$u->password = Hash::make($request->password);
+		$u->save();
+		
+		$_lid = $u->id;
+
+		$rs = new RiderStatus;
+		$rs->rider_status_rider_id = $_lid;
+		$rs->rider_status_status = 'not_active';
+		$rs->save();
+
+		foreach ($request->rider_contact_number as $k => $v)
+		{
+			$rs = new RiderContact;
+			$rs->rider_contact_rider_id = $_lid;
+			$rs->rider_contact_type = 'mobile';
+			$rs->rider_contact_number = $v;
+			$rs->save();
+		}
+
+		$rp = new RiderProfile;
+		$rp->rider_profile_rider_id = $_lid;
+		$rp->rider_profile_vehicle_type = 'others';
+		$rp->rider_profile_address = $request->rider_profile_address;
+		$rp->rider_profile_zip_code = $request->rider_profile_zip_code;
+		$rp->rider_profile_vehicle_number = $request->rider_profile_vehicle_number; // img
+		$rp->rider_profile_avatar = $rider_profile_avatar; // img
+		$rp->rider_profile_drivers_license = $rider_profile_drivers_license; // img
+		$rp->save();
+
+
+    	return redirect('/rider-list');
     }
 
     /**
@@ -169,7 +250,23 @@ class BEController extends Controller
 
     		$_addons = DB::table('addons')
 	            ->where('addmenuid', $v->menuid)
-	            ->get();
+	            ->get();        
+
+	        if(isset($v->maddons))
+	        {
+		        $_am = [];
+	        	$_ma = explode(',', str_replace(array('[',']'), '', $v->maddons));
+
+		        foreach ($_ma as $a)
+		        {
+		    		$_addon_menu = DB::table('addon_menu')
+			            ->where('amid', $a)
+			            ->first();
+
+			        array_push($_am, $_addon_menu);
+		        }
+	        	$menu[$k]->addon_menu = collect($_am);
+	        }
 	            
         	$_mt = explode(',', str_replace(array('[',']'), '', $v->mtype));
 
@@ -177,7 +274,7 @@ class BEController extends Controller
         	$menu[$k]->addons = $_addons;
         	$menu[$k]->mt = collect($_mt);
         }
-
+        // dd($menu);
         $vendors = DB::table('vendors')
             ->where('vendors.vis_activated', 1)
             ->get();
@@ -199,7 +296,9 @@ class BEController extends Controller
      */
     public function productAdd(Request $request)
     {
-    	dd($request);
+		$keys = array_keys($request->maddons);
+		$addons = '[' . implode(',', $keys) . ']';
+		// dd($addons);
     	$_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension(); 
     	$request->mavatar->storeAs('public/images', $_mavatar);
     	// dd($request);
@@ -214,17 +313,14 @@ class BEController extends Controller
 		$m->mname = $request->mname;
 		$m->vendorid = $request->vendorid;
 		$m->mtype = '[' . implode(',', $request->mtype) . ']';
+		$m->maddons = $addons;
 		$m->mdesc = $request->mdesc;
 		$m->mprice = $request->mprice;
 		$m->mquantity = $request->mquantity;
 		$m->mavatar = $_mavatar;
 		$m->save();
 		$_lid = $m->id;
-		
-		foreach ($request->maddons as $a) {
-			$key = array_search($a, $request->maddons);
 
-		}
 
     	return redirect('/product-list');
     }
@@ -237,29 +333,106 @@ class BEController extends Controller
         return response()->json($addons);
     }
 
-  //   /**
-  //    * Show the application dashboard.
-  //    *
-  //    * @return \Illuminate\Contracts\Support\Renderable
-  //    */
-  //   public function productUpdate($id)
-  //   {
-		// $menu = DB::table('menus')
-	 //            ->where('menuid', $id)
-	 //            ->first();
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function productUpdate($id)
+    {
+		$menu = DB::table('menus')
+	            ->where('menuid', $id)
+	            ->first();
 
-		// $_contact = DB::table('vendor_contact')
-  //           ->where('vc_vendor_id', $store->vendorid)
-  //           ->get();
+		$_contact = DB::table('vendor_contact')
+            ->where('vc_vendor_id', $menu->vendorid)
+            ->get();
 
-  //   	$menu->contact = $_contact;
-  //   	// dd($store);
-  //       return view('be/product-update',
-  //       	[
-  //       		'menu' => $menu
-  //       	]
-  //       );
-  //   }
+		$_vendor = DB::table('vendors')
+            ->where('vendorid', $menu->vendorid)
+            ->first();
+
+        $_ma = explode(',', str_replace(array('[',']'), '', $menu->maddons));
+        $_ma_arr = [];
+
+        if(count($_ma) > 0)
+        {
+	        foreach ($_ma as $k => $v)
+	        {
+		        $addons = DB::table('addon_menu')
+		            ->where('amid', (int) $v)
+		            ->first();
+		        array_push($_ma_arr, $addons);
+	        }
+
+	    	$menu->addons = collect($_ma_arr);
+        }
+
+        $_mtype = explode(',', str_replace(array('[',']'), '', $menu->mtype));
+        $_mtype_arr = [];
+
+        if(count($_mtype) > 0)
+        {
+	        foreach ($_mtype as $k => $v)
+	        {
+		        array_push($_mtype_arr, (int) $v);
+	        }
+
+	    	$menu->type = $_mtype_arr;
+        }
+
+    	$menu->contact = $_contact;
+    	$menu->vendor = $_vendor;
+
+        $vendors = DB::table('vendors')
+            ->where('vendors.vis_activated', 1)
+            ->get();
+           // dd($menu);
+        return view('be/product-update',
+        	[
+        		'menu' => $menu,
+        		'vendors' => $vendors
+        	]
+        );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function productSaveUpdate(Request $request)
+    {
+		// dd($request);
+		if($request->maddons)
+		{
+			$keys = array_keys($request->maddons);
+			$addons = '[' . implode(',', $keys) . ']';
+		}
+		else
+		{
+			$addons = null;
+		}
+		$type = '[' . implode(',', $request->mtype) . ']';
+		if($request->mavatar)
+		{
+	    	$_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension(); 
+	    	$request->mavatar->storeAs('public/images', $_mavatar);
+		}
+
+    	Menus::where('menuid', (int) $request->menuid)
+        	->update([
+        		'mname' => $request->mname,
+        		'vendorid' => $request->vendorid,
+        		'mtype' => $type,
+        		'mdesc' => $request->mdesc,
+        		'mprice' => $request->mprice,
+        		'mquantity' => $request->mquantity,
+        		'maddons' => $addons,
+        	]);
+
+    	return redirect('/product-list');
+    }
 
     /**
      * Show the application dashboard.
@@ -401,59 +574,15 @@ class BEController extends Controller
             ->where('order_track.order_track_riderid', '=', \Auth::user()->id)
             ->where(function ($query) {
                 $query->where('order_track.order_trackstatus', '=', 'processing')
+                	->orWhere('order_track.order_trackstatus', '=', 'processing')
                 	->orWhere('order_track.order_trackstatus', '=', 'purchased')
-                	->orWhere('order_track.order_trackstatus', '=', 'otw')
-                	->orWhere('order_track.order_trackstatus', '=', 'delivered');
+                	->orWhere('order_track.order_trackstatus', '=', 'otw');
+                	// ->orWhere('order_track.order_trackstatus', '=', 'delivered');
             })
             ->join('users', 'users.id', '=', 'order_track.order_trackcustomerid')
             ->join('customer_address', 'customer_address.caid', '=', 'order_track.order_trackdelivery_addressid')
             ->select('order_track.*', 'users.id', 'users.name', 'customer_address.*')
             ->get();
-
-        foreach ($orders as $k => $v) {
-        	$_o = [];
-        	if($v->order_trackorderid !== '{}' || $v->order_trackorderid !== '[]')
-        	{
-	        	$_ik = explode(',', str_replace(array('[',']'), '', $v->order_trackorderid));
-
-	        	foreach ($_ik as $id => $val) {
-	        		$_oid = (int) str_replace(array('"'), '', $val);
-
-	        		$_order_details = DB::table('order')
-			            ->where('orderid', $_oid)
-			            ->join('menus', 'menus.menuid', 'order.ordermenuid')
-			            ->join('vendors', 'vendors.vendorid', 'menus.vendorid')
-			            ->select('order.*', 'menus.*', 'vendors.*')
-			            ->first();
-	        		array_push($_o, $_order_details);
-	        	}
-
-	        	$_all_orders = $orders[$k]->orders = $_o;
-
-		        foreach ($_all_orders as $k => $x) {
-		        	$addons = [];
-		        	if($x->orderaddons !== '{}' || $x->orderaddons !== '[]')
-		        	{
-			        	$_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
-
-			        	foreach ($_ik as $id => $val) {
-			        		$_nik = explode(':', $val);
-			        		$_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
-			        		$_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
-			        		$_addons_details = DB::table('addons')
-					            ->where('addid', $_nik_id)
-					            ->first();
-					        $_addons_details->q = $_nik_q;
-
-			        		array_push($addons, $_addons_details);
-			        	}
-			        	$_all_orders[$k]->addons = $addons;
-		        	}
-		        }
-
-
-        	}
-        }
 
         $status = DB::table('rider_status')
             ->where('rider_status_rider_id', \Auth::user()->id)
@@ -619,15 +748,18 @@ class BEController extends Controller
 			        	$_ik = explode(',', str_replace(array('{','}'), '', $v->orderaddons));
 
 			        	foreach ($_ik as $id => $val) {
-			        		$_nik = explode(':', $val);
-			        		$_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
-			        		$_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
-			        		$_addons_details = DB::table('addons')
-					            ->where('addid', $_nik_id)
-					            ->first();
-					        $_addons_details->q = $_nik_q;
+			        		if(isset($val) && $val !== '')
+			        		{
+				        		$_nik = explode(':', $val);
+				        		$_nik_id = (int) str_replace(array('"'), '', $_nik[0]);
+				        		$_nik_q = (int) str_replace(array('"'), '', $_nik[1]);
+				        		$_addons_details = DB::table('addons')
+						            ->where('addid', $_nik_id)
+						            ->first();
+						        $_addons_details->q = $_nik_q;
 
-			        		array_push($addons, $_addons_details);
+				        		array_push($addons, $_addons_details);
+			        		}
 			        	}
 			        	$_all_orders[$k]->addons = $addons;
 		        	}

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/assets/fe/css/red-color.css">
     <link rel="stylesheet" href="/assets/fe/css/yellow-color.css">
     <link rel="stylesheet" href="/assets/fe/css/responsive.css">
+    <link rel="stylesheet" href="/assets/fe/css/plugins.css">
 </head>
 <body itemscope>
     <div id="app">
@@ -186,10 +187,10 @@
     </div>
     <script src="/assets/fe/js/jquery.min.js"></script>
     <script src="/assets/fe/js/bootstrap.min.js"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
     <script src="/assets/fe/js/plugins.js"></script>
     <script src="/assets/fe/js/main.js"></script>
     <script src="/assets/fe/js/cart.js"></script>
-    <script src="{{ asset('/js/app.js') }}"></script>
     @stack('scripts')
     @if(\Auth::user())
     <script>

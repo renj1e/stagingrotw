@@ -37,7 +37,7 @@ Route::get('/admin', 'BEController@index')->name('admin-index');
 Route::get('/rider', 'BEController@rider')->name('admin-rider');
 
 Route::get('/rider-list', 'BEController@riderList')->name('admin-rider-list');
-// Add
+Route::post('/rider-add', 'BEController@riderAdd')->name('admin-rider-add');
 // Update
 
 Route::get('/customer-list', 'BEController@customerList')->name('admin-customer-list');

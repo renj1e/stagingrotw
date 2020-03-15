@@ -12,6 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                            <label>Change your status here</label>
                             <select class="form-control select-rider-status" data-live-search="true" tabindex="-1" aria-hidden="true">
                                 @switch($status->rider_status_status)
                                     @case('hired')

@@ -23,6 +23,7 @@ class OrderTrack extends Model
 			$order->order_trackorderid = json_encode(explode(',', $data['ids']));
 			$order->order_trackdelivery_addressid = $data['address'];
 			$order->order_trackstatus = 'order_confirmed_and_received';
+			$order->order_trackdelivery_fee = $data['fee'];
 			$order->order_trackremarks = '';
 			$order->order_tracksched_date = '';
 

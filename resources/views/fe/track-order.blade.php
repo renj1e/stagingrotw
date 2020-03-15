@@ -41,7 +41,7 @@
 
                                 <div class="order-list">
                                     @foreach($trackorders as $o)
-                                        <div class="welcome-note yellow-bg brd-rd5">
+                                        <div class="welcome-note yellow-bg brd-rd5" data-order-price="{{$o->order_trackdelivery_fee}}">
                                         <p itemprop="description">Order Status: 
                                             @switch($o->order_trackstatus)
                                                 @case('order_confirmed_and_received')
@@ -80,9 +80,13 @@
                                                 <!-- <a class="brd-rd2" href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">Order Details</a> -->
                                                 <ul class="post-meta">
                                                     <li><i class="fa fa-check-circle-o"></i>Add-ons:
+                                                        @if(count($order->addons) > 0)
                                                         @foreach($order->addons as $li)
                                                         <span data-order-price="{{ $li->addprice * $li->q }}">{{ $li->addname }} (P{{ $li->addprice }}.00) x {{ $li->q }}</span>,
                                                         @endforeach
+                                                        @else
+                                                            <span>No Orders yet to track!</span>
+                                                        @endif
                                                     </li>
                                                     <!-- <li><i class="flaticon-transport"></i> 00min</li> -->
                                                 </ul>
