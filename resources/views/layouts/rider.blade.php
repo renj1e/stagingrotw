@@ -47,7 +47,6 @@
 </head>
 <body class="h-100 menu-close">
     <div id="app">
-        <online-user></online-user>
         <div class="loader">
             <div>
                 <div class="loader-animation">
@@ -84,7 +83,6 @@
                                         @csrf
                                     </form>
                                     <a href="/admin" class="btn text-uppercase px-3 btn-sm btn-default">Dashboard</a>
-                                    <a href="/profile" class="btn text-uppercase px-3 btn-sm btn-default">Profile</a>
                                 </div>
                             </div>
                         </div>

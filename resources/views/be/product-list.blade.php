@@ -178,6 +178,13 @@
 	                                                    @endswitch
 			                                    	@endforeach
 			                                    </p>
+			                                    <p>Status: 
+			                                    	@if($m->mis_activated === 1)
+			                                    		<span class="badge badge-success">Active </span>
+			                                    	@else
+			                                    		<span class="badge badge-danger">Not Active </span>
+			                                    	@endif
+			                                    </p>
 		                                        <hr/>
 	                                        	@if(isset($m->addon_menu))
 			                                        <p class="mb-0"> <small>Add-ons:</small>

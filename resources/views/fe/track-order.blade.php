@@ -68,7 +68,7 @@
                                         @foreach($o->orders as $order)
                                         <div class="order-item brd-rd5" data-order-price="{{ ($order->mprice * $order->orderquantity) }}">
                                             <div class="order-thumb brd-rd5">
-                                                <a href="/menu-detail/{{ $order->menuid }}"title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                                <a href="/menu-detail/{{ $order->menuid }}"title="" itemprop="url"><img src="/storage/images/{{ $order->mavatar }}" alt="order-img1.jpg" itemprop="image"></a>
                                             </div>
                                             <div class="order-info">
                                                 <span class="red-clr">
@@ -77,7 +77,7 @@
                                                 <h4 itemprop="headline"><a href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">{{ $order->mname }} x {{ $order->orderquantity }}</a></h4>
                                                 
                                                 <span class="price">P{{ ($order->mprice * $order->orderquantity) }}.00</span>
-                                                <!-- <a class="brd-rd2" href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">Order Details</a> -->
+                                                <!-- <a class="brd-rd2" href="/menu-detail/{{ $order->menuid }}" title="" itemprop="url">Order Details</a> 
                                                 <ul class="post-meta">
                                                     <li><i class="fa fa-check-circle-o"></i>Add-ons:
                                                         @if(count($order->addons) > 0)
@@ -88,8 +88,8 @@
                                                             <span>No Orders yet to track!</span>
                                                         @endif
                                                     </li>
-                                                    <!-- <li><i class="flaticon-transport"></i> 00min</li> -->
-                                                </ul>
+                                                    <!- <li><i class="flaticon-transport"></i> 00min</li> ->
+                                                </ul>-->
                                             </div>
                                         </div>
                                         @endforeach

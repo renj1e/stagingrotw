@@ -188,14 +188,21 @@
                         success:function(riders){
                         	console.log(riders)
                         	$('#riders').empty();
-                        	$('[name="otid"]').prop('value', id);
-							for ( var i = 0, l = riders.length; i < l; i++ ) {
+                            if(riders.length > 0)
+                            {
+                                $('[name="otid"]').prop('value', id);
+                                for ( var i = 0, l = riders.length; i < l; i++ ) {
 
-                                $('#riders').append('<div class="custom-control custom-radio">'+
-                                    '<input type="radio" name="rider" value="'+riders[i].id+'" class="custom-control-input" id="rider-'+i+'">'+
-                                    '<label class="custom-control-label" for="rider-'+i+'"><span class="font-weight-bold">'+riders[i].name+'</span> : Area : <span>'+riders[i].rider_profile_zip_code+'</span> <span>'+riders[i].rider_profile_address+'</span></label>'+
-                                '</div>');
-							}
+                                    $('#riders').append('<div class="custom-control custom-radio">'+
+                                        '<input type="radio" name="rider" value="'+riders[i].id+'" class="custom-control-input" id="rider-'+i+'">'+
+                                        '<label class="custom-control-label" for="rider-'+i+'"><span class="font-weight-bold">'+riders[i].name+'</span> : Area : <span>'+riders[i].rider_profile_zip_code+'</span> <span>'+riders[i].rider_profile_address+'</span></label>'+
+                                    '</div>');
+                                }
+                            }
+                            else
+                            {
+                                $('#riders').append('<p>No available Rider at this moment!</p>');
+                            }
                         },
                         error:function(data){
                           console.log(data);

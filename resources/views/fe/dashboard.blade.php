@@ -36,7 +36,7 @@
                                         <div class="profile-sidebar brd-rd5 wow fadeIn" data-wow-delay="0.2s">
                                             <div class="profile-sidebar-inner brd-rd5">
                                                 <div class="user-info red-bg">
-                                                    <img class="brd-rd50" src="/assets/fe/images/resource/user-avatar.jpg" alt="user-avatar.jpg" itemprop="image">
+                                                    <img class="brd-rd50" src="/assets/fe/images/resource/profile-thumb2.jpg" alt="user-avatar.jpg" itemprop="image">
                                                     <div class="user-info-inner">
                                                         <h5 itemprop="headline"><a href="#" title="" itemprop="url">{{ \Auth::user()->name }}</a></h5>
                                                         <span><a href="#" title="" itemprop="url">{{ \Auth::user()->email }}</a></span>
@@ -70,7 +70,7 @@
                                                             @foreach($o->orders as $po)
                                                                 <div class="order-item brd-rd5">
                                                                     <div class="order-thumb brd-rd5">
-                                                                        <a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url"><img src="/assets/fe/images/resource/order-img1.jpg" alt="order-img1.jpg" itemprop="image"></a>
+                                                                        <a href="/menu-detail/{{ $po->menuid }}" title="" itemprop="url"><img src="/storage/images/{{ $po->mavatar }}" alt="order-img1.jpg" itemprop="image"></a>
                                                                     </div>
                                                                     <div class="order-info">
                                                                         <span class="red-clr">
@@ -119,13 +119,13 @@
 														    	</div>
 														    </div>
 														    <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <label for="label">Postal Code</label>
+                                                                    <input type="text" class="form-control" name="cazipcode" placeholder="Postal Code">
+                                                                </div>
 														    	<div class="col-sm-6">
 															        <label for="label">Province</label>
 															        <input type="text" class="form-control" name="caprovince" placeholder="Address Province">
-														    	</div>
-														    	<div class="col-sm-6">
-															        <label for="label">Country</label>
-															        <input type="text" class="form-control" name="cacountry" placeholder="Address Country">
 														    	</div>
 														    </div>
 														    <button type="submit" class="btn btn-success btn-add-new-address">Add</button>
@@ -144,28 +144,6 @@
                                                     <h4 itemprop="headline">ACCOUNT SETTINGS</h4>
                                                     <div class="account-settings-inner">
                                                         <div class="row">
-                                                            <div class="col-md-4 col-sm-4 col-lg-4">
-                                                                <div class="profile-info text-center">
-                                                                    <div class="profile-thumb brd-rd50">
-                                                                        <img id="profile-display" src="/assets/fe/images/resource/profile-img1.jpg" alt="profile-img1.jpg" itemprop="image">
-                                                                    </div>
-                                                                    <a class="red-clr change-password" href="javascript:void(0)" title="" itemprop="url">Change Password</a>
-                                                                    <div class="profile-img-upload-btn">
-                                                                        <label class="fileContainer brd-rd5 yellow-bg">
-                                                                            UPLOAD PICTURE
-                                                                            <input id="profile-upload" type="file"/>
-                                                                        </label>
-                                                                    </div>
-                                                                    <p itemprop="description">Upload a profile picture or choose one of the following</p>
-                                                                    <div class="default-img-lst">
-                                                                        <img class="brd-rd50" src="/assets/fe/images/resource/profile-thumb1.jpg" alt="profile-thumb1.jpg" itemprop="image">
-                                                                        <img class="brd-rd50" src="/assets/fe/images/resource/profile-thumb2.jpg" alt="profile-thumb2.jpg" itemprop="image">
-                                                                        <img class="brd-rd50" src="/assets/fe/images/resource/profile-thumb3.jpg" alt="profile-thumb3.jpg" itemprop="image">
-                                                                        <img class="brd-rd50" src="/assets/fe/images/resource/profile-thumb4.jpg" alt="profile-thumb4.jpg" itemprop="image">
-                                                                        <img class="brd-rd50" src="/assets/fe/images/resource/profile-thumb5.jpg" alt="profile-thumb5.jpg" itemprop="image">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                             <div class="col-md-8 col-sm-8 col-lg-8">
                                                                 <div class="profile-info-form-wrap">
                                                                     <div class="form-holder">
@@ -185,7 +163,7 @@
                                                                             </div>
                                                                         </form>
                                                                     </div>
-
+                                                                    <br>
                                                                     <div class="form-holder">
                                                                         <form class="profile-info-form" id="profile-info-password-form">
                                                                             <div class="row mrg20">

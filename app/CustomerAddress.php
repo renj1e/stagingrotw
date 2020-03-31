@@ -16,7 +16,8 @@ class CustomerAddress extends Model
 		$order->castreet = $data['castreet'];		
 		$order->cacity = $data['cacity'];			
 		$order->caprovince = $data['caprovince'];	
-		$order->cacountry = $data['cacountry'];		
+		$order->cacountry = 'PH';		
+		$order->cazipcode = $data['cazipcode'];		
 
 		if($order->save())
 		{

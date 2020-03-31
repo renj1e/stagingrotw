@@ -24,7 +24,162 @@ class BEController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');        
+        $this->middleware('auth');
+    }
+
+    public function myProfile(Request $request)
+    {
+        if($request->input('ref_id') !== null)
+        {
+            $_id = (int) $request->query('ref_id');
+            $user = DB::table('users')
+                ->where('users.id', '=', $_id)
+                ->select('users.id', 'users.name', 'users.email', 'users.utype', 'users.gender', 'users.status', 'users.created_at', 'users.updated_at')
+                ->first();
+
+            // if no data has been found using "ref_id"
+            if($user === null)
+            {
+                $user = DB::table('users')
+                    ->where('users.id', '=', \Auth::user()->id)
+                    ->select('users.id', 'users.name', 'users.email', 'users.utype', 'users.gender', 'users.status', 'users.created_at', 'users.updated_at')
+                    ->first();
+
+                // if no data has been found using "ref_id"
+
+            }
+            $user->ref_id = $_id;
+        }
+        else
+        {
+            $user = DB::table('users')
+                ->where('users.id', '=', \Auth::user()->id)
+                ->select('users.id', 'users.name', 'users.email', 'users.utype', 'users.gender', 'users.status', 'users.created_at', 'users.updated_at')
+                ->first();
+            $user->ref_id = 0;
+        }
+
+        if($user->utype === 'rider')
+        {
+            $user->profile = DB::table('rider_profile')
+                ->where('rider_profile.rider_profile_rider_id', '=', $user->id)
+                ->select(
+                    'rider_profile.rider_profile_id',
+                    'rider_profile.rider_profile_address',
+                    'rider_profile.rider_profile_vehicle_number',
+                    'rider_profile.rider_profile_vehicle_type',
+                    'rider_profile.rider_profile_drivers_license',
+                    'rider_profile.rider_profile_avatar',
+                    'rider_profile.rider_profile_zip_code'
+                )
+                ->first();
+
+            $user->contact = DB::table('rider_contact')
+                ->where('rider_contact.rider_contact_rider_id', '=', $user->id)
+                ->select(
+                    'rider_contact.rider_contact_id',
+                    'rider_contact.rider_contact_rider_id',
+                    'rider_contact.rider_contact_number'
+                )
+                ->first();
+        }
+        // dd($user);
+        if($user->utype === 'customer')
+        {
+            return redirect('/profile');
+        }
+
+        // dd(\Auth::user()->utype);
+
+        if(\Auth::user()->utype === 'staff')
+        {
+            return view('be/profile',
+                [
+                    'user' => $user
+                ]
+            );
+        }
+        if(\Auth::user()->utype === 'rider')
+        {
+            return view('be/rider-profile',
+                [
+                    'user' => $user
+                ]
+            );
+        }
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function profileSaveUpdate(Request $request)
+    {
+         // dd($request);
+        if($request->rider_profile_avatar)
+        {
+            $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension(); 
+            $request->rider_profile_avatar->storeAs('public/images/users', $rider_profile_avatar);
+        }
+        if($request->rider_profile_drivers_license)
+        {
+            $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
+            $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
+        }
+
+        User::where('id', (int) $request->id)
+            ->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'status' => $request->status
+            ]);
+
+        if($request->new_password || $request->confirm_password)
+        {
+            User::where('users', (int) $request->menuid)
+                ->update([
+                    'password' => Hash::make($request->new_password)
+                ]);
+        }
+
+        RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
+            ->update([
+                'rider_profile_address' => $request->rider_profile_address,
+                'rider_profile_zip_code' => $request->rider_profile_zip_code,
+                'rider_profile_vehicle_number' => $request->rider_profile_vehicle_number
+            ]);
+
+        if($request->rider_profile_avatar)
+        {
+            RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
+                ->update([
+                    'rider_profile_avatar' => $rider_profile_avatar
+                ]);
+        }
+
+        if($request->rider_profile_drivers_license)
+        {
+            RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
+                ->update([
+                    'rider_profile_drivers_license' => $rider_profile_drivers_license
+                ]);
+        }
+
+        RiderContact::where('rider_contact_id', (int) $request->rider_contact_id)
+            ->update([
+                'rider_contact_number' => $request->rider_contact_number,
+            ]);
+
+        if((int) $request->ref_id)
+        {
+            return redirect('/profile?ref_id=' . $request->ref_id);
+        }
+        else
+        {
+            return redirect('/profile');
+        }
     }
 
     /**
@@ -34,6 +189,10 @@ class BEController extends Controller
      */
     public function index()
     {
+        if(\Auth::user()->status === 'not_active')
+        {
+            return redirect('/not-active');
+        }
     	if(\Auth::user()->utype === 'customer')
         {
         	return redirect('/dashboard');
@@ -45,6 +204,7 @@ class BEController extends Controller
 
         $riders = DB::table('users')
             ->where('utype',  'rider')
+            ->where('status',  'active')
             ->join('rider_status', 'rider_status.rider_status_rider_id', '=', 'users.id')
             ->join('rider_profile', 'rider_profile.rider_profile_rider_id', '=', 'users.id')
             ->join('rider_contact', 'rider_contact.rider_contact_rider_id', '=', 'users.id')
@@ -296,8 +456,12 @@ class BEController extends Controller
      */
     public function productAdd(Request $request)
     {
-		$keys = array_keys($request->maddons);
-		$addons = '[' . implode(',', $keys) . ']';
+        if(isset($request->maddons))
+        {
+            $keys = array_keys($request->maddons);
+            $addons = '[' . implode(',', $keys) . ']';
+        }
+
 		// dd($addons);
     	$_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension(); 
     	$request->mavatar->storeAs('public/images', $_mavatar);
@@ -313,15 +477,19 @@ class BEController extends Controller
 		$m->mname = $request->mname;
 		$m->vendorid = $request->vendorid;
 		$m->mtype = '[' . implode(',', $request->mtype) . ']';
-		$m->maddons = $addons;
+
+        if(isset($request->maddons))
+        {
+            $m->maddons = $addons;
+        }
+
 		$m->mdesc = $request->mdesc;
 		$m->mprice = $request->mprice;
 		$m->mquantity = $request->mquantity;
 		$m->mavatar = $_mavatar;
 		$m->save();
 		$_lid = $m->id;
-
-
+        
     	return redirect('/product-list');
     }
 
@@ -427,7 +595,8 @@ class BEController extends Controller
         		'mtype' => $type,
         		'mdesc' => $request->mdesc,
         		'mprice' => $request->mprice,
-        		'mquantity' => $request->mquantity,
+                'mquantity' => $request->mquantity,
+                'mis_activated' => $request->mis_activated,
         		'maddons' => $addons,
         	]);
 
@@ -503,23 +672,9 @@ class BEController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function storeUpdate($id)
+    public function notActive()
     {
-		$store = DB::table('vendors')
-	            ->where('vendorid', $id)
-	            ->first();
-
-		$_contact = DB::table('vendor_contact')
-            ->where('vc_vendor_id', $store->vendorid)
-            ->get();
-
-    	$store->contact = $_contact;
-    	// dd($store);
-        return view('be/store-update',
-        	[
-        		'store' => $store
-        	]
-        );
+        return view('be/not-active');
     }
 
     /**
@@ -561,6 +716,10 @@ class BEController extends Controller
      */
     public function rider()
     {
+        if(\Auth::user()->status === 'not_active')
+        {
+            return redirect('/not-active');
+        }
         if(\Auth::user()->utype === 'staff')
         {
             return redirect('/admin');
@@ -615,6 +774,7 @@ class BEController extends Controller
 
         $riders = DB::table('users')
             ->where('utype',  'rider')
+            ->where('status',  'active')
             ->join('rider_status', 'rider_status.rider_status_rider_id', '=', 'users.id')
             ->join('rider_profile', 'rider_profile.rider_profile_rider_id', '=', 'users.id')
             ->join('rider_contact', 'rider_contact.rider_contact_rider_id', '=', 'users.id')
@@ -637,6 +797,7 @@ class BEController extends Controller
 
         $riders = DB::table('users')
             ->where('utype',  'rider')
+            // ->where('status',  'active')
             ->join('rider_status', 'rider_status.rider_status_rider_id', '=', 'users.id')
             ->join('rider_profile', function($join) use ($zipcode) {
             	$join->on('rider_profile.rider_profile_rider_id', '=', 'users.id')

@@ -200,14 +200,26 @@
             dataType: 'json',
             success:function(data){
                 $('#checkoutAddress').empty();
-                $.each(data, function( i, v ) {
-                    $('#checkoutAddress').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
+                if(data.length > 0)
+                {
+                    $.each(data, function( i, v ) {
+                        $('#checkoutAddress').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
+                            '<div class="address-holder">'+
+                                '<h4><input type="radio" name="deliveryadd" checked value="'+v.caid+'"> '+v.calabel+'</h4>'+
+                                '<p>'+v.castreet+' '+v.cacity+', '+v.caprovince+' '+v.cacountry+'</p>'+
+                            '</div>'+
+                        '</div>');
+                    });
+                }
+                else
+                {
+                    $('#checkoutAddress').append('<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">'+
                         '<div class="address-holder">'+
-                            '<h4><input type="radio" name="deliveryadd" checked value="'+v.caid+'"> '+v.calabel+'</h4>'+
-                            '<p>'+v.castreet+' '+v.cacity+', '+v.caprovince+' '+v.cacountry+'</p>'+
+                            '<h4>No Delivery Address added yet!</h4>'+
+                            '<p>Click <a href="/dashboard" class="font-weight-bold"><b>here</b></a> to add your deliver address.</p>'+
                         '</div>'+
                     '</div>');
-                });
+                }
             },
             error:function(data){
                 console.log(data);

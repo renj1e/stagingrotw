@@ -10,24 +10,6 @@
             <p class="m-0"><small class="text-mute text-uppercase d-block font-weight-bold">panel</small></p>
         </div>
     </a>
-    <div class="sidebar-profile text-center">
-        <figure class="avatar avatar-120 avatar-circle"><img src="/assets/be/img/user1.jpg" alt=""></figure>
-        <div class="dropdown mt-3 w-100">
-            <button class="btn btn-link dropdown-toggle no-caret w-100" type="button" id="dropdownMenuButton13" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="d-flex justify-content-center">
-                    <span class="ml-3">
-                        {{ \Auth::user()->name }}<br>
-                        <span class="text-mute small">{{ \Auth::user()->utype }}</span>
-                    </span>
-                </span>
-            </button>
-            <div class="dropdown-menu w-100 text-center " aria-labelledby="dropdownMenuButton13">
-                <a class="dropdown-item" href="profile.html">My Profile</a>
-                <a class="dropdown-item" href="#">Activity</a>
-                <a class="dropdown-item text-danger" href="#">Sign Out <i class="material-icons icon-right icon">exit_to_app</i></a>
-            </div>
-        </div>
-    </div>
 
     <ul class="nav flex-column">
         <li class="nav-item">

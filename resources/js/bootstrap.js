@@ -36,20 +36,20 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from 'laravel-echo';
+// import Echo from 'laravel-echo';
 
-window.Pusher = require('pusher-js');
+// window.Pusher = require('pusher-js');
 
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    appId: process.env.MIX_PUSHER_APP_ID,
-    key: process.env.MIX_PUSHER_APP_KEY,
-    secret: process.env.MIX_PUSHER_APP_SECRET,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    //wsHost: 'webstackstudio.com',
-    wsHost: window.location.hostname,
-    //wsHost: 'larapusher.local',
-    wsPort: 6001,
-    wssPort: 6001,
-    enabledTransports: ['ws', 'wss'],   
-});
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     appId: process.env.MIX_PUSHER_APP_ID,
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     secret: process.env.MIX_PUSHER_APP_SECRET,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     //wsHost: 'webstackstudio.com',
+//     wsHost: window.location.hostname,
+//     //wsHost: 'larapusher.local',
+//     wsPort: 6001,
+//     wssPort: 6001,
+//     enabledTransports: ['ws', 'wss'],   
+// });

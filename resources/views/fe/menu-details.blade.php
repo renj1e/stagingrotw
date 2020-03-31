@@ -39,7 +39,7 @@
 										<div class="restaurant-detail-info">
 											<div class="restaurant-detail-thumb">
 												<ul class="restaurant-detail-img-carousel">
-													<li><img class="brd-rd3" src="/assets/fe/images/resource/restaurant-detail-big-img1-1.jpg" alt="restaurant-detail-big-img1-1.jpg" itemprop="image"></li>
+													<li><img class="brd-rd3" src="/storage/images/{{ $menu->mavatar }}" alt="restaurant-detail-big-img1-1.jpg" itemprop="image"></li>
 												</ul>
 											</div>
 
@@ -60,7 +60,7 @@
 														<input class="qty" type="number" name="orderquantity" value="1">
 													</div>
 													<p itemprop="description">{{ $menu->mdesc }}</p>
-
+                                                    {{--
 	                                                <h3>Add-ons</h3>
 	                                                <div class="add-ons">
 	                                                	@foreach($addons as $addon)
@@ -70,6 +70,8 @@
 		                                                    </div>
 	                                                	@endforeach
 	                                                </div>
+                                                    --}}
+                                                    <br>
 	                                                @auth                             
 	                                                	<button class="brd-rd3 btn btn-sm btn-order-now-menu-details order-now-menu-details" title="" itemprop="url">Order Now</button>
 	                                                @else	             

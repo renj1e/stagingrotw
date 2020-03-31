@@ -40,7 +40,7 @@
                                 <option value="processing">Processing </option>
                                 <option value="purchased">Purchased </option>
                                 <option value="otw">On the way </option>
-                                <option value="delivered">delivered </option>
+                                <option value="delivered">Delivered </option>
                             </select><br/>
                         </div>                        
                     </div>

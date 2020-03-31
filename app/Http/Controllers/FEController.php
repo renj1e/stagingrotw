@@ -80,10 +80,10 @@ class FEController extends Controller
                     }
 
                     $_all_orders = $orders[$k]->orders = $_o;
-
                     foreach ($_all_orders as $k => $x) {
                         $addons = [];
-                        if($x->orderaddons !== '{}' || $x->orderaddons !== '[]')
+                        
+                        if($x->orderaddons !== '{}')
                         {
                             $_ik = explode(',', str_replace(array('{','}'), '', $x->orderaddons));
 
@@ -98,8 +98,8 @@ class FEController extends Controller
 
                                 array_push($addons, $_addons_details);
                             }
-                            $_all_orders[$k]->addons = $addons;
                         }
+                            $_all_orders[$k]->addons = $addons;
                     }
 
 

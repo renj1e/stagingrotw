@@ -127,8 +127,9 @@
 
                                     @foreach($riders as $k => $r)
 		                                <tr class="{{ ($k % 2 === 0)? 'even':'odd' }}">
-		                                	<td>		                                		
-		                                    	<figure class="avatar avatar-100 vm"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure>
+		                                	<td>		
+		                                		<a href="/profile?ref_id={{$r->id}}">                              		
+		                                    	<figure class="avatar avatar-100 vm"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure></a>  
 		                                	</td>
 		                                    <td>
 		                                    	{{ $r->name }}

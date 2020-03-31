@@ -10,7 +10,7 @@ $(function(){
 			url: '/getcartcount',
 			dataType: 'json',
 			success:function(data){
-				console.log(data);
+				// console.log(data);
 				$('.cart_count').text(data)
 			},
 			error:function(data){

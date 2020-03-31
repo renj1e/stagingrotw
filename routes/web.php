@@ -32,13 +32,16 @@ Route::post('/removeaddress/{id}', 'FEController@removeAddress')->name('remove-a
 Route::post('/confirmorder', 'FEController@confirmOrder')->name('confirm-order');
 
 // BACKEND ROUTES
+Route::get('/not-active', 'BEController@notActive')->name('not-active');
+
+Route::get('/profile', 'BEController@myProfile')->name('my-profile');
+Route::post('/profile-save-update', 'BEController@profileSaveUpdate')->name('profile-save-update');
 Route::get('/admin', 'BEController@index')->name('admin-index');
 
 Route::get('/rider', 'BEController@rider')->name('admin-rider');
 
 Route::get('/rider-list', 'BEController@riderList')->name('admin-rider-list');
 Route::post('/rider-add', 'BEController@riderAdd')->name('admin-rider-add');
-// Update
 
 Route::get('/customer-list', 'BEController@customerList')->name('admin-customer-list');
 

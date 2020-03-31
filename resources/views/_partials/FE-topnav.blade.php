@@ -32,7 +32,11 @@
                         <li><a href="/our-menu" title="OUR MENU" itemprop="url"><span class="red-clr">REAL FOOD</span>OUR MENU</a></li>
                         <!-- <li><a href="/contact" title="CONTACT US" itemprop="url"><span class="red-clr">NEED SOME HELP?</span>CONTACT US</a></li> -->
                     </ul>
+                    
+                @guest
+                @else
                     <a class="red-bg brd-rd4" href="/track-order" title="Register" itemprop="url">TRACK ORDER</a>
+                @endguest
                 </div>
             </nav>
         </div>
@@ -62,7 +66,6 @@
             @guest
                 <a class="log-popup-btn" href="#" title="Login" itemprop="url">LOGIN</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">REGISTER</a> 
             @else
-                <online-user></online-user>
                 <a href="/dashboard" title="My Account" itemprop="url">MY ACCOUNT</a> / 
                 <a href="{{ route('logout') }}" title="Logout" itemprop="url"
                    onclick="event.preventDefault();

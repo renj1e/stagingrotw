@@ -92,6 +92,7 @@
                                                     <input type="number" class="form-control" placeholder="" name="mquantity" value="{{$menu->mquantity}}">
                                                 </div>
                                             </div>
+                                            {{-- 
                                             <div class="form-group row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <label>Add-ons: </label>
@@ -112,6 +113,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                             --}}
                                             <div class="form-group row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <label>Show this?</label>
@@ -126,6 +128,9 @@
                                             <div class="form-group row">
                                                 <div class="col-md-12">
                                                     <label>Display Photo</label>
+                                                    <div class="mb-3">
+                                                        <img src="/storage/images/{{ $menu->mavatar }}" class="" width="200">
+                                                    </div>
                                                     <input type="file" class="form-control" name="mavatar" placeholder="Photo upload">
                                                 </div>
                                             </div>

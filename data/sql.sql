@@ -385,6 +385,7 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gender` enum('male','female','others') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'others',
   `utype` enum('staff','rider','customer') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('active','not_active') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -399,7 +400,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Customer 1','customer1@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','customer','M9Ky9GGEM3VcQa8yG0nbMy8WwXW07EG6DtZPrRblOlEWIJvrYiwuC5LkBTjo','2020-01-22 00:34:30','2020-01-22 00:34:30'),(2,'Rider 1','rider1@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','rider','BYoV5xFXYBCxQs6tW6Zhc8QdXj19zyicwEsRl9XtA92BSE3wRzb2DJvfBMIm','2020-01-22 00:34:30','2020-01-22 00:34:30'),(3,'Admin','admin@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','staff','ZZHqmNd6GgzuiebJH2PCWTG8xgjNMHvkAjxagSgn8isTx0iB6stITFc8BOtk','2020-01-22 00:34:30','2020-01-22 00:34:30'),(4,'Rider 2','rider2@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','rider','VlogbCgDqIVlYm9Gbof6twfGgsgp0dG72WyBLLriKvuciPAcXOPIw0uyLXlq','2020-01-22 00:34:30','2020-01-22 00:34:30'),(15,'Rider 3','rider3@gmail.com',NULL,'$2y$10$QIBMqKg61Dq24H93WILcYO61sOH0I4wzWknE/FlzAdlGzhcE9XBCK','others','rider',NULL,'2020-03-15 10:54:29','2020-03-15 10:54:29');
+INSERT INTO `users` VALUES (1,'Admin','admin@gmail.com',NULL,'$2y$10$YhPNKuIBr/SXTcpMs9D0S.y/TlQ.cCJ4QZOKBPZRWpUUhkBiKjxRO','male','staff','active','ZZHqmNd6GgzuiebJH2PCWTG8xgjNMHvkAjxagSgn8isTx0iB6stITFc8BOtk','2020-01-22 00:34:30','2020-01-22 00:34:30');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
