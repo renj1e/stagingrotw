@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 // Models
+use \App\User;
 use \App\Order;
 use \App\CustomerAddress;
 use \App\OrderTrack;
@@ -341,6 +343,31 @@ class FEController extends Controller
     	$confirm = new OrderTrack;
         $data = $request->all();
         return response()->json($confirm->new($data));
+    }
+
+    public function customerPasswordSaveUpdate(Request $request)
+    {
+        if($request->password === $request->cpassword)
+        {
+            User::where('id', (int) \Auth::user()->id)
+                ->update([
+                    'password' => Hash::make($request->password)
+                ]);
+        }
+
+        return redirect('/dashboard');
+        
+    }
+
+    public function customerProfileSaveUpdate(Request $request)
+    {
+        User::where('id', (int) \Auth::user()->id)
+            ->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+
+        return redirect('/dashboard');
     }
 
     public function addNewAddress(Request $request)

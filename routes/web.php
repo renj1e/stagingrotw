@@ -31,6 +31,9 @@ Route::get('/getmyaddress', 'FEController@getMyAddress')->name('get-my-address')
 Route::post('/removeaddress/{id}', 'FEController@removeAddress')->name('remove-address');
 Route::post('/confirmorder', 'FEController@confirmOrder')->name('confirm-order');
 
+Route::post('/customer-profile-save-update', 'FEController@customerProfileSaveUpdate')->name('customer-profile-save-update');
+Route::post('/customer-password-save-update', 'FEController@customerPasswordSaveUpdate')->name('customer-password-save-update');
+
 // BACKEND ROUTES
 Route::get('/not-active', 'BEController@notActive')->name('not-active');
 

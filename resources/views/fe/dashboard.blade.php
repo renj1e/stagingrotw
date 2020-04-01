@@ -147,28 +147,30 @@
                                                             <div class="col-md-8 col-sm-8 col-lg-8">
                                                                 <div class="profile-info-form-wrap">
                                                                     <div class="form-holder">
-                                                                        <form class="profile-info-form" id="profile-info-form">
+                                                                        <form action="/customer-profile-save-update" class="profile-info-form" method="POST" enctype="multipart/form-data" id="profile-info-form">
+                                                                            @csrf
                                                                             <div class="row mrg20">
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <label>Name <sup>*</sup></label>
-                                                                                    <input class="brd-rd3" type="text" name="name" placeholder="Enter Your Name">
+                                                                                    <input class="brd-rd3" type="text" name="name" value="{{\Auth::user()->name}}" placeholder="Enter Your Name">
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <label>Email Address <sup>*</sup></label>
-                                                                                    <input class="brd-rd3" type="email" name="email" placeholder="Enter Your Email Address">
+                                                                                    <input class="brd-rd3" type="email" name="email" value="{{\Auth::user()->email}}" placeholder="Enter Your Email Address">
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                                    <button class="btn btn-sm btn-primary btn-update-info">Save Changes</button>
+                                                                                    <button type="submit" class="btn btn-sm btn-primary btn-update-info">Save Changes</button>
                                                                                 </div>
                                                                             </div>
                                                                         </form>
                                                                     </div>
                                                                     <br>
                                                                     <div class="form-holder">
-                                                                        <form class="profile-info-form" id="profile-info-password-form">
+                                                                        <form action="/customer-password-save-update" class="profile-info-form" method="POST" enctype="multipart/form-data" id="profile-info-password-form">
+                                                                            @csrf
                                                                             <div class="row mrg20">
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
-                                                                                    <label>Password <sup>*</sup></label>
+                                                                                    <label>New Password <sup>*</sup></label>
                                                                                     <input class="brd-rd3" type="password" name="password" placeholder="Password">
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">

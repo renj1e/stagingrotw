@@ -42,7 +42,7 @@
 		                                    	{{ $c->name }}
 		                                    </td>
 		                                    <td>
-		                                        <p class="mb-0"><small>{{ $c->email }} : Member since {{ $c->created_at }}</small></p>
+		                                        <p class="mb-0"><small>{{ $c->email }} : Member since {{ date_format(date_create($c->created_at), 'M d, Y h:i A')}}</small></p>
 		                                        @foreach($c->contacts as $_c)
 			                                        <p class="mb-0"><span class="font-weight-bold">{{$_c->conlabel}}</span>: {{$_c->connumber}}</p>
 		                                        @endforeach

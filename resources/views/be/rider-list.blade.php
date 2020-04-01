@@ -119,8 +119,10 @@
 	                                <tr>
 	                                    <th style="width: 82px">Avatar</th>
 	                                    <th>Name</th>
+	                                    <th>Status</th>
 	                                    <th>Contact</th>
 	                                    <th>Vehicle</th>
+	                                    <th>License</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
@@ -129,10 +131,17 @@
 		                                <tr class="{{ ($k % 2 === 0)? 'even':'odd' }}">
 		                                	<td>		
 		                                		<a href="/profile?ref_id={{$r->id}}">                              		
-		                                    	<figure class="avatar avatar-100 vm"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure></a>  
+		                                    	<figure class="avatar avatar-90 rounded-circle mx-auto my-3"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure></a>  
 		                                	</td>
 		                                    <td>
 		                                    	{{ $r->name }}
+		                                    </td>
+		                                    <td>
+		                                    	@if($r->status === 'active')
+		                                    	<span class="badge badge-success">Active</span>
+		                                    	@else
+		                                    	<span class="badge badge-danger">Not Active</span>
+		                                    	@endif
 		                                    </td>
 		                                    <td>
 		                                        <p class="mb-0">{{ $r->rider_contact_number }}</p>
@@ -140,27 +149,17 @@
 		                                    </td>     
 		                                    <td>
 		                                        <p class="mb-0">
-                                                    @switch($r->rider_profile_vehicle_type)
-                                                        @case('motorcycle')
-                                                            <span class="badge badge-success">Motorcycle </span> 
-                                                        @break
-                                                        @case('tricycle')
-                                                            <span class="badge badge-success">Tricycle </span> 
-                                                        @break
-                                                        @case('delivery_van')
-                                                            <span class="badge badge-success">Delivery Van </span> 
-                                                        @break
-                                                        @case('others')
-                                                            <span class="badge badge-success">Others </span> 
-                                                        @break
-
-                                                        @default
-                                                        @break
-                                                    @endswitch
-                                                    : {{ $r->rider_profile_vehicle_number }}</p>
-		                                        <p class="mb-0">
+		                                        	Plate #: {{ $r->rider_profile_vehicle_number }}</p>
+		                                        {{--
+		                                        	<p class="mb-0">
 		                                        	License:<br>                   		
 		                                    		<figure class="avatar avatar-100 vm"><img src="/storage/images/users/license/{{ $r->rider_profile_drivers_license }}" alt=""></figure>
+		                                        </p>
+		                                        --}}
+		                                    </td>   
+	                                    	<td>
+	                                        	<p class="mb-0">           		
+	                                    		<figure class="avatar avatar-100 vm"><img src="/storage/images/users/license/{{ $r->rider_profile_drivers_license }}" alt=""></figure>
 		                                        </p>
 		                                    </td>                 
 		                                </tr>
