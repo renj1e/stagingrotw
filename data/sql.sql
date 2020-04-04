@@ -384,7 +384,7 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gender` enum('male','female','others') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'others',
-  `utype` enum('staff','rider','customer') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `utype` enum('staff','rider','customer') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'customer',
   `status` enum('active','not_active') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
