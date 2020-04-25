@@ -52,19 +52,24 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <label>Contact Info</label>
-                                                    <!-- <span class="btn btn-success btn-sm float-right mb-2"><i class="material-icons icon-right icon">add</i></span> -->
-                                                    @foreach($store->contact as $c)
                                                     <div class="input-group mb-1">
-                                                        <div class="col-sm-12 p-0">
-                                                            <input type="text" class="form-control" name="contact[{{$c->vcid}}]" value="{{$c->vc_number}}" placeholder="09201234567">
+                                                        @foreach($store->contact as $c)
+                                                            <div class="col-sm-4 p-0">
+                                                                <input type="text" class="form-control" name="contact[{{$c->vcid}}]" value="{{$c->vc_number}}" placeholder="09201234567">
+                                                            </div>
+                                                        @endforeach
+
+                                                        <div class="col-sm-4 p-0">
+                                                            <input type="text" class="form-control" name="contact[]"  placeholder="Add # here 09201234567">
                                                         </div>
                                                     </div>
-                                                    @endforeach
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <label>Business Status</label>

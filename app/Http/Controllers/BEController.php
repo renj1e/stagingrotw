@@ -666,6 +666,26 @@ class BEController extends Controller
 
     	return redirect('/store-list');
     }
+    
+    public function storeUpdate($id)
+    {
+        $store = DB::table('vendors')
+                ->where('vendorid', $id)
+                ->first();
+
+        $_contact = DB::table('vendor_contact')
+            ->where('vc_vendor_id', $store->vendorid)
+            ->get();
+
+        $store->contact = $_contact;
+        // dd($store);
+        return view('be/store-update',
+            [
+                'store' => $store
+            ]
+        );
+        return view('be/not-active');
+    }
 
     /**
      * Show the application dashboard.
