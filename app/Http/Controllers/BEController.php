@@ -404,9 +404,13 @@ class BEController extends Controller
 
         foreach ($menu as $k => $v)
         {
-    		$_vendor = DB::table('vendors')
-	            ->where('vendorid', $v->vendorid)
-	            ->first();
+            $_vendor = DB::table('vendors')
+                ->where('vendorid', $v->vendorid)
+                ->first();
+
+            $_vendor_contact = DB::table('vendor_contact')
+                ->where('vc_vendor_id', $v->vendorid)
+                ->get();
 
     		$_addons = DB::table('addons')
 	            ->where('addmenuid', $v->menuid)
@@ -431,6 +435,7 @@ class BEController extends Controller
         	$_mt = explode(',', str_replace(array('[',']'), '', $v->mtype));
 
         	$menu[$k]->vendor = $_vendor;
+            $menu[$k]->vendor_contact = $_vendor_contact;
         	$menu[$k]->addons = $_addons;
         	$menu[$k]->mt = collect($_mt);
         }

@@ -61,7 +61,7 @@
 	                                                            <!-- <span class="btn btn-success btn-sm float-right mb-2"><i class="material-icons icon-right icon">add</i></span> -->
 	                                                            <div class="input-group mb-1">
 	                                                                <div class="col-sm-12 p-0">
-	                                                                    <input type="text" class="form-control" name="contact[]" placeholder="09201234567">
+	                                                                    <input type="text" class="form-control" name="contact[]" placeholder="Add # here Ex. 09201234567">
 	                                                                </div>
 	                                                            </div>
 	                                                        </div>

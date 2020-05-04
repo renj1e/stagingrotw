@@ -64,7 +64,7 @@
                                                         @endforeach
 
                                                         <div class="col-sm-4 p-0">
-                                                            <input type="text" class="form-control" name="contact[]"  placeholder="Add # here 09201234567">
+                                                            <input type="text" class="form-control" name="contact[]"  placeholder="Add # here Ex. 09201234567">
                                                         </div>
                                                     </div>
                                                 </div>

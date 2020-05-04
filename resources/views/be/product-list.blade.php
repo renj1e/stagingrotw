@@ -198,7 +198,11 @@
 		                                        <p class="mb-0"><span>Vendor: {{ $m->vendor->vname }}</span></p>
 		                                        <p class="mb-0">
 		                                        	<span>Vendor #:</span>
-		                                        	<span>{{ $m->mname }}</span>
+		                                        	@if(isset($m->vendor_contact))
+				                                        @foreach($m->vendor_contact as $_vc_k => $_vc_v)
+		                                        			<span>{{ $_vc_v->vc_number }}</span>
+				                                        @endforeach
+		                                        	@endif
 		                                        </p>
 		                                        <p class="mb-0"><span>Address: {{ $m->vendor->vstreet }}, {{ $m->vendor->vcity }}, {{ $m->vendor->vprovince }}</span></p>
 		                                    </td>
