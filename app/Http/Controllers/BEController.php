@@ -689,7 +689,7 @@ class BEController extends Controller
                 'store' => $store
             ]
         );
-        return view('be/not-active');
+        //return view('be/not-active');
     }
 
     /**
