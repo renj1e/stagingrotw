@@ -44,6 +44,8 @@
     <link href="/assets/be/css/otw.css" id="link" rel="stylesheet">
 
     <title>On The Way : Rider Panel</title>
+
+    @stack('styles')
 </head>
 <body class="h-100 menu-close">
     <div id="app">
@@ -83,6 +85,7 @@
                                         @csrf
                                     </form>
                                     <a href="/admin" class="btn text-uppercase px-3 btn-sm btn-default">Dashboard</a>
+                                    <a href="/my-order-list" class="btn text-uppercase px-3 btn-sm btn-default">All Delivered Orders</a>
                                 </div>
                             </div>
                         </div>

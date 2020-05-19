@@ -41,6 +41,9 @@ Route::get('/profile', 'BEController@myProfile')->name('my-profile');
 Route::post('/profile-save-update', 'BEController@profileSaveUpdate')->name('profile-save-update');
 Route::get('/admin', 'BEController@index')->name('admin-index');
 
+Route::get('/order-list', 'BEController@orderList')->name('admin-order-list');
+Route::get('/my-order-list', 'BEController@myOrderList')->name('rider-order-list');
+
 Route::get('/rider', 'BEController@rider')->name('admin-rider');
 
 Route::get('/rider-list', 'BEController@riderList')->name('admin-rider-list');
