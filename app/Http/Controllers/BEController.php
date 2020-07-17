@@ -989,7 +989,7 @@ class BEController extends Controller
             ->where('order_trackid', '=', (int) $request->get('otid'))
             ->update([
                 'order_trackstatus' => $request->get('status'),
-                'updated_at' => date('M d, Y H:i A'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]);
             
         return response()->json([
