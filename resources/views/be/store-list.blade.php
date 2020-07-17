@@ -39,19 +39,19 @@
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-12 col-md-12">
 	                                                            <label>Name</label>
-	                                                            <input type="text" class="form-control" name="vname" placeholder="">
+	                                                            <input type="text" class="form-control" name="vname" placeholder="" required>
 	                                                        </div>
 	                                                    </div>
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-12 col-md-12">
 	                                                            <label>Business Address</label>                                
 	                                                            <div class="input-group mb-1">
-	                                                                <input type="text" class="form-control" name="vstreet" placeholder="Street">
-	                                                                <input type="text" class="form-control" name="vcity" placeholder="City / Municipality">
+	                                                                <input type="text" class="form-control" name="vstreet" placeholder="Street" required>
+	                                                                <input type="text" class="form-control" name="vcity" placeholder="City / Municipality" required>
 	                                                            </div>                                                  
 	                                                            <div class="input-group mb-1">
-	                                                                <input type="text" class="form-control" name="vprovince" placeholder="Province">
-	                                                                <input type="text" class="form-control" name="vcountry" placeholder="Country">
+	                                                                <input type="text" class="form-control" name="vprovince" placeholder="Province" required>
+	                                                                <input type="text" class="form-control" name="vcountry" placeholder="Country" required>
 	                                                            </div>
 	                                                        </div>
 	                                                    </div>
@@ -61,7 +61,7 @@
 	                                                            <!-- <span class="btn btn-success btn-sm float-right mb-2"><i class="material-icons icon-right icon">add</i></span> -->
 	                                                            <div class="input-group mb-1">
 	                                                                <div class="col-sm-12 p-0">
-	                                                                    <input type="text" class="form-control" name="contact[]" placeholder="Add # here Ex. 09201234567">
+	                                                                    <input type="text" class="form-control" name="contact[]" placeholder="Add # here Ex. 09201234567" required>
 	                                                                </div>
 	                                                            </div>
 	                                                        </div>
@@ -69,7 +69,7 @@
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-12 col-md-12">
 	                                                            <label>Business Status</label>
-	                                                            <select class="form-control" name="vis_activated">
+	                                                            <select class="form-control" name="vis_activated" required>
 	                                                            	<option>Select Status</option>	                  
 	                                                            	<option value="1">Active</option>	                  
 	                                                            	<option value="0">Not Active</option>
@@ -102,6 +102,7 @@
 	                                    <th>Name</th>
 	                                    <th>Contact</th>
 	                                    <th>Address</th>
+	                                    <th>Status</th>
 	                                    <th>Action</th>
 	                                </tr>
 	                            </thead>
@@ -119,6 +120,13 @@
 		                                    </td>   
 		                                    <td>
 		                                    	<p class="mb-0">{{$s->vstreet}} {{$s->vcity}} {{$s->vprovince}} {{$s->vcountry}}</p>
+		                                    </td>
+		                                    <td>
+		                                    	@if($s->vis_activated)
+		                                    		<span class="badge badge-success">Active</span>
+		                                    	@else
+		                                    		<span class="badge badge-danger">Not Active</span>
+		                                    	@endif
 		                                    </td>
 		                                    <td class="center"><a href="/store-update/{{$s->vendorid}}" class="btn btn-success px-3 btn-sm">Edit</a></td>
 		                                </tr>
