@@ -40,7 +40,7 @@
 		                                                    <div class="col-lg-12 col-md-12">
 		                                                        <label>Name</label>                   
 		                                                        <div class="input-group mb-1">
-		                                                            <input type="text" class="form-control" name="name" placeholder="Name">
+		                                                            <input type="text" class="form-control" name="name" placeholder="Name" required>
 		                                                        </div>
 		                                                    </div>
 		                                                </div>
@@ -48,8 +48,8 @@
 		                                                    <div class="col-lg-12 col-md-12">
 		                                                        <label>Login Credentials</label>                   
 		                                                        <div class="input-group mb-1">
-		                                                            <input type="text" class="form-control" name="email" placeholder="Email">
-		                                                            <input type="password" class="form-control" name="password" placeholder="Password">
+		                                                            <input type="text" class="form-control" name="email" placeholder="Email" required>
+		                                                            <input type="password" class="form-control" name="password" placeholder="Password" required>
 		                                                        </div>
 		                                                    </div>
 		                                                </div>
@@ -57,41 +57,41 @@
 		                                                    <div class="col-lg-12 col-md-12">
 		                                                        <label>Contact Info</label>
 	                                                            <div class="p-0">
-	                                                                <input type="text" class="form-control" name="rider_contact_number[]" placeholder="09201234567">
+	                                                                <input type="text" class="form-control" name="rider_contact_number[]" placeholder="09201234567" required>
 	                                                            </div>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-md-12 col-lg-12">
 		                                                        <label>Avatar</label>
-		                                                        <input type="file" name="rider_profile_avatar" class="form-control">
+		                                                        <input type="file" name="rider_profile_avatar" class="form-control" required>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-lg-12 col-md-12">
 		                                                        <label>Home Address</label>                                
 		                                                        <div class="input-group mb-1">
-		                                                            <textarea class="form-control" name="rider_profile_address"></textarea>
+		                                                            <textarea class="form-control" name="rider_profile_address" required></textarea>
 		                                                        </div>               
 		                                                    </div>
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-lg-12 col-md-12">
 		                                                        <label>Postal Code</label>
-		                                                        <input type="text" class="form-control" placeholder="Postal code" name="rider_profile_zip_code">
+		                                                        <input type="text" class="form-control" placeholder="Postal code" name="rider_profile_zip_code" required>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-md-12 col-lg-12">
 		                                                        <label>Driver's License (Front and Back)</label>
-		                                                        <input type="file" name="rider_profile_drivers_license" class="form-control">
+		                                                        <input type="file" name="rider_profile_drivers_license" class="form-control" required>
 
 		                                                    </div>
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-lg-12 col-md-12">
 		                                                        <label>Vehicle Info</label>
-		                                                        <input type="text" class="form-control" placeholder="Plate #" name="rider_profile_vehicle_number">
+		                                                        <input type="text" class="form-control" placeholder="Plate #" name="rider_profile_vehicle_number" required>
 		                                                    </div>
 		                                                </div>
 		                                            </div>

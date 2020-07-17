@@ -45,13 +45,13 @@
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-12 col-md-12">
 	                                                            <label>Product name</label>
-	                                                            <input type="text" name="mname" class="form-control" placeholder="">
+	                                                            <input type="text" name="mname" class="form-control" placeholder="" required>
 	                                                        </div>
 	                                                    </div>
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-6 col-md-6">
 	                                                            <label>Vendor</label>
-	                                                            <select class="form-control" name="vendorid">
+	                                                            <select class="form-control" name="vendorid" required>
 	                                                                <option>Select Vendor</option>
 	                                                                @foreach($vendors as $v)
 	                                                                <option value="{{ $v->vendorid }}">{{ $v->vname }}</option>
@@ -62,7 +62,7 @@
 	                                                            <label>Types of Meal</label>
 	                                                            <div class="">
 	                                                                <div class="custom-control mb-2 custom-checkbox custom-control-inline">
-	                                                                    <input type="checkbox" class="custom-control-input" name="mtype[]" value="1" id="all-time">
+	                                                                    <input type="checkbox" class="custom-control-input" name="mtype[]" value="1" checked id="all-time">
 	                                                                    <label class="custom-control-label" for="all-time">All time</label>
 	                                                                </div>
 	                                                                <div class="custom-control mb-2 custom-checkbox custom-control-inline">
@@ -87,17 +87,17 @@
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-12 col-md-12">
 	                                                            <label>Description</label>
-	                                                            <textarea class="form-control" placeholder="" id="editor" name="mdesc"></textarea>
+	                                                            <textarea class="form-control" placeholder="" id="editor" name="mdesc" required></textarea>
 	                                                        </div>
 	                                                    </div>
 	                                                    <div class="form-group row">
 	                                                        <div class="col-lg-6 col-md-6">
 	                                                            <label>Price per order (Php)</label>
-	                                                            <input type="number" class="form-control" placeholder="" name="mprice">
+	                                                            <input type="number" class="form-control" placeholder="" name="mprice" required>
 	                                                        </div>
 	                                                        <div class="col-lg-6 col-md-6">
 	                                                            <label># of stacks</label>
-	                                                            <input type="number" class="form-control" placeholder="" name="mquantity">
+	                                                            <input type="number" class="form-control" placeholder="" name="mquantity" required>
 	                                                        </div>
 	                                                    </div>
 	                                                    {{--
@@ -113,7 +113,7 @@
 	                                                    <div class="form-group row">
 	                                                        <div class="col-md-12">
 	                                                            <label>Display Photo</label>
-	                                                            <input type="file" class="form-control" name="mavatar" placeholder="Photo upload">
+	                                                            <input type="file" class="form-control" name="mavatar" placeholder="Photo upload" required>
 	                                                        </div>
 	                                                    </div>
 	                                                </div>
