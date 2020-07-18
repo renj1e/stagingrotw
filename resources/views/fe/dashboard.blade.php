@@ -287,6 +287,7 @@
 				getMyAddress();
 				$('.cart-added-notifs').addClass('show').empty().append('<p>'+data.message+'</p>').delay(1000).show(0);
 				$('.cart-added-notifs').delay(3000).fadeOut(3000).removeClass('show');
+                $('#add-new-address-form').trigger('reset');
 			},
 			error:function(data){
 				console.log(data);
