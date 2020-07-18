@@ -723,7 +723,7 @@ class BEController extends Controller
                 'mtype' => $type,
                 'mdesc' => $request->mdesc,
                 'mprice' => $request->mprice,
-                'mquantity' => $request->mquantity,
+                'mquantity' => 100,
                 'mis_activated' => $request->mis_activated,
                 'maddons' => $addons,
             ]);

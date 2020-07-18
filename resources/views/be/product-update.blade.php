@@ -87,12 +87,12 @@
                                                     <label>Price per order (Php)</label>
                                                     <input type="number" class="form-control" placeholder="" name="mprice" value="{{$menu->mprice}}">
                                                 </div>
+                                            </div>
+                                            {{-- 
                                                 <div class="col-lg-6 col-md-6">
                                                     <label># of stacks</label>
                                                     <input type="number" class="form-control" placeholder="" name="mquantity" value="{{$menu->mquantity}}">
                                                 </div>
-                                            </div>
-                                            {{-- 
                                             <div class="form-group row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <label>Add-ons: </label>
