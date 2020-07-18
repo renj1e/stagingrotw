@@ -40,6 +40,7 @@
                                                     <div class="user-info-inner">
                                                         <h5 itemprop="headline"><a href="#" title="" itemprop="url">{{ \Auth::user()->name }}</a></h5>
                                                         <span><a href="#" title="" itemprop="url">{{ \Auth::user()->email }}</a></span>
+
 										                <a href="{{ route('logout') }}" title="Logout" itemprop="url" class="brd-rd3 sign-out-btn yellow-bg"
 										                   onclick="event.preventDefault();
 										                                 document.getElementById('logout-form').submit();">
@@ -53,7 +54,7 @@
                                                 <ul class="nav nav-tabs">
                                                     <li  class="active"><a href="#my-orders" data-toggle="tab"><i class="fa fa-shopping-basket"></i> MY ORDERS</a></li>
                                                     <li><a href="#delivery-address" data-toggle="tab"><i class="fa fa-map"></i> DELIVERY ADDRESS</a></li>
-                                                    <!-- <li><a href="#statement" data-toggle="tab"><i class="fa fa-wpforms"></i> STATEMENT</a></li> -->
+                                                    <li><a href="#contact-numbers" data-toggle="tab"><i class="fa fa-wpforms"></i> CONTACT NUMBERS</a></li>
                                                     <li><a href="#account-settings" data-toggle="tab"><i class="fa fa-cog"></i> ACCOUNT SETTINGS</a></li>
                                                 </ul>
                                             </div>
@@ -99,42 +100,73 @@
                                                     <h4 itemprop="headline">DELIVERY ADDRESS <button class="btn btn-success btn-address-form btn-xs"><i class="fa fa-plus"></i> New Address</button></h4>
 
                                                     <div class="new-address-form">
-														<form id="add-new-address-form">
-															@csrf
-															<input type="hidden" class="form-control" name="cacustomerid" value="{{ \Auth::user()->id }}">
-														    <div class="form-group row">
-														    	<div class="col-sm-6">
-															        <label for="label">Label</label>
-															        <input type="text" class="form-control" name="calabel" placeholder="Address Label">
-														    	</div>
-														    </div>
-														    <div class="form-group row">
-														    	<div class="col-sm-6">
-															        <label for="label">Street</label>
-															        <input type="text" class="form-control" name="castreet" placeholder="Address Street">
-														    	</div>
-														    	<div class="col-sm-6">
-															        <label for="label">City</label>
-															        <input type="text" class="form-control" name="cacity" placeholder="Address City">
-														    	</div>
-														    </div>
-														    <div class="form-group row">
+                                                        <form id="add-new-address-form">
+                                                            @csrf
+                                                            <input type="hidden" class="form-control" name="cacustomerid" value="{{ \Auth::user()->id }}">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <label for="label">Label</label>
+                                                                    <input type="text" class="form-control" name="calabel" placeholder="Address Label">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <label for="label">Street</label>
+                                                                    <input type="text" class="form-control" name="castreet" placeholder="Address Street">
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <label for="label">City</label>
+                                                                    <input type="text" class="form-control" name="cacity" placeholder="Address City">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <label for="label">Postal Code</label>
                                                                     <input type="text" class="form-control" name="cazipcode" placeholder="Postal Code">
                                                                 </div>
-														    	<div class="col-sm-6">
-															        <label for="label">Province</label>
-															        <input type="text" class="form-control" name="caprovince" placeholder="Address Province">
-														    	</div>
-														    </div>
-														    <button type="submit" class="btn btn-success btn-add-new-address">Add</button>
-														</form>
+                                                                <div class="col-sm-6">
+                                                                    <label for="label">Province</label>
+                                                                    <input type="text" class="form-control" name="caprovince" placeholder="Address Province">
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success btn-add-new-address">Add</button>
+                                                        </form>
                                                     </div>
 
                                                     <div class="delivery-address">
-	                                                    <div class="row" id="addressLists">
-	                                                    </div>
+                                                        <div class="row" id="addressLists">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="contact-numbers">
+                                                <div class="tabs-wrp brd-rd5">
+                                                    <h4 itemprop="headline">CONTACT NUMBERS <button class="btn btn-success btn-contact-form btn-xs"><i class="fa fa-plus"></i> New Contact</button></h4>
+
+                                                    <div class="new-contact-form">
+                                                        <form id="add-new-contact-form">
+                                                            @csrf
+                                                            <input type="hidden" class="form-control" name="concustomerid" value="{{ \Auth::user()->id }}">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <label for="label">Label</label>
+                                                                    <input type="text" class="form-control" name="conlabel" placeholder="Address Label">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12">
+                                                                    <label for="label">Number</label>
+                                                                    <input type="text" class="form-control" name="connumber" placeholder="Number">
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success btn-add-new-contact">Add</button>
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="delivery-address">
+                                                        <div class="row" id="contactLists">
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -152,11 +184,11 @@
                                                                             <div class="row mrg20">
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <label>Name <sup>*</sup></label>
-                                                                                    <input class="brd-rd3" type="text" name="name" value="{{\Auth::user()->name}}" placeholder="Enter Your Name">
+                                                                                    <input class="brd-rd3" type="text" name="name" value="{{\Auth::user()->name}}" placeholder="Enter Your Name" required>
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <label>Email Address <sup>*</sup></label>
-                                                                                    <input class="brd-rd3" type="email" name="email" value="{{\Auth::user()->email}}" placeholder="Enter Your Email Address">
+                                                                                    <input class="brd-rd3" type="email" name="email" value="{{\Auth::user()->email}}" placeholder="Enter Your Email Address" required>
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <button type="submit" class="btn btn-sm btn-primary btn-update-info">Save Changes</button>
@@ -164,18 +196,19 @@
                                                                             </div>
                                                                         </form>
                                                                     </div>
-                                                                    <br>
+                                                                    <hr/>
                                                                     <div class="form-holder">
+                                                                        <h5>Change Password</h5>
                                                                         <form action="/customer-password-save-update" class="profile-info-form" method="POST" enctype="multipart/form-data" id="profile-info-password-form">
                                                                             @csrf
                                                                             <div class="row mrg20">
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <label>New Password <sup>*</sup></label>
-                                                                                    <input class="brd-rd3" type="password" name="password" placeholder="Password">
+                                                                                    <input class="brd-rd3" type="password" name="password" placeholder="Password" required>
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <label>Repeat Password <sup>*</sup></label>
-                                                                                    <input class="brd-rd3" type="password" name="cpassword" placeholder="Repeat Password">
+                                                                                    <input class="brd-rd3" type="password" name="cpassword" placeholder="Repeat Password" required>
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                                                     <button class="btn btn-sm btn-primary btn-update-password">Save Changes</button>
@@ -208,70 +241,152 @@
     $('.btn-update-password').click(function(){
         console.log('TO-DO: change password');
     });
-	function getMyAddress()
-	{
-		$.ajax({
-			type: 'GET',
-			url: '/getmyaddress',
-			dataType: 'json',
-			success:function(data){
-				$('#addressLists').empty();
-				$.each(data, function( i, v ) {
-					$('#addressLists').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
-						'<div class="address-holder">'+
-							'<h4>'+v.calabel+' <span class="btn-remove-address" data-item-id="'+v.caid+'" title=""><i class="fa fa-trash-o"></i></span></h4>'+
-							'<p>'+v.castreet+' '+v.cacity+', '+v.caprovince+' '+v.cacountry+'</p>'+
-						'</div>'+
-					'</div>');
-				});
-				removeAddress();
-			},
-			error:function(data){
-				console.log(data);
-			}
-		});
-	}
+    function getMyContactLists()
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/getmycontactlists',
+            dataType: 'json',
+            success:function(data){
+                $('#contactLists').empty();
+                $.each(data, function( i, v ) {
+                    $('#contactLists').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
+                        '<div class="address-holder">'+
+                            '<h4>'+v.conlabel+' <span class="btn-remove-contact" data-item-id="'+v.id+'" title=""><i class="fa fa-trash-o"></i></span></h4>'+
+                            '<p>'+v.connumber+'</p>'+
+                        '</div>'+
+                    '</div>');
+                });
+                removeContact();
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
+    }
+    function getMyAddress()
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/getmyaddress',
+            dataType: 'json',
+            success:function(data){
+                $('#addressLists').empty();
+                $.each(data, function( i, v ) {
+                    $('#addressLists').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
+                        '<div class="address-holder">'+
+                            '<h4>'+v.calabel+' <span class="btn-remove-address" data-item-id="'+v.caid+'" title=""><i class="fa fa-trash-o"></i></span></h4>'+
+                            '<p>'+v.castreet+' '+v.cacity+', '+v.caprovince+' '+v.cacountry+'</p>'+
+                        '</div>'+
+                    '</div>');
+                });
+                removeAddress();
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
+    }
 
-	function removeAddress()
-	{
-		$('.btn-remove-address').on('click',function(e){
-	    	e.preventDefault();
-	    	var id = $(this).data('item-id'); 	    	
-		    $.ajax({
-				type: 'POST',
-				url: '/removeaddress/'+id,
-				dataType: 'json',
-				success:function(data){
-					getMyAddress();					
-					$('.cart-added-notifs').addClass('show').empty().append('<p>'+data.message+'</p>').delay(1000).show(0);
-					$('.cart-added-notifs').delay(3000).fadeOut(3000).removeClass('show');
-				},
-				error:function(data){
-				  console.log(data);
-				}
-		    });
-		});
-	}
+    function removeAddress()
+    {
+        $('.btn-remove-address').on('click',function(e){
+            e.preventDefault();
+            var id = $(this).data('item-id');           
+            $.ajax({
+                type: 'POST',
+                url: '/removeaddress/'+id,
+                dataType: 'json',
+                success:function(data){
+                    getMyAddress();                 
+                    $('.cart-added-notifs').addClass('show').empty().append('<p>'+data.message+'</p>').delay(1000).show(0);
+                    $('.cart-added-notifs').delay(3000).fadeOut(3000).removeClass('show');
+                },
+                error:function(data){
+                  console.log(data);
+                }
+            });
+        });
+    }
+
+
+    function removeContact()
+    {
+        $('.btn-remove-contact').on('click',function(e){
+            e.preventDefault();
+            var id = $(this).data('item-id');  
+            $.ajax({
+                type: 'POST',
+                url: '/removecontact/'+id,
+                dataType: 'json',
+                success:function(data){
+            console.log(data)         
+                    getMyContactLists();                 
+                    $('.cart-added-notifs').addClass('show').empty().append('<p>'+data.message+'</p>').delay(1000).show(0);
+                    $('.cart-added-notifs').delay(3000).fadeOut(3000).removeClass('show');
+                },
+                error:function(data){
+                  console.log(data);
+                }
+            });
+        });
+    }
 
 	getMyAddress();
+    getMyContactLists();
 
-	// Delivery Address toggle
-	$('.btn-address-form').click(function(){
-		if($('.new-address-form').hasClass('show'))
-		{
-			$('.new-address-form').removeClass('show')
-		}
-		else
-		{
-			$('.new-address-form').addClass('show')
-		}
-	});
+    // Delivery Address toggle
+    $('.btn-address-form').click(function(){
+        if($('.new-address-form').hasClass('show'))
+        {
+            $('.new-address-form').removeClass('show')
+        }
+        else
+        {
+            $('.new-address-form').addClass('show')
+        }
+    });
+    $('.btn-contact-form').click(function(){
+        if($('.new-contact-form').hasClass('show'))
+        {
+            $('.new-contact-form').removeClass('show')
+        }
+        else
+        {
+            $('.new-contact-form').addClass('show')
+        }
+    });
 
-
+    $('.btn-add-new-contact').click(function(e){
+        e.preventDefault(); 
+        var data = $('#add-new-contact-form').serializeArray();
+        console.log(data)
+        $.ajax({
+            type: 'POST',
+            url: '/addnewcontact',
+            data: data,
+            dataType: 'json',
+            success:function(data){
+                $('#contactLists').append('<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">'+
+                    '<div class="address-holder">'+
+                        '<h4>'+data.conlabel+'</h4>'+
+                        '<p>'+data.connumber+'</p>'+
+                    '</div>'+
+                '</div>');
+                getMyContactLists();
+                $('.cart-added-notifs').addClass('show').empty().append('<p>'+data.message+'</p>').delay(1000).show(0);
+                $('.cart-added-notifs').delay(3000).fadeOut(3000).removeClass('show');
+                $('#add-new-contact-form').trigger('reset');
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
+    });
 
 	$('.btn-add-new-address').click(function(e){
 		e.preventDefault(); 
-		var data = $('#add-new-address-form').serializeArray();
+		var data = $('#add-new-contact-form').serializeArray();
 		$.ajax({
 			type: 'POST',
 			url: '/addnewaddress',
@@ -284,7 +399,7 @@
 						'<p>'+data.castreet+' '+data.cacity+', '+data.caprovince+' '+data.cacountry+'</p>'+
 					'</div>'+
 				'</div>');
-				getMyAddress();
+				getMyContactLists();
 				$('.cart-added-notifs').addClass('show').empty().append('<p>'+data.message+'</p>').delay(1000).show(0);
 				$('.cart-added-notifs').delay(3000).fadeOut(3000).removeClass('show');
                 $('#add-new-address-form').trigger('reset');

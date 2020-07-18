@@ -5966,7 +5966,8 @@ html.thanks-message-popup-active .thanks-message {
   line-height: 45px;
   margin-top: 0;
 }
-.tabs-wrp .new-address-form {
+.tabs-wrp .new-address-form,
+.tabs-wrp .new-contact-form {
   display: none;
   background-color: #fff;
   padding: 10px;
@@ -5974,6 +5975,7 @@ html.thanks-message-popup-active .thanks-message {
   margin-bottom: 20px;
   box-shadow: 0px 3px 10px #909090;
 }
+.tabs-wrp .new-contact-form.show,
 .tabs-wrp .new-address-form.show {
   display: block;
 }

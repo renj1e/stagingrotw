@@ -28,7 +28,10 @@ Route::post('/removecartitem/{id}', 'FEController@removeCartItem')->name('remove
 Route::get('/getcartcount', 'FEController@getCartCount')->name('get-cart-count');
 Route::post('/addnewaddress', 'FEController@addNewAddress')->name('add-new-address');
 Route::get('/getmyaddress', 'FEController@getMyAddress')->name('get-my-address');
+Route::get('/getmycontactlists', 'FEController@getMyContactLists')->name('get-my-contact-list');
+Route::post('/addnewcontact', 'FEController@addNewContact')->name('add-new-contact');
 Route::post('/removeaddress/{id}', 'FEController@removeAddress')->name('remove-address');
+Route::post('/removecontact/{id}', 'FEController@removeContact')->name('remove-contact');
 Route::post('/confirmorder', 'FEController@confirmOrder')->name('confirm-order');
 
 Route::post('/customer-profile-save-update', 'FEController@customerProfileSaveUpdate')->name('customer-profile-save-update');
@@ -39,6 +42,7 @@ Route::get('/not-active', 'BEController@notActive')->name('not-active');
 
 Route::get('/profile', 'BEController@myProfile')->name('my-profile');
 Route::post('/profile-save-update', 'BEController@profileSaveUpdate')->name('profile-save-update');
+Route::post('/password-save-update', 'BEController@passwordSaveUpdate')->name('password-save-update');
 Route::get('/admin', 'BEController@index')->name('admin-index');
 
 Route::get('/order-list', 'BEController@orderList')->name('admin-order-list');

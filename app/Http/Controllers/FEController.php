@@ -12,6 +12,7 @@ use \App\User;
 use \App\Order;
 use \App\CustomerAddress;
 use \App\OrderTrack;
+use \App\Contact;
 
 class FEController extends Controller
 {
@@ -49,6 +50,10 @@ class FEController extends Controller
 
     	if(isset(\Auth::user()->id))
     	{
+            $contact = DB::table('contact')
+                ->where('concustomerid', \Auth::user()->id)
+                ->get();
+
             $address = DB::table('customer_address')
                 ->where('cacustomerid', \Auth::user()->id)
                 ->get();
@@ -111,6 +116,7 @@ class FEController extends Controller
 	        return view('fe/dashboard',
 	        	[
                     'address' => $address,
+                    'contact' => $contact,
                     'prev_orders' => $orders
 	        	]
 	    	);
@@ -385,23 +391,57 @@ class FEController extends Controller
         return response()->json($data);
     }
 
+    public function addNewContact(Request $request)
+    {
+        $contact = new Contact;
+        $data = $request->all();
+        return response()->json($contact->new($data));
+    }
+
+    public function getMyContactLists()
+    {
+        $data = DB::table('contact')
+            ->where('concustomerid', \Auth::user()->id)
+            ->get();
+        return response()->json($data);
+    }
+
     public function removeAddress($id)
     {
-		if(DB::table('customer_address')->where('caid', $id)->delete())
-		{
-			$status = 'success';
-			$message = 'Delivery Address removed.';
-		}
-		else
-		{
-			$status = 'error';
-			$message = 'You\'re trying to removed Delivery Address!';
-		}
+        if(DB::table('customer_address')->where('caid', $id)->delete())
+        {
+            $status = 'success';
+            $message = 'Delivery Address removed.';
+        }
+        else
+        {
+            $status = 'error';
+            $message = 'You\'re trying to removed Delivery Address!';
+        }
 
-    	return response()->json([ 	
-    		'status' => $status,
-    		'message' => $message
-    	]);
+        return response()->json([   
+            'status' => $status,
+            'message' => $message
+        ]);
+    }
+
+    public function removeContact($id)
+    {
+        if(DB::table('contact')->where('id', $id)->delete())
+        {
+            $status = 'success';
+            $message = 'Contact number removed.';
+        }
+        else
+        {
+            $status = 'error';
+            $message = 'You\'re trying to removed Contact number!';
+        }
+
+        return response()->json([   
+            'status' => $status,
+            'message' => $message
+        ]);
     }
 
     public function getCartDetails()

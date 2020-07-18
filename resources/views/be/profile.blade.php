@@ -57,6 +57,7 @@
 								        <div class="col-md-10 ">
 				                            <form action="/profile-save-update" method="POST" enctype="multipart/form-data">
 				                            	<input type="hidden" name="id" value="{{$user->id}}">
+				                            	<input type="hidden" name="userstatus" value="{{$user->status}}">
 				                            	@if($user->ref_id !== 0)
 				                            	<input type="hidden" name="ref_id" value="{{$user->id}}">
 				                            	@endif
@@ -86,6 +87,7 @@
 									                    </select>
 									                </div>
 									            </div>
+									            @if($user->utype === 'admin' && $user->ref_id !== 0)
 									            <div class="form-group row">
 									                <div class="col-lg-6 col-md-6">
 									                    <label>Account status</label>
@@ -96,6 +98,7 @@
 									                    </select>
 									                </div>
 									            </div>
+									            @endif
 									            <div class="form-group">
 									            	<h2 class="mt-4">Password Reset</h2>
 									            </div>
@@ -103,11 +106,11 @@
 									            <div class="form-group row">
 									                <div class="col-lg-6 col-md-6">
 									                    <label>New Password</label>
-									                    <input type="text" class="form-control" placeholder="New Password" name="new_password">
+									                    <input type="password" class="form-control" placeholder="New Password" name="new_password">
 									                </div>
 									                <div class="col-lg-6 col-md-6">
 									                    <label>Confirm Password</label>
-									                    <input type="text" class="form-control" placeholder="Confirm Password" name="confirm_password">
+									                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password">
 									                </div>
 									            </div>
 									            @if($user->utype === 'rider')

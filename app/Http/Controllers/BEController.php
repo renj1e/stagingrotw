@@ -127,18 +127,18 @@ class BEController extends Controller
             $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
             $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
         }
-
+// dd($request);
         User::where('id', (int) $request->id)
             ->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'gender' => $request->gender,
-                'status' => $request->status
+                'status' => (isset($request->status))? $request->status : $request->userstatus
             ]);
 
         if($request->new_password || $request->confirm_password)
         {
-            User::where('users', (int) $request->menuid)
+            User::where('id', (int) $request->menuid)
                 ->update([
                     'password' => Hash::make($request->new_password)
                 ]);
@@ -180,6 +180,20 @@ class BEController extends Controller
         {
             return redirect('/profile');
         }
+    }
+
+    public function passwordSaveUpdate(Request $request)
+    {
+        if($request->new_password === $request->confirm_password)
+        {
+            User::where('id', (int) \Auth::user()->id)
+                ->update([
+                    'password' => Hash::make($request->confirm_password)
+                ]);
+        }
+
+        return redirect('/profile');
+        
     }
 
     /**
