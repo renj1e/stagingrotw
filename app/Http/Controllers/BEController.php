@@ -117,15 +117,17 @@ class BEController extends Controller
     public function profileSaveUpdate(Request $request)
     {
          // dd($request);
-        if($request->rider_profile_avatar)
-        {
-            $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension(); 
-            $request->rider_profile_avatar->storeAs('public/images/users', $rider_profile_avatar);
-        }
-        if($request->rider_profile_drivers_license)
-        {
-            $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
-            $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
+        if($request->utype !== 'admin'){
+            if($request->rider_profile_avatar)
+            {
+                $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension(); 
+                $request->rider_profile_avatar->storeAs('public/images/users', $rider_profile_avatar);
+            }
+            if($request->rider_profile_drivers_license)
+            {
+                $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
+                $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
+            }
         }
 // dd($request);
         User::where('id', (int) $request->id)
@@ -138,39 +140,41 @@ class BEController extends Controller
 
         if($request->new_password || $request->confirm_password)
         {
-            User::where('id', (int) $request->menuid)
+            User::where('id', (int) $request->id)
                 ->update([
                     'password' => Hash::make($request->new_password)
                 ]);
         }
+        if($request->utype !== 'admin'){
 
-        RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
-            ->update([
-                'rider_profile_address' => $request->rider_profile_address,
-                'rider_profile_zip_code' => $request->rider_profile_zip_code,
-                'rider_profile_vehicle_number' => $request->rider_profile_vehicle_number
-            ]);
-
-        if($request->rider_profile_avatar)
-        {
             RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
                 ->update([
-                    'rider_profile_avatar' => $rider_profile_avatar
+                    'rider_profile_address' => $request->rider_profile_address,
+                    'rider_profile_zip_code' => $request->rider_profile_zip_code,
+                    'rider_profile_vehicle_number' => $request->rider_profile_vehicle_number
                 ]);
-        }
 
-        if($request->rider_profile_drivers_license)
-        {
-            RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
+            if($request->rider_profile_avatar)
+            {
+                RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
+                    ->update([
+                        'rider_profile_avatar' => $rider_profile_avatar
+                    ]);
+            }
+
+            if($request->rider_profile_drivers_license)
+            {
+                RiderProfile::where('rider_profile_id', (int) $request->rider_profile_id)
+                    ->update([
+                        'rider_profile_drivers_license' => $rider_profile_drivers_license
+                    ]);
+            }
+
+            RiderContact::where('rider_contact_id', (int) $request->rider_contact_id)
                 ->update([
-                    'rider_profile_drivers_license' => $rider_profile_drivers_license
+                    'rider_contact_number' => $request->rider_contact_number,
                 ]);
         }
-
-        RiderContact::where('rider_contact_id', (int) $request->rider_contact_id)
-            ->update([
-                'rider_contact_number' => $request->rider_contact_number,
-            ]);
 
         if((int) $request->ref_id)
         {

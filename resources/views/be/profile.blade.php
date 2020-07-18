@@ -57,6 +57,7 @@
 								        <div class="col-md-10 ">
 				                            <form action="/profile-save-update" method="POST" enctype="multipart/form-data">
 				                            	<input type="hidden" name="id" value="{{$user->id}}">
+				                            	<input type="hidden" name="utype" value="{{$user->utype}}">
 				                            	<input type="hidden" name="userstatus" value="{{$user->status}}">
 				                            	@if($user->ref_id !== 0)
 				                            	<input type="hidden" name="ref_id" value="{{$user->id}}">
