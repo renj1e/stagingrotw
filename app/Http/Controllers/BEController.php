@@ -631,7 +631,7 @@ class BEController extends Controller
 
         $m->mdesc = $request->mdesc;
         $m->mprice = $request->mprice;
-        $m->mquantity = $request->mquantity;
+        $m->mquantity = 100;
         $m->mavatar = $_mavatar;
         $m->save();
         $_lid = $m->id;
